@@ -17,7 +17,7 @@ public class Tester {
 //		ws.setGalleryPic("khorshid", "123", 1, "salam sosis", "salam sosis");
 //		ws.deleteFromGallery("khorshid", "123", 1, 7);
 //		ws.deleteFromGallery("khorshid", "123", 1, 6);
-		ws.updateTask("khorshid", "123", 1, 3, "تست", 19000);
+//		ws.updateTask("khorshid", "123", 1, 3, "تست", 19000);
 
 	}
 	

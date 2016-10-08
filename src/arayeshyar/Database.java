@@ -1760,12 +1760,19 @@ public class Database {
 		return id;
 	}
 	
-	public void updateTask(int id, String name, int price) throws SQLException{
-		String query = "update task set name = ?, price = ? where id = ?";
+	public void updateTaskPrice(int id, int price) throws SQLException{
+		String query = "update task set price = ? where id = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
-		ps.setString(1, name);
-		ps.setInt(2, price);
-		ps.setInt(3, id);
+		ps.setInt(1, price);
+		ps.setInt(2, id);
+		ps.executeUpdate();
+	}
+	
+	public void updateTaskName(int id, String taskName) throws SQLException{
+		String query = "update task set name = ? where id = ?";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setString(1, taskName);
+		ps.setInt(2, id);
 		ps.executeUpdate();
 	}
 	

@@ -111,6 +111,42 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="updateTaskPrice">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+      <element name="price" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateTaskPriceResponse">
+    <complexType>
+     <sequence>
+      <element name="updateTaskPriceReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateTaskName">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+      <element name="taskName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateTaskNameResponse">
+    <complexType>
+     <sequence>
+      <element name="updateTaskNameReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="login">
     <complexType>
      <sequence>
@@ -927,7 +963,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="updateTaskGroupResponse">
     <complexType>
      <sequence>
-      <element name="updateTaskGroupReturn" type="xsd:boolean"/>
+      <element name="updateTaskGroupReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -945,25 +981,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="deleteTaskGroupReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTask">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="taskName" type="xsd:string"/>
-      <element name="price" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTaskResponse">
-    <complexType>
-     <sequence>
-      <element name="updateTaskReturn" type="xsd:boolean"/>
      </sequence>
     </complexType>
    </element>
@@ -1534,6 +1551,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="updateTaskNameRequest">
+
+      <wsdl:part element="impl:updateTaskName" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="removeTurnRequest">
 
       <wsdl:part element="impl:removeTurn" name="parameters">
@@ -1721,6 +1746,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="changeGalleryPicDescriptionRequest">
 
       <wsdl:part element="impl:changeGalleryPicDescription" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateTaskPriceRequest">
+
+      <wsdl:part element="impl:updateTaskPrice" name="parameters">
 
       </wsdl:part>
 
@@ -2150,6 +2183,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="updateTaskNameResponse">
+
+      <wsdl:part element="impl:updateTaskNameResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="getProvinceRequest">
 
       <wsdl:part element="impl:getProvince" name="parameters">
@@ -2246,14 +2287,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="updateTaskResponse">
-
-      <wsdl:part element="impl:updateTaskResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="reserveForGuest2Response">
 
       <wsdl:part element="impl:reserveForGuest2Response" name="parameters">
@@ -2289,14 +2322,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getAllGalleyPicIdResponse">
 
       <wsdl:part element="impl:getAllGalleyPicIdResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="updateTaskRequest">
-
-      <wsdl:part element="impl:updateTask" name="parameters">
 
       </wsdl:part>
 
@@ -2433,6 +2458,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getOfficeInfo2Request">
 
       <wsdl:part element="impl:getOfficeInfo2" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateTaskPriceResponse">
+
+      <wsdl:part element="impl:updateTaskPriceResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2763,6 +2796,30 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:getTasksResponse" name="getTasksResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateTaskPrice">
+
+         <wsdl:input message="impl:updateTaskPriceRequest" name="updateTaskPriceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateTaskPriceResponse" name="updateTaskPriceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateTaskName">
+
+         <wsdl:input message="impl:updateTaskNameRequest" name="updateTaskNameRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateTaskNameResponse" name="updateTaskNameResponse">
 
        </wsdl:output>
 
@@ -3356,18 +3413,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateTask">
-
-         <wsdl:input message="impl:updateTaskRequest" name="updateTaskRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateTaskResponse" name="updateTaskResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getOfficeInfo2">
 
          <wsdl:input message="impl:getOfficeInfo2Request" name="getOfficeInfo2Request">
@@ -3703,6 +3748,42 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="getTasksResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateTaskPrice">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateTaskPriceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateTaskPriceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateTaskName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateTaskNameRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateTaskNameResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -4585,24 +4666,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="deleteTaskGroupResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateTask">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateTaskRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateTaskResponse">
 
             <wsdlsoap:body use="literal"/>
 
