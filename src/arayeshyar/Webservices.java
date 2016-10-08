@@ -1483,23 +1483,32 @@ public class Webservices {
 		return res + ", id = " + id;
 	}
 
-	public boolean updateTaskGroup(String username, String password, int officeId, int taskGroupId, String taskGroupName) {
-		boolean res = false;
+	public String updateTaskGroup(String username, String password, int officeId, int taskGroupId, String taskGroupName) {
+		String res;
 		Database db = new Database();
 		if(db.openConnection()){
 			try{
 				if(db.isHaveSecretaryPermission(username, password, officeId)){
-					db.updateTaskGroup(taskGroupId, taskGroupName);
-					res = true;
+					if(!db.isAnyoneReserveTaskGroup(taskGroupId)){
+						db.updateTaskGroup(taskGroupId, taskGroupName);
+						res = "OK";
+					} else {
+						res = "شما اجازه تغییرنام این گروه را ندارید زیرا قبلاً حداقل یک نفر در این گروه نوبت رزرو کرده است";
+					}
+				} else {
+					res = "شما مجوز دسترسی به این بخش را ندارید";
 				}
 			}catch(SQLException e){
-				res = false;
+				res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 			} finally {
 				db.closeConnection();
 			}
+		} else {
+			res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 		}
 		return res;
 	}
+	
 	
 	public String deleteTaskGroup(String username, String password, int officeId, int taskGroupId) {
 		String res;
@@ -1544,20 +1553,50 @@ public class Webservices {
 		return id;
 	}
 	
-	public boolean updateTask(String username, String password, int officeId, int taskId, String taskName, int price) {
-		boolean res = false;
+	public String updateTaskPrice(String username, String password, int officeId, int taskId, int price) {
+		String res;
 		Database db = new Database();
 		if(db.openConnection()){
 			try{
 				if(db.isHaveSecretaryPermission(username, password, officeId)){
-					db.updateTask(taskId, taskName, price);
-					res = true;
+					db.updateTaskPrice(taskId, price);
+					res = "OK";
+				} else {
+					res = "شما مجوز دسترسی به این بخش را ندارید";
 				}
 			}catch(SQLException e){
-				res = false;
+				res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 			} finally {
 				db.closeConnection();
 			}
+		} else {
+			res = "خطای غیر منتظره در سمت سرور پیش آمده است";
+		}
+		return res;
+	}
+	
+	public String updateTaskName(String username, String password, int officeId, int taskId, String taskName) {
+		String res;
+		Database db = new Database();
+		if(db.openConnection()){
+			try{
+				if(db.isHaveSecretaryPermission(username, password, officeId)){
+					if(!db.isAnyoneReserveTask(taskId)){
+						db.updateTaskName(taskId, taskName);
+						res = "OK";
+					} else {
+						res = "شما اجازه  تغییرنام این عملیات را ندارید زیرا قبلاً حداقل یک نفر در این گروه نوبت رزرو کرده است";
+					}
+				} else {
+					res = "شما مجوز دسترسی به این بخش را ندارید";
+				}
+			}catch(SQLException e){
+				res = "خطای غیر منتظره در سمت سرور پیش آمده است";
+			} finally {
+				db.closeConnection();
+			}
+		} else {
+			res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 		}
 		return res;
 	}

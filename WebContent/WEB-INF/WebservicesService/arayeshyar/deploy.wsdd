@@ -50,6 +50,20 @@
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:officeId" type="tns:int"/>
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:taskGroupId" type="tns:int"/>
       </operation>
+      <operation xmlns:operNS="http://arayeshyar" xmlns:retNS="http://arayeshyar" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateTaskPrice" qname="operNS:updateTaskPrice" returnQName="retNS:updateTaskPriceReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
+        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:officeId" type="tns:int"/>
+        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:taskId" type="tns:int"/>
+        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:price" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://arayeshyar" xmlns:retNS="http://arayeshyar" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateTaskName" qname="operNS:updateTaskName" returnQName="retNS:updateTaskNameReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
+        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:officeId" type="tns:int"/>
+        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:taskId" type="tns:int"/>
+        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:taskName" type="tns:string"/>
+      </operation>
       <operation xmlns:operNS="http://arayeshyar" xmlns:retNS="http://arayeshyar" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="login" qname="operNS:login" returnQName="retNS:loginReturn" returnType="rtns:int" soapAction="">
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
@@ -357,7 +371,7 @@
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:officeId" type="tns:int"/>
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:taskGroupName" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://arayeshyar" xmlns:retNS="http://arayeshyar" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateTaskGroup" qname="operNS:updateTaskGroup" returnQName="retNS:updateTaskGroupReturn" returnType="rtns:boolean" soapAction="">
+      <operation xmlns:operNS="http://arayeshyar" xmlns:retNS="http://arayeshyar" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateTaskGroup" qname="operNS:updateTaskGroup" returnQName="retNS:updateTaskGroupReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:officeId" type="tns:int"/>
@@ -369,14 +383,6 @@
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:officeId" type="tns:int"/>
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:taskGroupId" type="tns:int"/>
-      </operation>
-      <operation xmlns:operNS="http://arayeshyar" xmlns:retNS="http://arayeshyar" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateTask" qname="operNS:updateTask" returnQName="retNS:updateTaskReturn" returnType="rtns:boolean" soapAction="">
-        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
-        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
-        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:officeId" type="tns:int"/>
-        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:taskId" type="tns:int"/>
-        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:taskName" type="tns:string"/>
-        <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:price" type="tns:int"/>
       </operation>
       <operation xmlns:operNS="http://arayeshyar" xmlns:retNS="http://arayeshyar" xmlns:rtns="http://primitives" name="getOfficeInfo2" qname="operNS:getOfficeInfo2" returnQName="retNS:getOfficeInfo2Return" returnType="rtns:Office" soapAction="">
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:officeId" type="tns:int"/>
@@ -481,7 +487,7 @@
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:picId" type="tns:int"/>
         <parameter xmlns:pns="http://arayeshyar" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:description" type="tns:string"/>
       </operation>
-      <parameter name="allowedMethods" value="getProvinceName getAllTasks getSubSpec registerOffice reserveForGuest setGalleryPic getAllGalleyPicId getUserPic sendMessageBatch getCityName addTaskGroup2 getReservationByTurnId cancelReservation getPatientTurnInfoByDate deleteTaskGroup isUserNameAvailable getCity getDoctorOffice addSecretaryToOffice deleteFromGallery getDoctorPic getOfficeInfo reserveForGuest2 getUserInfoWithoutPic updateUserInfo2 updateUserInfo3 addBiography updateTask getSpec addTurn searchUser updateUserPassword reserveForUser getBiography helloWorld getReservation changeGalleryPicDescription reserveForMe updateUserPic2 register2 getTodayPatient setMessageRead login getReservationByUser addTask removeMessage getPatientFile getOfficeInfo2 updateOfficeInfo getTaskGroups getProvince removeTurn reception addTurnByDate updateTaskGroup addTaskGroup getAllTurn getUnreadMessages sendMessage updateOfficeLocation getAllMessages setAllMessageRead reserveForUser2 getOfficesBySpec updateUserInfo getTasks getCityOfProvince getAllTurnFromToday getReservationByDate getUserInfo deleteTask getGalleryPic login2 removeSecretaryFromOffice register"/>
+      <parameter name="allowedMethods" value="getProvinceName getAllTasks getSubSpec registerOffice reserveForGuest setGalleryPic getAllGalleyPicId getUserPic sendMessageBatch getCityName addTaskGroup2 getReservationByTurnId cancelReservation getPatientTurnInfoByDate deleteTaskGroup isUserNameAvailable getCity getDoctorOffice addSecretaryToOffice deleteFromGallery getDoctorPic getOfficeInfo reserveForGuest2 getUserInfoWithoutPic updateUserInfo2 updateUserInfo3 addBiography getSpec addTurn searchUser updateUserPassword updateTaskPrice reserveForUser getBiography helloWorld getReservation changeGalleryPicDescription reserveForMe updateUserPic2 register2 getTodayPatient setMessageRead login getReservationByUser addTask removeMessage getPatientFile getOfficeInfo2 updateOfficeInfo getTaskGroups getProvince removeTurn reception addTurnByDate updateTaskGroup addTaskGroup getAllTurn getUnreadMessages sendMessage updateOfficeLocation getAllMessages setAllMessageRead updateTaskName reserveForUser2 getOfficesBySpec updateUserInfo getTasks getCityOfProvince getAllTurnFromToday getReservationByDate getUserInfo deleteTask getGalleryPic login2 removeSecretaryFromOffice register"/>
 
       <typeMapping xmlns:ns="http://primitives" qname="ns:Info_patientFile" type="java:primitives.Info_patientFile" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
       <typeMapping xmlns:ns="http://primitives" qname="ns:Info_User" type="java:primitives.Info_User" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
