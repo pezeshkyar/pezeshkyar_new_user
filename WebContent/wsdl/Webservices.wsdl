@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions targetNamespace="http://arayeshyar" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://arayeshyar" xmlns:intf="http://arayeshyar" xmlns:tns1="http://primitives" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<wsdl:definitions targetNamespace="http://pirayeshyar" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://pirayeshyar" xmlns:intf="http://pirayeshyar" xmlns:tns1="http://primitives" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 <!--WSDL created by Apache Axis version: 1.4
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
-  <schema elementFormDefault="qualified" targetNamespace="http://arayeshyar" xmlns="http://www.w3.org/2001/XMLSchema">
+  <schema elementFormDefault="qualified" targetNamespace="http://pirayeshyar" xmlns="http://www.w3.org/2001/XMLSchema">
    <import namespace="http://primitives"/>
    <element name="register">
     <complexType>
@@ -1511,374 +1511,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
   </schema>
  </wsdl:types>
 
-   <wsdl:message name="deleteFromGalleryRequest">
-
-      <wsdl:part element="impl:deleteFromGallery" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getReservationRequest">
-
-      <wsdl:part element="impl:getReservation" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="setAllMessageReadRequest">
-
-      <wsdl:part element="impl:setAllMessageRead" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getProvinceNameResponse">
-
-      <wsdl:part element="impl:getProvinceNameResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="updateTaskGroupRequest">
-
-      <wsdl:part element="impl:updateTaskGroup" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="updateTaskNameRequest">
-
-      <wsdl:part element="impl:updateTaskName" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="removeTurnRequest">
-
-      <wsdl:part element="impl:removeTurn" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="reserveForMeResponse">
-
-      <wsdl:part element="impl:reserveForMeResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="isUserNameAvailableRequest">
-
-      <wsdl:part element="impl:isUserNameAvailable" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getCityOfProvinceResponse">
-
-      <wsdl:part element="impl:getCityOfProvinceResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="reserveForGuestRequest">
-
-      <wsdl:part element="impl:reserveForGuest" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="helloWorldRequest">
-
-      <wsdl:part element="impl:helloWorld" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="addTaskGroup2Request">
-
-      <wsdl:part element="impl:addTaskGroup2" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getCityOfProvinceRequest">
-
-      <wsdl:part element="impl:getCityOfProvince" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getGalleryPicRequest">
-
-      <wsdl:part element="impl:getGalleryPic" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getUserPicRequest">
-
-      <wsdl:part element="impl:getUserPic" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="loginResponse">
-
-      <wsdl:part element="impl:loginResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="updateUserInfoRequest">
-
-      <wsdl:part element="impl:updateUserInfo" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="addSecretaryToOfficeRequest">
-
-      <wsdl:part element="impl:addSecretaryToOffice" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getBiographyRequest">
-
-      <wsdl:part element="impl:getBiography" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="reserveForMeRequest">
-
-      <wsdl:part element="impl:reserveForMe" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getUserInfoResponse">
-
-      <wsdl:part element="impl:getUserInfoResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="setMessageReadRequest">
-
-      <wsdl:part element="impl:setMessageRead" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="removeMessageRequest">
-
-      <wsdl:part element="impl:removeMessage" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="sendMessageRequest">
-
-      <wsdl:part element="impl:sendMessage" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="receptionRequest">
-
-      <wsdl:part element="impl:reception" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getOfficeInfoResponse">
-
-      <wsdl:part element="impl:getOfficeInfoResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getAllTurnFromTodayResponse">
-
-      <wsdl:part element="impl:getAllTurnFromTodayResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getUserInfoWithoutPicRequest">
-
-      <wsdl:part element="impl:getUserInfoWithoutPic" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="changeGalleryPicDescriptionRequest">
-
-      <wsdl:part element="impl:changeGalleryPicDescription" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="updateTaskPriceRequest">
-
-      <wsdl:part element="impl:updateTaskPrice" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getReservationByTurnIdResponse">
-
-      <wsdl:part element="impl:getReservationByTurnIdResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getOfficesBySpecResponse">
-
-      <wsdl:part element="impl:getOfficesBySpecResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getOfficeInfo2Response">
-
-      <wsdl:part element="impl:getOfficeInfo2Response" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="searchUserResponse">
-
-      <wsdl:part element="impl:searchUserResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getPatientFileResponse">
-
-      <wsdl:part element="impl:getPatientFileResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="changeGalleryPicDescriptionResponse">
-
-      <wsdl:part element="impl:changeGalleryPicDescriptionResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getAllTasksRequest">
-
-      <wsdl:part element="impl:getAllTasks" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getAllTurnFromTodayRequest">
-
-      <wsdl:part element="impl:getAllTurnFromToday" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="setAllMessageReadResponse">
-
-      <wsdl:part element="impl:setAllMessageReadResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="sendMessageBatchResponse">
-
-      <wsdl:part element="impl:sendMessageBatchResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getReservationByDateRequest">
-
-      <wsdl:part element="impl:getReservationByDate" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getOfficeInfoRequest">
-
-      <wsdl:part element="impl:getOfficeInfo" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="deleteTaskGroupResponse">
-
-      <wsdl:part element="impl:deleteTaskGroupResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="updateUserPasswordRequest">
-
-      <wsdl:part element="impl:updateUserPassword" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="cancelReservationResponse">
-
-      <wsdl:part element="impl:cancelReservationResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="removeMessageResponse">
 
       <wsdl:part element="impl:removeMessageResponse" name="parameters">
@@ -1895,17 +1527,25 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getAllTurnRequest">
+   <wsdl:message name="updateUserPasswordRequest">
 
-      <wsdl:part element="impl:getAllTurn" name="parameters">
+      <wsdl:part element="impl:updateUserPassword" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getUnreadMessagesRequest">
+   <wsdl:message name="deleteTaskGroupResponse">
 
-      <wsdl:part element="impl:getUnreadMessages" name="parameters">
+      <wsdl:part element="impl:deleteTaskGroupResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="cancelReservationResponse">
+
+      <wsdl:part element="impl:cancelReservationResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1927,9 +1567,25 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="addSecretaryToOfficeResponse">
+   <wsdl:message name="getUnreadMessagesRequest">
 
-      <wsdl:part element="impl:addSecretaryToOfficeResponse" name="parameters">
+      <wsdl:part element="impl:getUnreadMessages" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllTurnRequest">
+
+      <wsdl:part element="impl:getAllTurn" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteTaskGroupRequest">
+
+      <wsdl:part element="impl:deleteTaskGroup" name="parameters">
 
       </wsdl:part>
 
@@ -1938,6 +1594,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getReservationResponse">
 
       <wsdl:part element="impl:getReservationResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addSecretaryToOfficeResponse">
+
+      <wsdl:part element="impl:addSecretaryToOfficeResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1967,22 +1631,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="deleteTaskGroupRequest">
-
-      <wsdl:part element="impl:deleteTaskGroup" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="addBiographyResponse">
-
-      <wsdl:part element="impl:addBiographyResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="getCityResponse">
 
       <wsdl:part element="impl:getCityResponse" name="parameters">
@@ -2007,49 +1655,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="updateUserInfo3Response">
+   <wsdl:message name="addBiographyResponse">
 
-      <wsdl:part element="impl:updateUserInfo3Response" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="updateUserPic2Response">
-
-      <wsdl:part element="impl:updateUserPic2Response" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="reserveForGuest2Request">
-
-      <wsdl:part element="impl:reserveForGuest2" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getPatientFileRequest">
-
-      <wsdl:part element="impl:getPatientFile" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="addTaskGroup2Response">
-
-      <wsdl:part element="impl:addTaskGroup2Response" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="registerResponse">
-
-      <wsdl:part element="impl:registerResponse" name="parameters">
+      <wsdl:part element="impl:addBiographyResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2079,9 +1687,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="addTurnByDateRequest">
+   <wsdl:message name="registerResponse">
 
-      <wsdl:part element="impl:addTurnByDate" name="parameters">
+      <wsdl:part element="impl:registerResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2095,17 +1703,49 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="register2Response">
+   <wsdl:message name="addTurnByDateRequest">
 
-      <wsdl:part element="impl:register2Response" name="parameters">
+      <wsdl:part element="impl:addTurnByDate" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getTaskGroupsResponse">
+   <wsdl:message name="updateUserInfo3Response">
 
-      <wsdl:part element="impl:getTaskGroupsResponse" name="parameters">
+      <wsdl:part element="impl:updateUserInfo3Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateUserPic2Response">
+
+      <wsdl:part element="impl:updateUserPic2Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPatientFileRequest">
+
+      <wsdl:part element="impl:getPatientFile" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addTaskGroup2Response">
+
+      <wsdl:part element="impl:addTaskGroup2Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="reserveForGuest2Request">
+
+      <wsdl:part element="impl:reserveForGuest2" name="parameters">
 
       </wsdl:part>
 
@@ -2135,329 +1775,361 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getDoctorPicRequest">
+   <wsdl:message name="register2Response">
 
-      <wsdl:part element="impl:getDoctorPic" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="updateOfficeLocationRequest">
-
-      <wsdl:part element="impl:updateOfficeLocation" name="parameters">
+      <wsdl:part element="impl:register2Response" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getProvinceResponse">
+   <wsdl:message name="getTaskGroupsResponse">
 
-      <wsdl:part element="impl:getProvinceResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="reserveForUser2Request">
-
-      <wsdl:part element="impl:reserveForUser2" name="parameters">
+      <wsdl:part element="impl:getTaskGroupsResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="updateUserInfo2Response">
+   <wsdl:message name="getProvinceNameResponse">
 
-      <wsdl:part element="impl:updateUserInfo2Response" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="addTurnRequest">
-
-      <wsdl:part element="impl:addTurn" name="parameters">
+      <wsdl:part element="impl:getProvinceNameResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="updateTaskNameResponse">
+   <wsdl:message name="updateTaskGroupRequest">
 
-      <wsdl:part element="impl:updateTaskNameResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getProvinceRequest">
-
-      <wsdl:part element="impl:getProvince" name="parameters">
+      <wsdl:part element="impl:updateTaskGroup" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getAllTasksResponse">
+   <wsdl:message name="getReservationRequest">
 
-      <wsdl:part element="impl:getAllTasksResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getPatientTurnInfoByDateResponse">
-
-      <wsdl:part element="impl:getPatientTurnInfoByDateResponse" name="parameters">
+      <wsdl:part element="impl:getReservation" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="sendMessageBatchRequest">
+   <wsdl:message name="setAllMessageReadRequest">
 
-      <wsdl:part element="impl:sendMessageBatch" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getSubSpecRequest">
-
-      <wsdl:part element="impl:getSubSpec" name="parameters">
+      <wsdl:part element="impl:setAllMessageRead" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="setGalleryPicResponse">
+   <wsdl:message name="deleteFromGalleryRequest">
 
-      <wsdl:part element="impl:setGalleryPicResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getOfficesBySpecRequest">
-
-      <wsdl:part element="impl:getOfficesBySpec" name="parameters">
+      <wsdl:part element="impl:deleteFromGallery" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getTodayPatientRequest">
+   <wsdl:message name="reserveForMeResponse">
 
-      <wsdl:part element="impl:getTodayPatient" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="addTurnByDateResponse">
-
-      <wsdl:part element="impl:addTurnByDateResponse" name="parameters">
+      <wsdl:part element="impl:reserveForMeResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="isUserNameAvailableResponse">
+   <wsdl:message name="isUserNameAvailableRequest">
 
-      <wsdl:part element="impl:isUserNameAvailableResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="removeTurnResponse">
-
-      <wsdl:part element="impl:removeTurnResponse" name="parameters">
+      <wsdl:part element="impl:isUserNameAvailable" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getCityNameResponse">
+   <wsdl:message name="getCityOfProvinceResponse">
 
-      <wsdl:part element="impl:getCityNameResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="reserveForGuest2Response">
-
-      <wsdl:part element="impl:reserveForGuest2Response" name="parameters">
+      <wsdl:part element="impl:getCityOfProvinceResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getTodayPatientResponse">
+   <wsdl:message name="updateTaskNameRequest">
 
-      <wsdl:part element="impl:getTodayPatientResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getDoctorPicResponse">
-
-      <wsdl:part element="impl:getDoctorPicResponse" name="parameters">
+      <wsdl:part element="impl:updateTaskName" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getReservationByUserRequest">
+   <wsdl:message name="removeTurnRequest">
 
-      <wsdl:part element="impl:getReservationByUser" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getAllGalleyPicIdResponse">
-
-      <wsdl:part element="impl:getAllGalleyPicIdResponse" name="parameters">
+      <wsdl:part element="impl:removeTurn" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="searchUserRequest">
+   <wsdl:message name="helloWorldRequest">
 
-      <wsdl:part element="impl:searchUser" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getReservationByDateResponse">
-
-      <wsdl:part element="impl:getReservationByDateResponse" name="parameters">
+      <wsdl:part element="impl:helloWorld" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getAllTurnResponse">
+   <wsdl:message name="addTaskGroup2Request">
 
-      <wsdl:part element="impl:getAllTurnResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="deleteTaskRequest">
-
-      <wsdl:part element="impl:deleteTask" name="parameters">
+      <wsdl:part element="impl:addTaskGroup2" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="registerOfficeRequest">
+   <wsdl:message name="reserveForGuestRequest">
 
-      <wsdl:part element="impl:registerOffice" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getCityRequest">
-
-      <wsdl:part element="impl:getCity" name="parameters">
+      <wsdl:part element="impl:reserveForGuest" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="addTaskRequest">
+   <wsdl:message name="getGalleryPicRequest">
 
-      <wsdl:part element="impl:addTask" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="addTaskResponse">
-
-      <wsdl:part element="impl:addTaskResponse" name="parameters">
+      <wsdl:part element="impl:getGalleryPic" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getUserInfoWithoutPicResponse">
+   <wsdl:message name="getCityOfProvinceRequest">
 
-      <wsdl:part element="impl:getUserInfoWithoutPicResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="reserveForUser2Response">
-
-      <wsdl:part element="impl:reserveForUser2Response" name="parameters">
+      <wsdl:part element="impl:getCityOfProvince" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="updateOfficeInfoRequest">
+   <wsdl:message name="getUserPicRequest">
 
-      <wsdl:part element="impl:updateOfficeInfo" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="sendMessageResponse">
-
-      <wsdl:part element="impl:sendMessageResponse" name="parameters">
+      <wsdl:part element="impl:getUserPic" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="login2Request">
+   <wsdl:message name="getBiographyRequest">
 
-      <wsdl:part element="impl:login2" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getSpecResponse">
-
-      <wsdl:part element="impl:getSpecResponse" name="parameters">
+      <wsdl:part element="impl:getBiography" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getReservationByUserResponse">
+   <wsdl:message name="reserveForMeRequest">
 
-      <wsdl:part element="impl:getReservationByUserResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="register2Request">
-
-      <wsdl:part element="impl:register2" name="parameters">
+      <wsdl:part element="impl:reserveForMe" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getOfficeInfo2Request">
+   <wsdl:message name="loginResponse">
 
-      <wsdl:part element="impl:getOfficeInfo2" name="parameters">
+      <wsdl:part element="impl:loginResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateUserInfoRequest">
+
+      <wsdl:part element="impl:updateUserInfo" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addSecretaryToOfficeRequest">
+
+      <wsdl:part element="impl:addSecretaryToOffice" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOfficeInfoResponse">
+
+      <wsdl:part element="impl:getOfficeInfoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="removeMessageRequest">
+
+      <wsdl:part element="impl:removeMessage" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="sendMessageRequest">
+
+      <wsdl:part element="impl:sendMessage" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserInfoResponse">
+
+      <wsdl:part element="impl:getUserInfoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="setMessageReadRequest">
+
+      <wsdl:part element="impl:setMessageRead" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="receptionRequest">
+
+      <wsdl:part element="impl:reception" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchUserResponse">
+
+      <wsdl:part element="impl:searchUserResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOfficeInfo2Response">
+
+      <wsdl:part element="impl:getOfficeInfo2Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllTurnFromTodayResponse">
+
+      <wsdl:part element="impl:getAllTurnFromTodayResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserInfoWithoutPicRequest">
+
+      <wsdl:part element="impl:getUserInfoWithoutPic" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeGalleryPicDescriptionRequest">
+
+      <wsdl:part element="impl:changeGalleryPicDescription" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOfficesBySpecResponse">
+
+      <wsdl:part element="impl:getOfficesBySpecResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateTaskPriceRequest">
+
+      <wsdl:part element="impl:updateTaskPrice" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getReservationByTurnIdResponse">
+
+      <wsdl:part element="impl:getReservationByTurnIdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="sendMessageBatchResponse">
+
+      <wsdl:part element="impl:sendMessageBatchResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getReservationByDateRequest">
+
+      <wsdl:part element="impl:getReservationByDate" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllTurnFromTodayRequest">
+
+      <wsdl:part element="impl:getAllTurnFromToday" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="setAllMessageReadResponse">
+
+      <wsdl:part element="impl:setAllMessageReadResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOfficeInfoRequest">
+
+      <wsdl:part element="impl:getOfficeInfo" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPatientFileResponse">
+
+      <wsdl:part element="impl:getPatientFileResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllTasksRequest">
+
+      <wsdl:part element="impl:getAllTasks" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeGalleryPicDescriptionResponse">
+
+      <wsdl:part element="impl:changeGalleryPicDescriptionResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2487,6 +2159,38 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="register2Request">
+
+      <wsdl:part element="impl:register2" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSpecResponse">
+
+      <wsdl:part element="impl:getSpecResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getReservationByUserResponse">
+
+      <wsdl:part element="impl:getReservationByUserResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOfficeInfo2Request">
+
+      <wsdl:part element="impl:getOfficeInfo2" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="getUserInfoRequest">
 
       <wsdl:part element="impl:getUserInfo" name="parameters">
@@ -2503,14 +2207,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getSpecRequest">
-
-      <wsdl:part element="impl:getSpec" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="updateUserInfoResponse">
 
       <wsdl:part element="impl:updateUserInfoResponse" name="parameters">
@@ -2519,41 +2215,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="updateUserPic2Request">
+   <wsdl:message name="getSpecRequest">
 
-      <wsdl:part element="impl:updateUserPic2" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getProvinceNameRequest">
-
-      <wsdl:part element="impl:getProvinceName" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="reserveForUserRequest">
-
-      <wsdl:part element="impl:reserveForUser" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="deleteTaskResponse">
-
-      <wsdl:part element="impl:deleteTaskResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getAllMessagesRequest">
-
-      <wsdl:part element="impl:getAllMessages" name="parameters">
+      <wsdl:part element="impl:getSpec" name="parameters">
 
       </wsdl:part>
 
@@ -2575,25 +2239,41 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getTaskGroupsRequest">
+   <wsdl:message name="getProvinceNameRequest">
 
-      <wsdl:part element="impl:getTaskGroups" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getPatientTurnInfoByDateRequest">
-
-      <wsdl:part element="impl:getPatientTurnInfoByDate" name="parameters">
+      <wsdl:part element="impl:getProvinceName" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="deleteFromGalleryResponse">
+   <wsdl:message name="reserveForUserRequest">
 
-      <wsdl:part element="impl:deleteFromGalleryResponse" name="parameters">
+      <wsdl:part element="impl:reserveForUser" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateUserPic2Request">
+
+      <wsdl:part element="impl:updateUserPic2" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteTaskResponse">
+
+      <wsdl:part element="impl:deleteTaskResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllMessagesRequest">
+
+      <wsdl:part element="impl:getAllMessages" name="parameters">
 
       </wsdl:part>
 
@@ -2623,6 +2303,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="deleteFromGalleryResponse">
+
+      <wsdl:part element="impl:deleteFromGalleryResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="reserveForGuestResponse">
 
       <wsdl:part element="impl:reserveForGuestResponse" name="parameters">
@@ -2631,41 +2319,25 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="setMessageReadResponse">
+   <wsdl:message name="getTaskGroupsRequest">
 
-      <wsdl:part element="impl:setMessageReadResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="updateUserPasswordResponse">
-
-      <wsdl:part element="impl:updateUserPasswordResponse" name="parameters">
+      <wsdl:part element="impl:getTaskGroups" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="addTaskGroupResponse">
+   <wsdl:message name="getPatientTurnInfoByDateRequest">
 
-      <wsdl:part element="impl:addTaskGroupResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getReservationByTurnIdRequest">
-
-      <wsdl:part element="impl:getReservationByTurnId" name="parameters">
+      <wsdl:part element="impl:getPatientTurnInfoByDate" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="updateOfficeLocationResponse">
+   <wsdl:message name="login2Response">
 
-      <wsdl:part element="impl:updateOfficeLocationResponse" name="parameters">
+      <wsdl:part element="impl:login2Response" name="parameters">
 
       </wsdl:part>
 
@@ -2687,14 +2359,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="login2Response">
-
-      <wsdl:part element="impl:login2Response" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="addTurnResponse">
 
       <wsdl:part element="impl:addTurnResponse" name="parameters">
@@ -2703,9 +2367,41 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="helloWorldResponse">
+   <wsdl:message name="addTaskGroupResponse">
 
-      <wsdl:part element="impl:helloWorldResponse" name="parameters">
+      <wsdl:part element="impl:addTaskGroupResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="setMessageReadResponse">
+
+      <wsdl:part element="impl:setMessageReadResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateUserPasswordResponse">
+
+      <wsdl:part element="impl:updateUserPasswordResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getReservationByTurnIdRequest">
+
+      <wsdl:part element="impl:getReservationByTurnId" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateOfficeLocationResponse">
+
+      <wsdl:part element="impl:updateOfficeLocationResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2722,6 +2418,310 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getBiographyResponse">
 
       <wsdl:part element="impl:getBiographyResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="helloWorldResponse">
+
+      <wsdl:part element="impl:helloWorldResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="reserveForUser2Request">
+
+      <wsdl:part element="impl:reserveForUser2" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDoctorPicRequest">
+
+      <wsdl:part element="impl:getDoctorPic" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateOfficeLocationRequest">
+
+      <wsdl:part element="impl:updateOfficeLocation" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProvinceResponse">
+
+      <wsdl:part element="impl:getProvinceResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllTasksResponse">
+
+      <wsdl:part element="impl:getAllTasksResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProvinceRequest">
+
+      <wsdl:part element="impl:getProvince" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addTurnRequest">
+
+      <wsdl:part element="impl:addTurn" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateUserInfo2Response">
+
+      <wsdl:part element="impl:updateUserInfo2Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateTaskNameResponse">
+
+      <wsdl:part element="impl:updateTaskNameResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="sendMessageBatchRequest">
+
+      <wsdl:part element="impl:sendMessageBatch" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getSubSpecRequest">
+
+      <wsdl:part element="impl:getSubSpec" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPatientTurnInfoByDateResponse">
+
+      <wsdl:part element="impl:getPatientTurnInfoByDateResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="setGalleryPicResponse">
+
+      <wsdl:part element="impl:setGalleryPicResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getTodayPatientRequest">
+
+      <wsdl:part element="impl:getTodayPatient" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOfficesBySpecRequest">
+
+      <wsdl:part element="impl:getOfficesBySpec" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCityNameResponse">
+
+      <wsdl:part element="impl:getCityNameResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDoctorPicResponse">
+
+      <wsdl:part element="impl:getDoctorPicResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getReservationByUserRequest">
+
+      <wsdl:part element="impl:getReservationByUser" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="reserveForGuest2Response">
+
+      <wsdl:part element="impl:reserveForGuest2Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getTodayPatientResponse">
+
+      <wsdl:part element="impl:getTodayPatientResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="removeTurnResponse">
+
+      <wsdl:part element="impl:removeTurnResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addTurnByDateResponse">
+
+      <wsdl:part element="impl:addTurnByDateResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="isUserNameAvailableResponse">
+
+      <wsdl:part element="impl:isUserNameAvailableResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="searchUserRequest">
+
+      <wsdl:part element="impl:searchUser" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllGalleyPicIdResponse">
+
+      <wsdl:part element="impl:getAllGalleyPicIdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addTaskRequest">
+
+      <wsdl:part element="impl:addTask" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addTaskResponse">
+
+      <wsdl:part element="impl:addTaskResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getUserInfoWithoutPicResponse">
+
+      <wsdl:part element="impl:getUserInfoWithoutPicResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllTurnResponse">
+
+      <wsdl:part element="impl:getAllTurnResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getReservationByDateResponse">
+
+      <wsdl:part element="impl:getReservationByDateResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteTaskRequest">
+
+      <wsdl:part element="impl:deleteTask" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="registerOfficeRequest">
+
+      <wsdl:part element="impl:registerOffice" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCityRequest">
+
+      <wsdl:part element="impl:getCity" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="sendMessageResponse">
+
+      <wsdl:part element="impl:sendMessageResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="login2Request">
+
+      <wsdl:part element="impl:login2" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="reserveForUser2Response">
+
+      <wsdl:part element="impl:reserveForUser2Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateOfficeInfoRequest">
+
+      <wsdl:part element="impl:updateOfficeInfo" name="parameters">
 
       </wsdl:part>
 
@@ -5021,7 +5021,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdl:port binding="impl:WebservicesSoapBinding" name="Webservices">
 
-         <wsdlsoap:address location="http://localhost:8080/arayeshyar/services/Webservices"/>
+         <wsdlsoap:address location="http://localhost:8080/pirayeshyar/services/Webservices"/>
 
       </wsdl:port>
 

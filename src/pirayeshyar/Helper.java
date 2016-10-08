@@ -1,4 +1,4 @@
-package arayeshyar;
+package pirayeshyar;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -31,7 +31,7 @@ public class Helper {
 			res = "مطب";
 			break;
 			default:
-				res = "دفتر";
+				res = "د�?تر";
 				break;
 		}
 		return res;

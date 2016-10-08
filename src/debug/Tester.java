@@ -3,14 +3,14 @@ package debug;
 import java.util.Calendar;
 import java.util.Date;
 
-import arayeshyar.Helper;
-import arayeshyar.Webservices;
 import persindatepicker.PersianCalendar;
+import pirayeshyar.Helper;
+import pirayeshyar.Webservices;
 
 public class Tester {
 
 	public static void main(String[] args) {
-		arayeshyar.Webservices ws = new Webservices();
+		pirayeshyar.Webservices ws = new Webservices();
 //		ws.reserveForGuest("khorshid", "123", 7, 0, 3, 1, "Ù…Ø±ÛŒÙ…", "Ù„Ø·Ù�Ø³", "09356214578", 78);
 //		ws.getTaskGroups("khorshid", "123", 1);
 //		ws.addTask("khorshid", "123", 1, "تست", 2, 2000);
