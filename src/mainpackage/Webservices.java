@@ -119,7 +119,7 @@ public class Webservices {
 			String password, int role, int cityid, String pic){
 		Database db = new Database();
 		if(!db.isUsernameAvailable(username))
-			return "Ù†Ø§Ù… Ú©Ø§Ø±Ø¨Ø±ÛŒ Ø§Ù†ØªØ®Ø§Ø¨ÛŒ Ù…Ø¬Ø§Ø² Ù†ÛŒØ³Øª";
+			return "نام کاربری انتخابی مجاز نیست";
 		byte[] picbyte = null;
 		if(pic != null && pic.length() > 0){
 			picbyte = Helper.getBytes(pic);
@@ -131,7 +131,7 @@ public class Webservices {
 			String password, int role, int cityid, String pic, String email){
 		Database db = new Database();
 		if(!db.isUsernameAvailable(username))
-			return "Ù†Ø§Ù… Ú©Ø§Ø±Ø¨Ø±ÛŒ Ø§Ù†ØªØ®Ø§Ø¨ÛŒ Ù…Ø¬Ø§Ø² Ù†ÛŒØ³Øª";
+			return "نام کاربری انتخابی مجاز نیست";
 		byte[] picbyte = null;
 		if(pic != null && pic.length() > 0){
 			picbyte = Helper.getBytes(pic);
@@ -702,7 +702,7 @@ public class Webservices {
 		if(!db.openConnection()) return user;
 		try{
 			if(!db.checkUserPass(username, password)){
-				user.username = "Ù†Ø§Ù… Ú©Ø§Ø±Ø¨Ø±ÛŒ ÛŒØ§ Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø§Ø´ØªØ¨Ø§Ù‡ Ø§Ø³Øª";
+				user.username = "نام کاربری یا رمز عبور اشتباه است";
 				user.name = "Username or Password is incorrect";
 			} else {
 				int userId = db.getUserId(username);
@@ -723,7 +723,7 @@ public class Webservices {
 		
 		try{
 			if(!db.checkUserPass(username, password)){
-				user.username = "Ù†Ø§Ù… Ú©Ø§Ø±Ø¨Ø±ÛŒ ÛŒØ§ Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø§Ø´ØªØ¨Ø§Ù‡ Ø§Ø³Øª";
+				user.username = "نام کاربری یا رمز عبور اشتباه است";
 				user.name = "Username or Password is incorrect";
 			}
 			user = db.getUserInfoWithoutPic(username);
@@ -740,18 +740,18 @@ public class Webservices {
 		String res = "OK";
 		Database db = new Database();
 		if(!db.openConnection()){
-			res = "Ø®Ø·Ø§ÛŒ Ø³Ù…Øª Ø³Ø±ÙˆØ±";
+			res = "خطای سمت سرور";
 		}
 		try{
 			if(!db.checkUserPass(username, password)){
-				res = "Ù†Ø§Ù… Ú©Ø§Ø±Ø¨Ø±ÛŒ ÛŒØ§ Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø§Ø´ØªØ¨Ø§Ù‡ Ø§Ø³Øª";
+				res = "نام کاربری یا رمز عبور اشتباه است";
 			}
 
 			if(!db.updateUserInfo(username, name, lastname, mobileno, cityid)){
-				res = "Ø®Ø·Ø§ÛŒ Ø³Ù…Øª Ø³Ø±ÙˆØ±";
+				res = "خطای سمت سرور";
 			}
 		} catch(SQLException e){
-			res = "Ø®Ø·Ø§ÛŒ Ø³Ù…Øª Ø³Ø±ÙˆØ±";;
+			res = "خطای سمت سرور";;
 		}
 		return res;
 	}
@@ -761,18 +761,18 @@ public class Webservices {
 		String res = "OK";
 		Database db = new Database();
 		if(!db.openConnection()){
-			res = "Ø®Ø·Ø§ÛŒ Ø³Ù…Øª Ø³Ø±ÙˆØ±";
+			res = "خطای سمت سرور";
 		}
 		try{
 			if(!db.checkUserPass(username, password)){
-				res = "Ù†Ø§Ù… Ú©Ø§Ø±Ø¨Ø±ÛŒ ÛŒØ§ Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø§Ø´ØªØ¨Ø§Ù‡ Ø§Ø³Øª";
+				res = "نام کاربری یا رمز عبور اشتباه است";
 			}
 
 			if(!db.updateUserInfo(username, name, lastname, mobileno, cityid, newPassword)){
-				res = "Ø®Ø·Ø§ÛŒ Ø³Ù…Øª Ø³Ø±ÙˆØ±";
+				res = "خطای سمت سرور";
 			}
 		} catch(SQLException e){
-			res = "Ø®Ø·Ø§ÛŒ Ø³Ù…Øª Ø³Ø±ÙˆØ±";;
+			res = "خطای سمت سرور";;
 		}
 		return res;
 	}
@@ -782,18 +782,18 @@ public class Webservices {
 		String res = "OK";
 		Database db = new Database();
 		if(!db.openConnection()){
-			res = "Ø®Ø·Ø§ÛŒ Ø³Ù…Øª Ø³Ø±ÙˆØ±";
+			res = "خطای سمت سرور";
 		}
 		try{
 			if(!db.checkUserPass(username, password)){
-				res = "Ù†Ø§Ù… Ú©Ø§Ø±Ø¨Ø±ÛŒ ÛŒØ§ Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø§Ø´ØªØ¨Ø§Ù‡ Ø§Ø³Øª";
+				res = "نام کاربری یا رمز عبور اشتباه است";
 			}
 
 			if(!db.updateUserInfo(username, name, lastname, mobileno, cityid, newPassword, email)){
-				res = "Ø®Ø·Ø§ÛŒ Ø³Ù…Øª Ø³Ø±ÙˆØ±";
+				res = "خطای سمت سرور";
 			}
 		} catch(SQLException e){
-			res = "Ø®Ø·Ø§ÛŒ Ø³Ù…Øª Ø³Ø±ÙˆØ±";;
+			res = "خطای سمت سرور";;
 		}
 		return res;
 	}
@@ -1493,18 +1493,18 @@ public class Webservices {
 						db.updateTaskGroup(taskGroupId, taskGroupName);
 						res = "OK";
 					} else {
-						res = "Ø´Ù…Ø§ Ø§Ø¬Ø§Ø²Ù‡ ØªØºÛŒÛŒØ±Ù†Ø§Ù… Ø§ÛŒÙ† Ú¯Ø±ÙˆÙ‡ Ø±Ø§ Ù†Ø¯Ø§Ø±ÛŒØ¯ Ø²ÛŒØ±Ø§ Ù‚Ø¨Ù„Ø§Ù‹ Ø­Ø¯Ø§Ù‚Ù„ ÛŒÚ© Ù†Ù?Ø± Ø¯Ø± Ø§ÛŒÙ† Ú¯Ø±ÙˆÙ‡ Ù†ÙˆØ¨Øª Ø±Ø²Ø±Ùˆ Ú©Ø±Ø¯Ù‡ Ø§Ø³Øª";
+						res = "شما اجازه تغییرنام این گروه را ندارید زیرا قبلاً حداقل یک نفر در این گروه نوبت رزرو کرده است";
 					}
 				} else {
-					res = "Ø´Ù…Ø§ Ù…Ø¬ÙˆØ² Ø¯Ø³ØªØ±Ø³ÛŒ Ø¨Ù‡ Ø§ÛŒÙ† Ø¨Ø®Ø´ Ø±Ø§ Ù†Ø¯Ø§Ø±ÛŒØ¯";
+					res = "شما مجوز دسترسی به این بخش را ندارید";
 				}
 			}catch(SQLException e){
-				res = "Ø®Ø·Ø§ÛŒ ØºÛŒØ± Ù…Ù†ØªØ¸Ø±Ù‡ Ø¯Ø± Ø³Ù…Øª Ø³Ø±ÙˆØ± Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡ Ø§Ø³Øª";
+				res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 			} finally {
 				db.closeConnection();
 			}
 		} else {
-			res = "Ø®Ø·Ø§ÛŒ ØºÛŒØ± Ù…Ù†ØªØ¸Ø±Ù‡ Ø¯Ø± Ø³Ù…Øª Ø³Ø±ÙˆØ± Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡ Ø§Ø³Øª";
+			res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 		}
 		return res;
 	}
@@ -1520,18 +1520,18 @@ public class Webservices {
 						db.deleteTaskGroup(taskGroupId);
 						res = "OK";
 					} else {
-						res = "Ø´Ù…Ø§ Ø§Ø¬Ø§Ø²Ù‡ Ù¾Ø§Ú© Ú©Ø±Ø¯Ù† Ø§ÛŒÙ† Ú¯Ø±ÙˆÙ‡ Ø±Ø§ Ù†Ø¯Ø§Ø±ÛŒØ¯ Ø²ÛŒØ±Ø§ Ù‚Ø¨Ù„Ø§Ù‹ Ø­Ø¯Ø§Ù‚Ù„ ÛŒÚ© Ù†Ù?Ø± Ø¯Ø± Ø§ÛŒÙ† Ú¯Ø±ÙˆÙ‡ Ù†ÙˆØ¨Øª Ø±Ø²Ø±Ùˆ Ú©Ø±Ø¯Ù‡ Ø§Ø³Øª";
+						res = "شما اجازه پاک کردن این گروه را ندارید زیرا قبلاً حداقل یک نفر در این گروه نوبت رزرو کرده است";
 					}
 				} else {
-					res = "Ø´Ù…Ø§ Ù…Ø¬ÙˆØ² Ø¯Ø³ØªØ±Ø³ÛŒ Ø¨Ù‡ Ø§ÛŒÙ† Ø¨Ø®Ø´ Ø±Ø§ Ù†Ø¯Ø§Ø±ÛŒØ¯";
+					res = "شما مجوز دسترسی به این بخش را ندارید";
 				}
 			}catch(SQLException e){
-				res = "Ø®Ø·Ø§ÛŒ ØºÛŒØ± Ù…Ù†ØªØ¸Ø±Ù‡ Ø¯Ø± Ø³Ù…Øª Ø³Ø±ÙˆØ± Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡ Ø§Ø³Øª";
+				res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 			} finally {
 				db.closeConnection();
 			}
 		} else {
-			res = "Ø®Ø·Ø§ÛŒ ØºÛŒØ± Ù…Ù†ØªØ¸Ø±Ù‡ Ø¯Ø± Ø³Ù…Øª Ø³Ø±ÙˆØ± Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡ Ø§Ø³Øª";
+			res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 		}
 		return res;
 	}
@@ -1562,15 +1562,15 @@ public class Webservices {
 					db.updateTaskPrice(taskId, price);
 					res = "OK";
 				} else {
-					res = "Ø´Ù…Ø§ Ù…Ø¬ÙˆØ² Ø¯Ø³ØªØ±Ø³ÛŒ Ø¨Ù‡ Ø§ÛŒÙ† Ø¨Ø®Ø´ Ø±Ø§ Ù†Ø¯Ø§Ø±ÛŒØ¯";
+					res = "شما مجوز دسترسی به این بخش را ندارید";
 				}
 			}catch(SQLException e){
-				res = "Ø®Ø·Ø§ÛŒ ØºÛŒØ± Ù…Ù†ØªØ¸Ø±Ù‡ Ø¯Ø± Ø³Ù…Øª Ø³Ø±ÙˆØ± Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡ Ø§Ø³Øª";
+				res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 			} finally {
 				db.closeConnection();
 			}
 		} else {
-			res = "Ø®Ø·Ø§ÛŒ ØºÛŒØ± Ù…Ù†ØªØ¸Ø±Ù‡ Ø¯Ø± Ø³Ù…Øª Ø³Ø±ÙˆØ± Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡ Ø§Ø³Øª";
+			res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 		}
 		return res;
 	}
@@ -1585,18 +1585,18 @@ public class Webservices {
 						db.updateTaskName(taskId, taskName);
 						res = "OK";
 					} else {
-						res = "Ø´Ù…Ø§ Ø§Ø¬Ø§Ø²Ù‡  ØªØºÛŒÛŒØ±Ù†Ø§Ù… Ø§ÛŒÙ† Ø¹Ù…Ù„ÛŒØ§Øª Ø±Ø§ Ù†Ø¯Ø§Ø±ÛŒØ¯ Ø²ÛŒØ±Ø§ Ù‚Ø¨Ù„Ø§Ù‹ Ø­Ø¯Ø§Ù‚Ù„ ÛŒÚ© Ù†Ù?Ø± Ø¯Ø± Ø§ÛŒÙ† Ú¯Ø±ÙˆÙ‡ Ù†ÙˆØ¨Øª Ø±Ø²Ø±Ùˆ Ú©Ø±Ø¯Ù‡ Ø§Ø³Øª";
+						res = "شما اجازه  تغییرنام این عملیات را ندارید زیرا قبلاً حداقل یک نفر در این گروه نوبت رزرو کرده است";
 					}
 				} else {
-					res = "Ø´Ù…Ø§ Ù…Ø¬ÙˆØ² Ø¯Ø³ØªØ±Ø³ÛŒ Ø¨Ù‡ Ø§ÛŒÙ† Ø¨Ø®Ø´ Ø±Ø§ Ù†Ø¯Ø§Ø±ÛŒØ¯";
+					res = "شما مجوز دسترسی به این بخش را ندارید";
 				}
 			}catch(SQLException e){
-				res = "Ø®Ø·Ø§ÛŒ ØºÛŒØ± Ù…Ù†ØªØ¸Ø±Ù‡ Ø¯Ø± Ø³Ù…Øª Ø³Ø±ÙˆØ± Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡ Ø§Ø³Øª";
+				res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 			} finally {
 				db.closeConnection();
 			}
 		} else {
-			res = "Ø®Ø·Ø§ÛŒ ØºÛŒØ± Ù…Ù†ØªØ¸Ø±Ù‡ Ø¯Ø± Ø³Ù…Øª Ø³Ø±ÙˆØ± Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡ Ø§Ø³Øª";
+			res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 		}
 		return res;
 	}
@@ -1611,19 +1611,19 @@ public class Webservices {
 						db.deleteTask(taskId);
 						res = "OK";
 					} else {
-						res = "Ø´Ù…Ø§ Ø§Ø¬Ø§Ø²Ù‡ Ù¾Ø§Ú© Ú©Ø±Ø¯Ù† Ø§ÛŒÙ† Ø¹Ù…Ù„ÛŒØ§Øª Ø±Ø§ Ù†Ø¯Ø§Ø±ÛŒØ¯ Ø²ÛŒØ±Ø§ Ù‚Ø¨Ù„Ø§Ù‹ Ø­Ø¯Ø§Ù‚Ù„ ÛŒÚ© Ù†Ù?Ø± Ø¯Ø± Ø§ÛŒÙ† Ú¯Ø±ÙˆÙ‡ Ù†ÙˆØ¨Øª Ø±Ø²Ø±Ùˆ Ú©Ø±Ø¯Ù‡ Ø§Ø³Øª";
+						res = "شما اجازه پاک کردن این عملیات را ندارید زیرا قبلاً حداقل یک نفر در این گروه نوبت رزرو کرده است";
 					}
 				} else {
-					res = "Ø´Ù…Ø§ Ù…Ø¬ÙˆØ² Ø¯Ø³ØªØ±Ø³ÛŒ Ø¨Ù‡ Ø§ÛŒÙ† Ø¨Ø®Ø´ Ø±Ø§ Ù†Ø¯Ø§Ø±ÛŒØ¯";
+					res = "شما مجوز دسترسی به این بخش را ندارید";
 				}
 			}catch(SQLException e){
-				res = "Ø®Ø·Ø§ÛŒ ØºÛŒØ± Ù…Ù†ØªØ¸Ø±Ù‡ Ø¯Ø± Ø³Ù…Øª Ø³Ø±ÙˆØ± Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡ Ø§Ø³Øª";
+				res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 			} finally {
 				db.closeConnection();
 			}
 		}
 		else {
-			res = "Ø®Ø·Ø§ÛŒ ØºÛŒØ± Ù…Ù†ØªØ¸Ø±Ù‡ Ø¯Ø± Ø³Ù…Øª Ø³Ø±ÙˆØ± Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡ Ø§Ø³Øª";
+			res = "خطای غیر منتظره در سمت سرور پیش آمده است";
 		}
 		return res;
 	}
