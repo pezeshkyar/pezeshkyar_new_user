@@ -751,7 +751,7 @@ public class Webservices {
 				res = "خطای سمت سرور";
 			}
 		} catch(SQLException e){
-			res = "خطای سمت سرور";;
+			res = "خطای سمت سرور";
 		}
 		return res;
 	}
