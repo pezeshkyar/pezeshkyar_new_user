@@ -1,6 +1,7 @@
 /build/
 
 .metadata
+WebContent/
 bin/
 tmp/
 *.tmp
@@ -49,4 +50,3 @@ local.properties
 .springBeans
 # Code Recommenders
 .recommenders/
-webcontent/
