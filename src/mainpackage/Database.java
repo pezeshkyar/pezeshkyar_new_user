@@ -306,7 +306,7 @@ public class Database {
 		return id;
 	}
 	
-	public void InsertInSecretary(int officeid, String[] secName) throws SQLException{
+	public boolean InsertInSecretary(int officeid, String[] secName) throws SQLException{
 		String query = "insert into secretary(officeid, secretaryid) "
 				+ "select ?, id from user where username = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
@@ -315,8 +315,24 @@ public class Database {
 			ps.setString(2, secretary);
 			ps.addBatch();
 		}
-		ps.executeBatch();
+		int[] res = ps.executeBatch();
+		int sum = 0;
+		for(int i : res){
+			sum += i;
+		}
 		ps.close();
+		return (sum > 0) ?true :false;
+	}
+	
+	public Info_User InsertInSecretary2(int officeid, String secName) throws SQLException{
+		String[] secNames = new String[1];
+		secNames[0] = secName;
+		boolean b = InsertInSecretary(officeid,secNames);
+		if (b) {
+			return getUserInfoWithoutPic(secName).getInfoUser();
+		} else {
+			return User.getErrorUser().getInfoUser();
+		}
 	}
 	
 	public void removeFromSecretary(int officeid, String secName) throws SQLException{
@@ -830,7 +846,7 @@ public class Database {
 	}
 	
 	public User getUserInfoWithoutPic(String username) throws SQLException{
-		User res = new User();
+		User res = User.getErrorUser();
 		String query = "select username, mobileno, name, lastname, role, cityid "
 				+ "from user where username = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
@@ -1868,5 +1884,34 @@ public class Database {
 			vec.addElement(info);
 		}
 		return vec;
+	}
+	
+	public Info_User getUserInfo(String username) throws SQLException{
+		String query = "select username, user.name, lastname, mobileno, cityid, photo, city.name "
+				+ "from user join city on user.cityid = city.id where username = ?";
+		
+		Info_User info = null;
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setString(1, username);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			info = new Info_User();
+			info.username = rs.getString(1);
+			info.name = rs.getString(2);
+			info.lastname = rs.getString(3);
+			info.mobileno = rs.getString(4);
+			info.cityId = rs.getInt(5);
+			info.pic = null;
+
+			Blob blob = rs.getBlob(6);
+			if(blob != null){
+				int blobLength = (int) blob.length();  
+				byte[] blobAsBytes = blob.getBytes(1, blobLength);
+				blob.free();
+				info.pic = Helper.getString(blobAsBytes);
+			}
+			info.city = rs.getString(7);
+		}
+		return info;
 	}
 }

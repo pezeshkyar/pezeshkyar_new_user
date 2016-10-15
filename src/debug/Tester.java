@@ -19,7 +19,7 @@ public class Tester {
 //		ws.deleteFromGallery("khorshid", "123", 1, 6);
 //		ws.updateTask("khorshid", "123", 1, 3, "تست", 19000);
 //		ws.getTodayPatient("khorshid", "123", 1);
-		ws.getSecretaryInfo("bahar", "123", 1);
+		ws.addSecretaryToOffice("khorshid", "123", 1, "dsfvwr");
 	}
 	
 	private static void sendMessages(Webservices ws) {

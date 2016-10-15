@@ -18,9 +18,22 @@ public class User {
 		User u = new User();
 		u.name = "خطا";
 		u.lastname = "Error";
-		u.username = "خطا";
+		u.username = "";
 		u.pic = null;
+		u.role = 0;
 		
 		return u;
+	}
+	
+	public Info_User getInfoUser(){
+		Info_User info = new Info_User();
+		info.city = city;
+		info.cityId = cityid;
+		info.lastname = lastname;
+		info.mobileno = mobileno;
+		info.name = name;
+		info.pic = pic;
+		info.username = username;
+		return info;
 	}
 }

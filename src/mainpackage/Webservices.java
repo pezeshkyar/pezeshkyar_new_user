@@ -225,12 +225,27 @@ public class Webservices {
 		try{
 			if(db.openConnection()){
 				if(db.isHaveSecretaryPermission(username, password, officeId)){
-						db.InsertInSecretary(officeId, sec);
-						ret = true;
+						ret = db.InsertInSecretary(officeId, sec);
 				}
 			}
 		} catch(SQLException e){
 			ret = false;
+		} finally{
+			db.closeConnection();
+		}
+		return ret;
+	}
+	
+	public Info_User addSecretaryToOffice2(String username, String password, int officeId, String secretary){
+		Info_User ret = User.getErrorUser().getInfoUser();
+		Database db = new Database();
+		try{
+			if(db.openConnection()){
+				if(db.isHaveSecretaryPermission(username, password, officeId)){
+						ret = db.InsertInSecretary2(officeId, secretary);
+				}
+			}
+		} catch(Exception e){
 		} finally{
 			db.closeConnection();
 		}
@@ -689,38 +704,31 @@ public class Webservices {
 	}
 
 	public User getUserInfo(String username, String password, int officeId){
-		Database db = new Database();
-		User user = User.getErrorUser();
-		if(!db.openConnection()) return user;
-		try{
-			if(!db.checkUserPass(username, password)){
-				user.username = "نام کاربری یا رمز عبور اشتباه است";
-				user.name = "Username or Password is incorrect";
-			} else {
-				int userId = db.getUserId(username);
-				user = db.getUserInfo(userId);
-				if(user.role == Role.doctor)
-					user.role = db.getPermissionOnOffice(officeId, username);
-			}
-		}catch(SQLException e){
-			return user;
-		}
-		return user;
+		return getUserInfoHelper(username, password, officeId, true);
 	}
 	
 	public User getUserInfoWithoutPic(String username, String password, int officeId){
+		return getUserInfoHelper(username, password, officeId, false);
+	}
+	
+	private User getUserInfoHelper(String username, String password, int officeId, boolean picSw){
 		Database db = new Database();
 		User user = User.getErrorUser();
 		if(!db.openConnection()) return user;
-		
 		try{
 			if(!db.checkUserPass(username, password)){
-				user.username = "نام کاربری یا رمز عبور اشتباه است";
-				user.name = "Username or Password is incorrect";
+				user.name = "نام کاربری یا رمز عبور اشتباه است";
+				user.lastname = "Username or Password is incorrect";
+			} else {
+				int userId = db.getUserId(username);
+				if(picSw){
+					user = db.getUserInfo(userId);
+				} else {
+					user = db.getUserInfoWithoutPic(username);
+				}
+				if(user.role == Role.doctor)
+					user.role = db.getPermissionOnOffice(officeId, username);
 			}
-			user = db.getUserInfoWithoutPic(username);
-			if(user.role == Role.doctor)
-				user.role = db.getPermissionOnOffice(officeId, username);
 		}catch(SQLException e){
 			return user;
 		}
@@ -1655,6 +1663,7 @@ public class Webservices {
 		
 		return result;
 	}
+	
 }
 
 
