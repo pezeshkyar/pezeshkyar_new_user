@@ -1461,11 +1461,12 @@ public class Database {
 	public Vector<Info_Patient> getOneDayPatient(int officeId, String date) throws SQLException{
 		String query = "select user.username, user.name, user.lastname, user.mobileno, "
 				+ "reserve.id, reserve.firstturn, reserve.taskid, task.name, "
-				+ "reserve.payment, reserve.description "
+				+ "reserve.payment, reserve.description, taskgroup.id, taskgroup.name "
 				+ "from reserve "
 				+ "join turn on turn.id = reserve.turnid "
 				+ "join user on reserve.patientid = user.id "
 				+ "join task on reserve.taskid = task.id "
+				+ "join taskgroup on task.taskgroup = taskgroup.id "
 				+ "where turn.officeid = ? and turn.date = ?";
 		
 		Vector<Info_Patient> vec = new Vector<Info_Patient>();
@@ -1485,6 +1486,8 @@ public class Database {
 			info.taskName = rs.getString(8);
 			info.payment = rs.getInt(9);
 			info.description = rs.getString(10);
+			info.taskGroupId = rs.getInt(11);
+			info.taskGroupName = rs.getString(12);
 			
 			vec.addElement(info);
 		}
