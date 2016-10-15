@@ -118,8 +118,12 @@ public class Webservices {
 	public String register(String name, String lastname, String mobileno, String username,
 			String password, int role, int cityid, String pic){
 		Database db = new Database();
-		if(!db.isUsernameAvailable(username))
-			return "نام کاربری انتخابی مجاز نیست";
+		if(!db.isUsernameAvailable(username)){
+			// "نام کاربری انتخابی مجاز نیست";
+			return "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
+					+ "\u0627\u0646\u062a\u062e\u0627\u0628\u06cc "
+					+ "\u0645\u062c\u0627\u0632 \u0646\u06cc\u0633\u062a";
+		}
 		byte[] picbyte = null;
 		if(pic != null && pic.length() > 0){
 			picbyte = Helper.getBytes(pic);
@@ -130,8 +134,12 @@ public class Webservices {
 	public String register2(String name, String lastname, String mobileno, String username,
 			String password, int role, int cityid, String pic, String email){
 		Database db = new Database();
-		if(!db.isUsernameAvailable(username))
-			return "نام کاربری انتخابی مجاز نیست";
+		if(!db.isUsernameAvailable(username)){
+			// "نام کاربری انتخابی مجاز نیست";
+						return "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
+								+ "\u0627\u0646\u062a\u062e\u0627\u0628\u06cc "
+								+ "\u0645\u062c\u0627\u0632 \u0646\u06cc\u0633\u062a";
+		}
 		byte[] picbyte = null;
 		if(pic != null && pic.length() > 0){
 			picbyte = Helper.getBytes(pic);
@@ -1312,6 +1320,7 @@ public class Webservices {
 	public PhotoDesc getGalleryPic(String username, String password, int officeId, int picId){
 		PhotoDesc res = null;
 		Database db = new Database();
+		System.out.println();
 		if(db.openConnection()){
 			if(db.isHavePatientPermission(username, password, officeId, username)){
 				try{

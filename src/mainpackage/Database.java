@@ -59,7 +59,7 @@ public class Database {
 				databaseName = "pirayeshyar";
 				break;
 			case Version.PEZESHKYAR: 
-				databaseName = "docTurn";
+				databaseName = "doctorturn";
 				break;
 				default:
 					databaseName = "unknown";

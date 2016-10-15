@@ -42,845 +42,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="getSubSpec">
-    <complexType>
-     <sequence>
-      <element name="specId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getSubSpecResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getSubSpecReturn" type="tns1:Subspec"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getSpec">
-    <complexType/>
-   </element>
-   <element name="getSpecResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getSpecReturn" type="tns1:Spec"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="register2">
-    <complexType>
-     <sequence>
-      <element name="name" type="xsd:string"/>
-      <element name="lastname" type="xsd:string"/>
-      <element name="mobileno" type="xsd:string"/>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="role" type="xsd:int"/>
-      <element name="cityid" type="xsd:int"/>
-      <element name="pic" type="xsd:string"/>
-      <element name="email" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="register2Response">
-    <complexType>
-     <sequence>
-      <element name="register2Return" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="login2">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="login2Response">
-    <complexType>
-     <sequence>
-      <element name="login2Return" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="registerOffice">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="cityid" type="xsd:int"/>
-      <element name="spec" type="xsd:int"/>
-      <element name="subspec" type="xsd:int"/>
-      <element name="address" type="xsd:string"/>
-      <element name="tellNo" type="xsd:string"/>
-      <element name="latitude" type="xsd:double"/>
-      <element name="longitude" type="xsd:double"/>
-      <element maxOccurs="unbounded" name="secretaryNames" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="registerOfficeResponse">
-    <complexType>
-     <sequence>
-      <element name="registerOfficeReturn" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateOfficeInfo">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="cityId" type="xsd:int"/>
-      <element name="spec" type="xsd:int"/>
-      <element name="subspec" type="xsd:int"/>
-      <element name="address" type="xsd:string"/>
-      <element name="tellNo" type="xsd:string"/>
-      <element name="biography" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateOfficeInfoResponse">
-    <complexType>
-     <sequence>
-      <element name="updateOfficeInfoReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addBiography">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="biography" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addBiographyResponse">
-    <complexType>
-     <sequence>
-      <element name="addBiographyReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addTurn">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="date" type="xsd:string"/>
-      <element name="startHour" type="xsd:int"/>
-      <element name="startMin" type="xsd:int"/>
-      <element name="duration" type="xsd:int"/>
-      <element name="capacity" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addTurnResponse">
-    <complexType>
-     <sequence>
-      <element name="addTurnReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addTurnByDate">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="fromDate" type="xsd:string"/>
-      <element name="toDate" type="xsd:string"/>
-      <element name="hour" type="xsd:int"/>
-      <element name="min" type="xsd:int"/>
-      <element name="duration" type="xsd:int"/>
-      <element name="capacity" type="xsd:int"/>
-      <element name="dayOfWeek" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addTurnByDateResponse">
-    <complexType>
-     <sequence>
-      <element name="addTurnByDateReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getAllTurn">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="fromDate" type="xsd:string"/>
-      <element name="toDate" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getAllTurnResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getAllTurnReturn" type="tns1:Turn"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForMe">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="turnId" type="xsd:int"/>
-      <element name="firstReservationId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="numberOfTurns" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForMeResponse">
-    <complexType>
-     <sequence>
-      <element name="reserveForMeReturn" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getBiography">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getBiographyResponse">
-    <complexType>
-     <sequence>
-      <element name="getBiographyReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getCityName">
-    <complexType/>
-   </element>
-   <element name="getCityNameResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getCityNameReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getProvinceName">
-    <complexType/>
-   </element>
-   <element name="getProvinceNameResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getProvinceNameReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="helloWorld">
-    <complexType/>
-   </element>
-   <element name="helloWorldResponse">
-    <complexType>
-     <sequence>
-      <element name="helloWorldReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getProvince">
-    <complexType/>
-   </element>
-   <element name="getProvinceResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getProvinceReturn" type="tns1:Province"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getCity">
-    <complexType/>
-   </element>
-   <element name="getCityResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getCityReturn" type="tns1:City"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForUser">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="turnId" type="xsd:int"/>
-      <element name="firstReservationId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="numberOfTurns" type="xsd:int"/>
-      <element name="patientUserName" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForUserResponse">
-    <complexType>
-     <sequence>
-      <element name="reserveForUserReturn" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForGuest">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="turnId" type="xsd:int"/>
-      <element name="firstReservationId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="numberOfTurns" type="xsd:int"/>
-      <element name="patientFirstName" type="xsd:string"/>
-      <element name="patientLastName" type="xsd:string"/>
-      <element name="patientPhoneNo" type="xsd:string"/>
-      <element name="patientCityId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForGuestResponse">
-    <complexType>
-     <sequence>
-      <element name="reserveForGuestReturn" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForUser2">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="turnId" type="xsd:int"/>
-      <element name="firstReservationId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="numberOfTurns" type="xsd:int"/>
-      <element name="patientUserName" type="xsd:string"/>
-      <element name="price" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForUser2Response">
-    <complexType>
-     <sequence>
-      <element name="reserveForUser2Return" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForGuest2">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="turnId" type="xsd:int"/>
-      <element name="firstReservationId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="numberOfTurns" type="xsd:int"/>
-      <element name="patientFirstName" type="xsd:string"/>
-      <element name="patientLastName" type="xsd:string"/>
-      <element name="patientPhoneNo" type="xsd:string"/>
-      <element name="patientCityId" type="xsd:int"/>
-      <element name="price" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForGuest2Response">
-    <complexType>
-     <sequence>
-      <element name="reserveForGuest2Return" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getReservation">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="turnId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getReservationResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getReservationReturn" type="tns1:Info_Reservation2"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateUserInfo">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="name" type="xsd:string"/>
-      <element name="lastname" type="xsd:string"/>
-      <element name="mobileno" type="xsd:string"/>
-      <element name="cityid" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateUserInfoResponse">
-    <complexType>
-     <sequence>
-      <element name="updateUserInfoReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateUserInfo2">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="name" type="xsd:string"/>
-      <element name="lastname" type="xsd:string"/>
-      <element name="mobileno" type="xsd:string"/>
-      <element name="cityid" type="xsd:int"/>
-      <element name="newPassword" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateUserInfo2Response">
-    <complexType>
-     <sequence>
-      <element name="updateUserInfo2Return" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateUserInfo3">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="name" type="xsd:string"/>
-      <element name="lastname" type="xsd:string"/>
-      <element name="mobileno" type="xsd:string"/>
-      <element name="cityid" type="xsd:int"/>
-      <element name="newPassword" type="xsd:string"/>
-      <element name="email" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateUserInfo3Response">
-    <complexType>
-     <sequence>
-      <element name="updateUserInfo3Return" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateUserPic2">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="pic" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateUserPic2Response">
-    <complexType>
-     <sequence>
-      <element name="updateUserPic2Return" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getOfficeInfo">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getOfficeInfoResponse">
-    <complexType>
-     <sequence>
-      <element name="getOfficeInfoReturn" type="tns1:Office"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getDoctorOffice">
-    <complexType>
-     <sequence>
-      <element name="doctorUsername" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getDoctorOfficeResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getDoctorOfficeReturn" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getUserPic">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getUserPicResponse">
-    <complexType>
-     <sequence>
-      <element name="getUserPicReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getDoctorPic">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getDoctorPicResponse">
-    <complexType>
-     <sequence>
-      <element name="getDoctorPicReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="searchUser">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="name" type="xsd:string"/>
-      <element name="lastName" type="xsd:string"/>
-      <element name="mobileNo" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="searchUserResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="searchUserReturn" type="tns1:Info_User"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="sendMessage">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="receiver" type="xsd:string"/>
-      <element name="subject" type="xsd:string"/>
-      <element name="message" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="sendMessageResponse">
-    <complexType>
-     <sequence>
-      <element name="sendMessageReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="sendMessageBatch">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element maxOccurs="unbounded" name="receivers" type="xsd:string"/>
-      <element maxOccurs="unbounded" name="phoneNo" type="xsd:string"/>
-      <element name="subject" type="xsd:string"/>
-      <element name="message" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="sendMessageBatchResponse">
-    <complexType>
-     <sequence>
-      <element name="sendMessageBatchReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="setMessageRead">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="messageId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="setMessageReadResponse">
-    <complexType/>
-   </element>
-   <element name="removeTurn">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="turnId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="removeTurnResponse">
-    <complexType>
-     <sequence>
-      <element name="removeTurnReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getOfficesBySpec">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="specId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getOfficesBySpecResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getOfficesBySpecReturn" type="tns1:Office"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getTodayPatient">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getTodayPatientResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getTodayPatientReturn" type="tns1:Info_Patient"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reception">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="reservationId" type="xsd:int"/>
-      <element name="payment" type="xsd:int"/>
-      <element name="description" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="receptionResponse">
-    <complexType>
-     <sequence>
-      <element name="receptionReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getPatientFile">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="patientUsername" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getPatientFileResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getPatientFileReturn" type="tns1:Info_patientFile"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getGalleryPic">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="picId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getGalleryPicResponse">
-    <complexType>
-     <sequence>
-      <element name="getGalleryPicReturn" type="tns1:PhotoDesc"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="setGalleryPic">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="pic" type="xsd:string"/>
-      <element name="description" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="setGalleryPicResponse">
-    <complexType>
-     <sequence>
-      <element name="setGalleryPicReturn" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getTaskGroups">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getTaskGroupsResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getTaskGroupsReturn" type="tns1:TaskGroup"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addTaskGroup">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskGroupName" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addTaskGroupResponse">
-    <complexType>
-     <sequence>
-      <element name="addTaskGroupReturn" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addTaskGroup2">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskGroupName" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addTaskGroup2Response">
-    <complexType>
-     <sequence>
-      <element name="addTaskGroup2Return" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTaskGroup">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskGroupId" type="xsd:int"/>
-      <element name="taskGroupName" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTaskGroupResponse">
-    <complexType>
-     <sequence>
-      <element name="updateTaskGroupReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="deleteTaskGroup">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskGroupId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="deleteTaskGroupResponse">
-    <complexType>
-     <sequence>
-      <element name="deleteTaskGroupReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTaskPrice">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="price" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTaskPriceResponse">
-    <complexType>
-     <sequence>
-      <element name="updateTaskPriceReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTaskName">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="taskName" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTaskNameResponse">
-    <complexType>
-     <sequence>
-      <element name="updateTaskNameReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getOfficeInfo2">
-    <complexType>
-     <sequence>
-      <element name="officeId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getOfficeInfo2Response">
-    <complexType>
-     <sequence>
-      <element name="getOfficeInfo2Return" type="tns1:Office"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="login">
     <complexType>
      <sequence>
@@ -896,89 +57,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="getAllMessages">
+   <element name="getUserPic">
     <complexType>
      <sequence>
       <element name="username" type="xsd:string"/>
       <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
      </sequence>
     </complexType>
    </element>
-   <element name="getAllMessagesResponse">
+   <element name="getUserPicResponse">
     <complexType>
      <sequence>
-      <element maxOccurs="unbounded" name="getAllMessagesReturn" type="tns1:Info_Message"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="removeMessage">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="messageId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="removeMessageResponse">
-    <complexType>
-     <sequence>
-      <element name="removeMessageReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="deleteTask">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="deleteTaskResponse">
-    <complexType>
-     <sequence>
-      <element name="deleteTaskReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getTasks">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskGroupId" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getTasksResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getTasksReturn" type="tns1:Task"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addTask">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="name" type="xsd:string"/>
-      <element name="taskGroupId" type="xsd:int"/>
-      <element name="price" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addTaskResponse">
-    <complexType>
-     <sequence>
-      <element name="addTaskReturn" type="xsd:int"/>
+      <element name="getUserPicReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -1284,6 +374,916 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="changeGalleryPicDescriptionResponse">
     <complexType/>
    </element>
+   <element name="getSubSpec">
+    <complexType>
+     <sequence>
+      <element name="specId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getSubSpecResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getSubSpecReturn" type="tns1:Subspec"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getSpec">
+    <complexType/>
+   </element>
+   <element name="getSpecResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getSpecReturn" type="tns1:Spec"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="register2">
+    <complexType>
+     <sequence>
+      <element name="name" type="xsd:string"/>
+      <element name="lastname" type="xsd:string"/>
+      <element name="mobileno" type="xsd:string"/>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="role" type="xsd:int"/>
+      <element name="cityid" type="xsd:int"/>
+      <element name="pic" type="xsd:string"/>
+      <element name="email" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="register2Response">
+    <complexType>
+     <sequence>
+      <element name="register2Return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="login2">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="login2Response">
+    <complexType>
+     <sequence>
+      <element name="login2Return" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="registerOffice">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="cityid" type="xsd:int"/>
+      <element name="spec" type="xsd:int"/>
+      <element name="subspec" type="xsd:int"/>
+      <element name="address" type="xsd:string"/>
+      <element name="tellNo" type="xsd:string"/>
+      <element name="latitude" type="xsd:double"/>
+      <element name="longitude" type="xsd:double"/>
+      <element maxOccurs="unbounded" name="secretaryNames" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="registerOfficeResponse">
+    <complexType>
+     <sequence>
+      <element name="registerOfficeReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateOfficeInfo">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="cityId" type="xsd:int"/>
+      <element name="spec" type="xsd:int"/>
+      <element name="subspec" type="xsd:int"/>
+      <element name="address" type="xsd:string"/>
+      <element name="tellNo" type="xsd:string"/>
+      <element name="biography" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateOfficeInfoResponse">
+    <complexType>
+     <sequence>
+      <element name="updateOfficeInfoReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addBiography">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="biography" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addBiographyResponse">
+    <complexType>
+     <sequence>
+      <element name="addBiographyReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addTurn">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="date" type="xsd:string"/>
+      <element name="startHour" type="xsd:int"/>
+      <element name="startMin" type="xsd:int"/>
+      <element name="duration" type="xsd:int"/>
+      <element name="capacity" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addTurnResponse">
+    <complexType>
+     <sequence>
+      <element name="addTurnReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addTurnByDate">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="fromDate" type="xsd:string"/>
+      <element name="toDate" type="xsd:string"/>
+      <element name="hour" type="xsd:int"/>
+      <element name="min" type="xsd:int"/>
+      <element name="duration" type="xsd:int"/>
+      <element name="capacity" type="xsd:int"/>
+      <element name="dayOfWeek" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addTurnByDateResponse">
+    <complexType>
+     <sequence>
+      <element name="addTurnByDateReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllTurn">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="fromDate" type="xsd:string"/>
+      <element name="toDate" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllTurnResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAllTurnReturn" type="tns1:Turn"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getBiography">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getBiographyResponse">
+    <complexType>
+     <sequence>
+      <element name="getBiographyReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reserveForMe">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="turnId" type="xsd:int"/>
+      <element name="firstReservationId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+      <element name="numberOfTurns" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reserveForMeResponse">
+    <complexType>
+     <sequence>
+      <element name="reserveForMeReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getCityName">
+    <complexType/>
+   </element>
+   <element name="getCityNameResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getCityNameReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProvinceName">
+    <complexType/>
+   </element>
+   <element name="getProvinceNameResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getProvinceNameReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="helloWorld">
+    <complexType/>
+   </element>
+   <element name="helloWorldResponse">
+    <complexType>
+     <sequence>
+      <element name="helloWorldReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProvince">
+    <complexType/>
+   </element>
+   <element name="getProvinceResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getProvinceReturn" type="tns1:Province"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getCity">
+    <complexType/>
+   </element>
+   <element name="getCityResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getCityReturn" type="tns1:City"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reserveForUser">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="turnId" type="xsd:int"/>
+      <element name="firstReservationId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+      <element name="numberOfTurns" type="xsd:int"/>
+      <element name="patientUserName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reserveForUserResponse">
+    <complexType>
+     <sequence>
+      <element name="reserveForUserReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reserveForGuest">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="turnId" type="xsd:int"/>
+      <element name="firstReservationId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+      <element name="numberOfTurns" type="xsd:int"/>
+      <element name="patientFirstName" type="xsd:string"/>
+      <element name="patientLastName" type="xsd:string"/>
+      <element name="patientPhoneNo" type="xsd:string"/>
+      <element name="patientCityId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reserveForGuestResponse">
+    <complexType>
+     <sequence>
+      <element name="reserveForGuestReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reserveForUser2">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="turnId" type="xsd:int"/>
+      <element name="firstReservationId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+      <element name="numberOfTurns" type="xsd:int"/>
+      <element name="patientUserName" type="xsd:string"/>
+      <element name="price" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reserveForUser2Response">
+    <complexType>
+     <sequence>
+      <element name="reserveForUser2Return" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reserveForGuest2">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="turnId" type="xsd:int"/>
+      <element name="firstReservationId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+      <element name="numberOfTurns" type="xsd:int"/>
+      <element name="patientFirstName" type="xsd:string"/>
+      <element name="patientLastName" type="xsd:string"/>
+      <element name="patientPhoneNo" type="xsd:string"/>
+      <element name="patientCityId" type="xsd:int"/>
+      <element name="price" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reserveForGuest2Response">
+    <complexType>
+     <sequence>
+      <element name="reserveForGuest2Return" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getReservation">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="turnId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getReservationResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getReservationReturn" type="tns1:Info_Reservation2"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateUserInfo">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="name" type="xsd:string"/>
+      <element name="lastname" type="xsd:string"/>
+      <element name="mobileno" type="xsd:string"/>
+      <element name="cityid" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateUserInfoResponse">
+    <complexType>
+     <sequence>
+      <element name="updateUserInfoReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateUserInfo2">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="name" type="xsd:string"/>
+      <element name="lastname" type="xsd:string"/>
+      <element name="mobileno" type="xsd:string"/>
+      <element name="cityid" type="xsd:int"/>
+      <element name="newPassword" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateUserInfo2Response">
+    <complexType>
+     <sequence>
+      <element name="updateUserInfo2Return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateUserInfo3">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="name" type="xsd:string"/>
+      <element name="lastname" type="xsd:string"/>
+      <element name="mobileno" type="xsd:string"/>
+      <element name="cityid" type="xsd:int"/>
+      <element name="newPassword" type="xsd:string"/>
+      <element name="email" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateUserInfo3Response">
+    <complexType>
+     <sequence>
+      <element name="updateUserInfo3Return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateUserPic2">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="pic" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateUserPic2Response">
+    <complexType>
+     <sequence>
+      <element name="updateUserPic2Return" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteTask">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteTaskResponse">
+    <complexType>
+     <sequence>
+      <element name="deleteTaskReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getTasks">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="taskGroupId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getTasksResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getTasksReturn" type="tns1:Task"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addTask">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="name" type="xsd:string"/>
+      <element name="taskGroupId" type="xsd:int"/>
+      <element name="price" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addTaskResponse">
+    <complexType>
+     <sequence>
+      <element name="addTaskReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDoctorOffice">
+    <complexType>
+     <sequence>
+      <element name="doctorUsername" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDoctorOfficeResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getDoctorOfficeReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOfficeInfo">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOfficeInfoResponse">
+    <complexType>
+     <sequence>
+      <element name="getOfficeInfoReturn" type="tns1:Office"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="removeMessage">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="messageId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="removeMessageResponse">
+    <complexType>
+     <sequence>
+      <element name="removeMessageReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="setMessageRead">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="messageId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="setMessageReadResponse">
+    <complexType/>
+   </element>
+   <element name="searchUser">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="name" type="xsd:string"/>
+      <element name="lastName" type="xsd:string"/>
+      <element name="mobileNo" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="searchUserResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="searchUserReturn" type="tns1:Info_User"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="sendMessageBatch">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element maxOccurs="unbounded" name="receivers" type="xsd:string"/>
+      <element maxOccurs="unbounded" name="phoneNo" type="xsd:string"/>
+      <element name="subject" type="xsd:string"/>
+      <element name="message" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="sendMessageBatchResponse">
+    <complexType>
+     <sequence>
+      <element name="sendMessageBatchReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllMessages">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllMessagesResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAllMessagesReturn" type="tns1:Info_Message"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDoctorPic">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDoctorPicResponse">
+    <complexType>
+     <sequence>
+      <element name="getDoctorPicReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getGalleryPic">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="picId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getGalleryPicResponse">
+    <complexType>
+     <sequence>
+      <element name="getGalleryPicReturn" type="tns1:PhotoDesc"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reception">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="reservationId" type="xsd:int"/>
+      <element name="payment" type="xsd:int"/>
+      <element name="description" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="receptionResponse">
+    <complexType>
+     <sequence>
+      <element name="receptionReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="setGalleryPic">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="pic" type="xsd:string"/>
+      <element name="description" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="setGalleryPicResponse">
+    <complexType>
+     <sequence>
+      <element name="setGalleryPicReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPatientFile">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="patientUsername" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPatientFileResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getPatientFileReturn" type="tns1:Info_patientFile"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getTodayPatient">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getTodayPatientResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getTodayPatientReturn" type="tns1:Info_Patient"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOfficesBySpec">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="specId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOfficesBySpecResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getOfficesBySpecReturn" type="tns1:Office"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="removeTurn">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="turnId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="removeTurnResponse">
+    <complexType>
+     <sequence>
+      <element name="removeTurnReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getTaskGroups">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getTaskGroupsResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getTaskGroupsReturn" type="tns1:TaskGroup"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addTaskGroup">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="taskGroupName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addTaskGroupResponse">
+    <complexType>
+     <sequence>
+      <element name="addTaskGroupReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addTaskGroup2">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="taskGroupName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addTaskGroup2Response">
+    <complexType>
+     <sequence>
+      <element name="addTaskGroup2Return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateTaskGroup">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="taskGroupId" type="xsd:int"/>
+      <element name="taskGroupName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateTaskGroupResponse">
+    <complexType>
+     <sequence>
+      <element name="updateTaskGroupReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteTaskGroup">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="taskGroupId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteTaskGroupResponse">
+    <complexType>
+     <sequence>
+      <element name="deleteTaskGroupReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateTaskPrice">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+      <element name="price" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateTaskPriceResponse">
+    <complexType>
+     <sequence>
+      <element name="updateTaskPriceReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateTaskName">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+      <element name="taskName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateTaskNameResponse">
+    <complexType>
+     <sequence>
+      <element name="updateTaskNameReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOfficeInfo2">
+    <complexType>
+     <sequence>
+      <element name="officeId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOfficeInfo2Response">
+    <complexType>
+     <sequence>
+      <element name="getOfficeInfo2Return" type="tns1:Office"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="sendMessage">
+    <complexType>
+     <sequence>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="officeId" type="xsd:int"/>
+      <element name="receiver" type="xsd:string"/>
+      <element name="subject" type="xsd:string"/>
+      <element name="message" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="sendMessageResponse">
+    <complexType>
+     <sequence>
+      <element name="sendMessageReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
   </schema>
   <schema elementFormDefault="qualified" targetNamespace="http://primitives" xmlns="http://www.w3.org/2001/XMLSchema">
    <complexType name="User">
@@ -1301,16 +1301,19 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="email" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
-   <complexType name="Subspec">
+   <complexType name="Task">
     <sequence>
      <element name="id" type="xsd:int"/>
-     <element name="specId" type="xsd:int"/>
+     <element name="officeId" type="xsd:int"/>
      <element name="name" nillable="true" type="xsd:string"/>
+     <element name="price" type="xsd:int"/>
+     <element name="taskGroupId" type="xsd:int"/>
     </sequence>
    </complexType>
-   <complexType name="Spec">
+   <complexType name="City">
     <sequence>
      <element name="id" type="xsd:int"/>
+     <element name="provinceId" type="xsd:int"/>
      <element name="name" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
@@ -1328,16 +1331,94 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="isReserved" type="xsd:boolean"/>
     </sequence>
    </complexType>
-   <complexType name="Province">
+   <complexType name="Reservation2">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="username" nillable="true" type="xsd:string"/>
+     <element name="turnId" type="xsd:int"/>
+     <element name="taskId" type="xsd:int"/>
+     <element name="patientFirstName" nillable="true" type="xsd:string"/>
+     <element name="patientLastName" nillable="true" type="xsd:string"/>
+     <element name="patientPhoneNo" nillable="true" type="xsd:string"/>
+     <element name="firstReservationId" type="xsd:int"/>
+     <element name="payment" type="xsd:int"/>
+     <element name="numberOfTurns" type="xsd:int"/>
+     <element name="date" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Reservation4">
+    <sequence>
+     <element name="reservationId" type="xsd:int"/>
+     <element name="turnId" type="xsd:int"/>
+     <element name="taskId" type="xsd:int"/>
+     <element name="username" nillable="true" type="xsd:string"/>
+     <element name="taskName" nillable="true" type="xsd:string"/>
+     <element name="patientFirstName" nillable="true" type="xsd:string"/>
+     <element name="patientLastName" nillable="true" type="xsd:string"/>
+     <element name="patientPhoneNo" nillable="true" type="xsd:string"/>
+     <element name="firstReservationId" type="xsd:int"/>
+     <element name="payment" type="xsd:int"/>
+     <element name="numberOfTurns" type="xsd:int"/>
+     <element name="date" nillable="true" type="xsd:string"/>
+     <element name="longDate" nillable="true" type="xsd:string"/>
+     <element name="time" nillable="true" type="xsd:string"/>
+     <element name="doctorUsername" nillable="true" type="xsd:string"/>
+     <element name="doctorFirstName" nillable="true" type="xsd:string"/>
+     <element name="doctorLastName" nillable="true" type="xsd:string"/>
+     <element name="doctorSpec" nillable="true" type="xsd:string"/>
+     <element name="doctorSubSpec" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Info_Message">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="senderUsername" nillable="true" type="xsd:string"/>
+     <element name="senderFirstName" nillable="true" type="xsd:string"/>
+     <element name="senderLastName" nillable="true" type="xsd:string"/>
+     <element name="subject" nillable="true" type="xsd:string"/>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="date" nillable="true" type="xsd:string"/>
+     <element name="time" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="UserTurn">
+    <sequence>
+     <element name="username" nillable="true" type="xsd:string"/>
+     <element name="patientFirstName" nillable="true" type="xsd:string"/>
+     <element name="patientLastName" nillable="true" type="xsd:string"/>
+     <element name="patientPhoneNo" nillable="true" type="xsd:string"/>
+     <element name="numberOfTurns" type="xsd:int"/>
+     <element name="shortDate" nillable="true" type="xsd:string"/>
+     <element name="longDate" nillable="true" type="xsd:string"/>
+     <element name="hour" type="xsd:int"/>
+     <element name="min" type="xsd:int"/>
+     <element name="duration" type="xsd:int"/>
+     <element name="capacity" type="xsd:int"/>
+     <element name="reserved" type="xsd:int"/>
+     <element name="reservationId" type="xsd:int"/>
+     <element name="turnId" type="xsd:int"/>
+     <element name="officeId" type="xsd:int"/>
+     <element name="taskId" type="xsd:int"/>
+     <element name="taskName" nillable="true" type="xsd:string"/>
+     <element name="price" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <complexType name="Subspec">
+    <sequence>
+     <element name="id" type="xsd:int"/>
+     <element name="specId" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Spec">
     <sequence>
      <element name="id" type="xsd:int"/>
      <element name="name" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
-   <complexType name="City">
+   <complexType name="Province">
     <sequence>
      <element name="id" type="xsd:int"/>
-     <element name="provinceId" type="xsd:int"/>
      <element name="name" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
@@ -1382,18 +1463,12 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="pic" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
-   <complexType name="Info_Patient">
+   <complexType name="PhotoDesc">
     <sequence>
-     <element name="firstName" nillable="true" type="xsd:string"/>
-     <element name="lastName" nillable="true" type="xsd:string"/>
-     <element name="mobileNo" nillable="true" type="xsd:string"/>
-     <element name="username" nillable="true" type="xsd:string"/>
-     <element name="reservationId" type="xsd:int"/>
-     <element name="firstReservationId" type="xsd:int"/>
-     <element name="taskId" type="xsd:int"/>
-     <element name="taskName" nillable="true" type="xsd:string"/>
-     <element name="payment" type="xsd:int"/>
+     <element name="id" type="xsd:int"/>
+     <element name="photo" nillable="true" type="xsd:string"/>
      <element name="description" nillable="true" type="xsd:string"/>
+     <element name="date" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
    <complexType name="Info_patientFile">
@@ -1412,12 +1487,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="remain" type="xsd:int"/>
     </sequence>
    </complexType>
-   <complexType name="PhotoDesc">
+   <complexType name="Info_Patient">
     <sequence>
-     <element name="id" type="xsd:int"/>
-     <element name="photo" nillable="true" type="xsd:string"/>
+     <element name="firstName" nillable="true" type="xsd:string"/>
+     <element name="lastName" nillable="true" type="xsd:string"/>
+     <element name="mobileNo" nillable="true" type="xsd:string"/>
+     <element name="username" nillable="true" type="xsd:string"/>
+     <element name="reservationId" type="xsd:int"/>
+     <element name="firstReservationId" type="xsd:int"/>
+     <element name="taskId" type="xsd:int"/>
+     <element name="taskName" nillable="true" type="xsd:string"/>
+     <element name="payment" type="xsd:int"/>
      <element name="description" nillable="true" type="xsd:string"/>
-     <element name="date" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
    <complexType name="TaskGroup">
@@ -1425,87 +1506,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="id" type="xsd:int"/>
      <element name="officeId" type="xsd:int"/>
      <element name="name" nillable="true" type="xsd:string"/>
-    </sequence>
-   </complexType>
-   <complexType name="Info_Message">
-    <sequence>
-     <element name="id" type="xsd:int"/>
-     <element name="senderUsername" nillable="true" type="xsd:string"/>
-     <element name="senderFirstName" nillable="true" type="xsd:string"/>
-     <element name="senderLastName" nillable="true" type="xsd:string"/>
-     <element name="subject" nillable="true" type="xsd:string"/>
-     <element name="message" nillable="true" type="xsd:string"/>
-     <element name="date" nillable="true" type="xsd:string"/>
-     <element name="time" nillable="true" type="xsd:string"/>
-    </sequence>
-   </complexType>
-   <complexType name="Task">
-    <sequence>
-     <element name="id" type="xsd:int"/>
-     <element name="officeId" type="xsd:int"/>
-     <element name="name" nillable="true" type="xsd:string"/>
-     <element name="price" type="xsd:int"/>
-     <element name="taskGroupId" type="xsd:int"/>
-    </sequence>
-   </complexType>
-   <complexType name="Reservation2">
-    <sequence>
-     <element name="id" type="xsd:int"/>
-     <element name="username" nillable="true" type="xsd:string"/>
-     <element name="turnId" type="xsd:int"/>
-     <element name="taskId" type="xsd:int"/>
-     <element name="patientFirstName" nillable="true" type="xsd:string"/>
-     <element name="patientLastName" nillable="true" type="xsd:string"/>
-     <element name="patientPhoneNo" nillable="true" type="xsd:string"/>
-     <element name="firstReservationId" type="xsd:int"/>
-     <element name="payment" type="xsd:int"/>
-     <element name="numberOfTurns" type="xsd:int"/>
-     <element name="date" nillable="true" type="xsd:string"/>
-    </sequence>
-   </complexType>
-   <complexType name="Reservation4">
-    <sequence>
-     <element name="reservationId" type="xsd:int"/>
-     <element name="turnId" type="xsd:int"/>
-     <element name="taskId" type="xsd:int"/>
-     <element name="username" nillable="true" type="xsd:string"/>
-     <element name="taskName" nillable="true" type="xsd:string"/>
-     <element name="patientFirstName" nillable="true" type="xsd:string"/>
-     <element name="patientLastName" nillable="true" type="xsd:string"/>
-     <element name="patientPhoneNo" nillable="true" type="xsd:string"/>
-     <element name="firstReservationId" type="xsd:int"/>
-     <element name="payment" type="xsd:int"/>
-     <element name="numberOfTurns" type="xsd:int"/>
-     <element name="date" nillable="true" type="xsd:string"/>
-     <element name="longDate" nillable="true" type="xsd:string"/>
-     <element name="time" nillable="true" type="xsd:string"/>
-     <element name="doctorUsername" nillable="true" type="xsd:string"/>
-     <element name="doctorFirstName" nillable="true" type="xsd:string"/>
-     <element name="doctorLastName" nillable="true" type="xsd:string"/>
-     <element name="doctorSpec" nillable="true" type="xsd:string"/>
-     <element name="doctorSubSpec" nillable="true" type="xsd:string"/>
-    </sequence>
-   </complexType>
-   <complexType name="UserTurn">
-    <sequence>
-     <element name="username" nillable="true" type="xsd:string"/>
-     <element name="patientFirstName" nillable="true" type="xsd:string"/>
-     <element name="patientLastName" nillable="true" type="xsd:string"/>
-     <element name="patientPhoneNo" nillable="true" type="xsd:string"/>
-     <element name="numberOfTurns" type="xsd:int"/>
-     <element name="shortDate" nillable="true" type="xsd:string"/>
-     <element name="longDate" nillable="true" type="xsd:string"/>
-     <element name="hour" type="xsd:int"/>
-     <element name="min" type="xsd:int"/>
-     <element name="duration" type="xsd:int"/>
-     <element name="capacity" type="xsd:int"/>
-     <element name="reserved" type="xsd:int"/>
-     <element name="reservationId" type="xsd:int"/>
-     <element name="turnId" type="xsd:int"/>
-     <element name="officeId" type="xsd:int"/>
-     <element name="taskId" type="xsd:int"/>
-     <element name="taskName" nillable="true" type="xsd:string"/>
-     <element name="price" type="xsd:int"/>
     </sequence>
    </complexType>
   </schema>
@@ -1551,6 +1551,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="getUserInfoWithoutPicResponse">
+
+      <wsdl:part element="impl:getUserInfoWithoutPicResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="addTaskRequest">
 
       <wsdl:part element="impl:addTask" name="parameters">
@@ -1562,14 +1570,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="addTaskResponse">
 
       <wsdl:part element="impl:addTaskResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="getUserInfoWithoutPicResponse">
-
-      <wsdl:part element="impl:getUserInfoWithoutPicResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1615,14 +1615,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="addTurnByDateResponse">
-
-      <wsdl:part element="impl:addTurnByDateResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="isUserNameAvailableResponse">
 
       <wsdl:part element="impl:isUserNameAvailableResponse" name="parameters">
@@ -1631,9 +1623,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getDoctorPicResponse">
+   <wsdl:message name="addTurnByDateResponse">
 
-      <wsdl:part element="impl:getDoctorPicResponse" name="parameters">
+      <wsdl:part element="impl:addTurnByDateResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1642,6 +1634,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getReservationByUserRequest">
 
       <wsdl:part element="impl:getReservationByUser" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDoctorPicResponse">
+
+      <wsdl:part element="impl:getDoctorPicResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1743,17 +1743,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getDoctorPicRequest">
+   <wsdl:message name="updateOfficeLocationRequest">
 
-      <wsdl:part element="impl:getDoctorPic" name="parameters">
+      <wsdl:part element="impl:updateOfficeLocation" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="updateOfficeLocationRequest">
+   <wsdl:message name="getDoctorPicRequest">
 
-      <wsdl:part element="impl:updateOfficeLocation" name="parameters">
+      <wsdl:part element="impl:getDoctorPic" name="parameters">
 
       </wsdl:part>
 
@@ -1911,17 +1911,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="setMessageReadResponse">
+   <wsdl:message name="updateUserPasswordResponse">
 
-      <wsdl:part element="impl:setMessageReadResponse" name="parameters">
+      <wsdl:part element="impl:updateUserPasswordResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="updateUserPasswordResponse">
+   <wsdl:message name="setMessageReadResponse">
 
-      <wsdl:part element="impl:updateUserPasswordResponse" name="parameters">
+      <wsdl:part element="impl:setMessageReadResponse" name="parameters">
 
       </wsdl:part>
 
@@ -1943,17 +1943,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getCityNameRequest">
+   <wsdl:message name="getUnreadMessagesResponse">
 
-      <wsdl:part element="impl:getCityName" name="parameters">
+      <wsdl:part element="impl:getUnreadMessagesResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getUnreadMessagesResponse">
+   <wsdl:message name="getCityNameRequest">
 
-      <wsdl:part element="impl:getUnreadMessagesResponse" name="parameters">
+      <wsdl:part element="impl:getCityName" name="parameters">
 
       </wsdl:part>
 
@@ -1975,17 +1975,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getAllMessagesRequest">
+   <wsdl:message name="deleteTaskResponse">
 
-      <wsdl:part element="impl:getAllMessages" name="parameters">
+      <wsdl:part element="impl:deleteTaskResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="deleteTaskResponse">
+   <wsdl:message name="getAllMessagesRequest">
 
-      <wsdl:part element="impl:deleteTaskResponse" name="parameters">
+      <wsdl:part element="impl:getAllMessages" name="parameters">
 
       </wsdl:part>
 
@@ -2047,17 +2047,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getSpecResponse">
+   <wsdl:message name="getReservationByUserResponse">
 
-      <wsdl:part element="impl:getSpecResponse" name="parameters">
+      <wsdl:part element="impl:getReservationByUserResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getReservationByUserResponse">
+   <wsdl:message name="getSpecResponse">
 
-      <wsdl:part element="impl:getReservationByUserResponse" name="parameters">
+      <wsdl:part element="impl:getSpecResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2071,17 +2071,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="updateTaskPriceResponse">
+   <wsdl:message name="getAllMessagesResponse">
 
-      <wsdl:part element="impl:updateTaskPriceResponse" name="parameters">
+      <wsdl:part element="impl:getAllMessagesResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getAllMessagesResponse">
+   <wsdl:message name="updateTaskPriceResponse">
 
-      <wsdl:part element="impl:getAllMessagesResponse" name="parameters">
+      <wsdl:part element="impl:updateTaskPriceResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2111,17 +2111,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="updateTaskPriceRequest">
+   <wsdl:message name="getReservationByTurnIdResponse">
 
-      <wsdl:part element="impl:updateTaskPrice" name="parameters">
+      <wsdl:part element="impl:getReservationByTurnIdResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getReservationByTurnIdResponse">
+   <wsdl:message name="updateTaskPriceRequest">
 
-      <wsdl:part element="impl:getReservationByTurnIdResponse" name="parameters">
+      <wsdl:part element="impl:updateTaskPrice" name="parameters">
 
       </wsdl:part>
 
@@ -2199,17 +2199,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="sendMessageBatchResponse">
+   <wsdl:message name="getReservationByDateRequest">
 
-      <wsdl:part element="impl:sendMessageBatchResponse" name="parameters">
+      <wsdl:part element="impl:getReservationByDate" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getReservationByDateRequest">
+   <wsdl:message name="sendMessageBatchResponse">
 
-      <wsdl:part element="impl:getReservationByDate" name="parameters">
+      <wsdl:part element="impl:sendMessageBatchResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2231,17 +2231,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="updateUserInfoRequest">
+   <wsdl:message name="addSecretaryToOfficeRequest">
 
-      <wsdl:part element="impl:updateUserInfo" name="parameters">
+      <wsdl:part element="impl:addSecretaryToOffice" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="addSecretaryToOfficeRequest">
+   <wsdl:message name="updateUserInfoRequest">
 
-      <wsdl:part element="impl:addSecretaryToOffice" name="parameters">
+      <wsdl:part element="impl:updateUserInfo" name="parameters">
 
       </wsdl:part>
 
@@ -2255,17 +2255,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="reserveForMeRequest">
+   <wsdl:message name="getBiographyRequest">
 
-      <wsdl:part element="impl:reserveForMe" name="parameters">
+      <wsdl:part element="impl:getBiography" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="getBiographyRequest">
+   <wsdl:message name="reserveForMeRequest">
 
-      <wsdl:part element="impl:getBiography" name="parameters">
+      <wsdl:part element="impl:reserveForMe" name="parameters">
 
       </wsdl:part>
 
@@ -2279,17 +2279,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="sendMessageRequest">
+   <wsdl:message name="removeMessageRequest">
 
-      <wsdl:part element="impl:sendMessage" name="parameters">
+      <wsdl:part element="impl:removeMessage" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="removeMessageRequest">
+   <wsdl:message name="sendMessageRequest">
 
-      <wsdl:part element="impl:removeMessage" name="parameters">
+      <wsdl:part element="impl:sendMessage" name="parameters">
 
       </wsdl:part>
 
@@ -2391,14 +2391,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getReservationRequest">
-
-      <wsdl:part element="impl:getReservation" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="setAllMessageReadRequest">
 
       <wsdl:part element="impl:setAllMessageRead" name="parameters">
@@ -2407,9 +2399,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="reserveForMeResponse">
+   <wsdl:message name="getReservationRequest">
 
-      <wsdl:part element="impl:reserveForMeResponse" name="parameters">
+      <wsdl:part element="impl:getReservation" name="parameters">
 
       </wsdl:part>
 
@@ -2426,6 +2418,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="getCityOfProvinceResponse">
 
       <wsdl:part element="impl:getCityOfProvinceResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="reserveForMeResponse">
+
+      <wsdl:part element="impl:reserveForMeResponse" name="parameters">
 
       </wsdl:part>
 
@@ -2511,17 +2511,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getTasksRequest">
+   <wsdl:message name="removeSecretaryFromOfficeRequest">
 
-      <wsdl:part element="impl:getTasks" name="parameters">
+      <wsdl:part element="impl:removeSecretaryFromOffice" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="removeSecretaryFromOfficeRequest">
+   <wsdl:message name="getTasksRequest">
 
-      <wsdl:part element="impl:removeSecretaryFromOffice" name="parameters">
+      <wsdl:part element="impl:getTasks" name="parameters">
 
       </wsdl:part>
 
@@ -2551,14 +2551,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getDoctorOfficeResponse">
-
-      <wsdl:part element="impl:getDoctorOfficeResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="removeSecretaryFromOfficeResponse">
 
       <wsdl:part element="impl:removeSecretaryFromOfficeResponse" name="parameters">
@@ -2575,6 +2567,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="getDoctorOfficeResponse">
+
+      <wsdl:part element="impl:getDoctorOfficeResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="addBiographyResponse">
 
       <wsdl:part element="impl:addBiographyResponse" name="parameters">
@@ -2583,17 +2583,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getDoctorOfficeRequest">
+   <wsdl:message name="loginRequest">
 
-      <wsdl:part element="impl:getDoctorOffice" name="parameters">
+      <wsdl:part element="impl:login" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="loginRequest">
+   <wsdl:message name="getDoctorOfficeRequest">
 
-      <wsdl:part element="impl:login" name="parameters">
+      <wsdl:part element="impl:getDoctorOffice" name="parameters">
 
       </wsdl:part>
 
@@ -2753,594 +2753,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getSubSpec">
-
-         <wsdl:input message="impl:getSubSpecRequest" name="getSubSpecRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getSubSpecResponse" name="getSubSpecResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getSpec">
-
-         <wsdl:input message="impl:getSpecRequest" name="getSpecRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getSpecResponse" name="getSpecResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="register2">
-
-         <wsdl:input message="impl:register2Request" name="register2Request">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:register2Response" name="register2Response">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="login2">
-
-         <wsdl:input message="impl:login2Request" name="login2Request">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:login2Response" name="login2Response">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="registerOffice">
-
-         <wsdl:input message="impl:registerOfficeRequest" name="registerOfficeRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:registerOfficeResponse" name="registerOfficeResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateOfficeInfo">
-
-         <wsdl:input message="impl:updateOfficeInfoRequest" name="updateOfficeInfoRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateOfficeInfoResponse" name="updateOfficeInfoResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addBiography">
-
-         <wsdl:input message="impl:addBiographyRequest" name="addBiographyRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addBiographyResponse" name="addBiographyResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTurn">
-
-         <wsdl:input message="impl:addTurnRequest" name="addTurnRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addTurnResponse" name="addTurnResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTurnByDate">
-
-         <wsdl:input message="impl:addTurnByDateRequest" name="addTurnByDateRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addTurnByDateResponse" name="addTurnByDateResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getAllTurn">
-
-         <wsdl:input message="impl:getAllTurnRequest" name="getAllTurnRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getAllTurnResponse" name="getAllTurnResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reserveForMe">
-
-         <wsdl:input message="impl:reserveForMeRequest" name="reserveForMeRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:reserveForMeResponse" name="reserveForMeResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getBiography">
-
-         <wsdl:input message="impl:getBiographyRequest" name="getBiographyRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getBiographyResponse" name="getBiographyResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getCityName">
-
-         <wsdl:input message="impl:getCityNameRequest" name="getCityNameRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getCityNameResponse" name="getCityNameResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getProvinceName">
-
-         <wsdl:input message="impl:getProvinceNameRequest" name="getProvinceNameRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getProvinceNameResponse" name="getProvinceNameResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="helloWorld">
-
-         <wsdl:input message="impl:helloWorldRequest" name="helloWorldRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:helloWorldResponse" name="helloWorldResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getProvince">
-
-         <wsdl:input message="impl:getProvinceRequest" name="getProvinceRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getProvinceResponse" name="getProvinceResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getCity">
-
-         <wsdl:input message="impl:getCityRequest" name="getCityRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getCityResponse" name="getCityResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reserveForUser">
-
-         <wsdl:input message="impl:reserveForUserRequest" name="reserveForUserRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:reserveForUserResponse" name="reserveForUserResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reserveForGuest">
-
-         <wsdl:input message="impl:reserveForGuestRequest" name="reserveForGuestRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:reserveForGuestResponse" name="reserveForGuestResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reserveForUser2">
-
-         <wsdl:input message="impl:reserveForUser2Request" name="reserveForUser2Request">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:reserveForUser2Response" name="reserveForUser2Response">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reserveForGuest2">
-
-         <wsdl:input message="impl:reserveForGuest2Request" name="reserveForGuest2Request">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:reserveForGuest2Response" name="reserveForGuest2Response">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getReservation">
-
-         <wsdl:input message="impl:getReservationRequest" name="getReservationRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getReservationResponse" name="getReservationResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateUserInfo">
-
-         <wsdl:input message="impl:updateUserInfoRequest" name="updateUserInfoRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateUserInfoResponse" name="updateUserInfoResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateUserInfo2">
-
-         <wsdl:input message="impl:updateUserInfo2Request" name="updateUserInfo2Request">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateUserInfo2Response" name="updateUserInfo2Response">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateUserInfo3">
-
-         <wsdl:input message="impl:updateUserInfo3Request" name="updateUserInfo3Request">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateUserInfo3Response" name="updateUserInfo3Response">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateUserPic2">
-
-         <wsdl:input message="impl:updateUserPic2Request" name="updateUserPic2Request">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateUserPic2Response" name="updateUserPic2Response">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getOfficeInfo">
-
-         <wsdl:input message="impl:getOfficeInfoRequest" name="getOfficeInfoRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getOfficeInfoResponse" name="getOfficeInfoResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getDoctorOffice">
-
-         <wsdl:input message="impl:getDoctorOfficeRequest" name="getDoctorOfficeRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getDoctorOfficeResponse" name="getDoctorOfficeResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getUserPic">
-
-         <wsdl:input message="impl:getUserPicRequest" name="getUserPicRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getUserPicResponse" name="getUserPicResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getDoctorPic">
-
-         <wsdl:input message="impl:getDoctorPicRequest" name="getDoctorPicRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getDoctorPicResponse" name="getDoctorPicResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="searchUser">
-
-         <wsdl:input message="impl:searchUserRequest" name="searchUserRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:searchUserResponse" name="searchUserResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="sendMessage">
-
-         <wsdl:input message="impl:sendMessageRequest" name="sendMessageRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:sendMessageResponse" name="sendMessageResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="sendMessageBatch">
-
-         <wsdl:input message="impl:sendMessageBatchRequest" name="sendMessageBatchRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:sendMessageBatchResponse" name="sendMessageBatchResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="setMessageRead">
-
-         <wsdl:input message="impl:setMessageReadRequest" name="setMessageReadRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:setMessageReadResponse" name="setMessageReadResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="removeTurn">
-
-         <wsdl:input message="impl:removeTurnRequest" name="removeTurnRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:removeTurnResponse" name="removeTurnResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getOfficesBySpec">
-
-         <wsdl:input message="impl:getOfficesBySpecRequest" name="getOfficesBySpecRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getOfficesBySpecResponse" name="getOfficesBySpecResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getTodayPatient">
-
-         <wsdl:input message="impl:getTodayPatientRequest" name="getTodayPatientRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getTodayPatientResponse" name="getTodayPatientResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reception">
-
-         <wsdl:input message="impl:receptionRequest" name="receptionRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:receptionResponse" name="receptionResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getPatientFile">
-
-         <wsdl:input message="impl:getPatientFileRequest" name="getPatientFileRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getPatientFileResponse" name="getPatientFileResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getGalleryPic">
-
-         <wsdl:input message="impl:getGalleryPicRequest" name="getGalleryPicRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getGalleryPicResponse" name="getGalleryPicResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="setGalleryPic">
-
-         <wsdl:input message="impl:setGalleryPicRequest" name="setGalleryPicRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:setGalleryPicResponse" name="setGalleryPicResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getTaskGroups">
-
-         <wsdl:input message="impl:getTaskGroupsRequest" name="getTaskGroupsRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getTaskGroupsResponse" name="getTaskGroupsResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTaskGroup">
-
-         <wsdl:input message="impl:addTaskGroupRequest" name="addTaskGroupRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addTaskGroupResponse" name="addTaskGroupResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTaskGroup2">
-
-         <wsdl:input message="impl:addTaskGroup2Request" name="addTaskGroup2Request">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addTaskGroup2Response" name="addTaskGroup2Response">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateTaskGroup">
-
-         <wsdl:input message="impl:updateTaskGroupRequest" name="updateTaskGroupRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateTaskGroupResponse" name="updateTaskGroupResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="deleteTaskGroup">
-
-         <wsdl:input message="impl:deleteTaskGroupRequest" name="deleteTaskGroupRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:deleteTaskGroupResponse" name="deleteTaskGroupResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateTaskPrice">
-
-         <wsdl:input message="impl:updateTaskPriceRequest" name="updateTaskPriceRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateTaskPriceResponse" name="updateTaskPriceResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateTaskName">
-
-         <wsdl:input message="impl:updateTaskNameRequest" name="updateTaskNameRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateTaskNameResponse" name="updateTaskNameResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getOfficeInfo2">
-
-         <wsdl:input message="impl:getOfficeInfo2Request" name="getOfficeInfo2Request">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getOfficeInfo2Response" name="getOfficeInfo2Response">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="login">
 
          <wsdl:input message="impl:loginRequest" name="loginRequest">
@@ -3353,61 +2765,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getAllMessages">
+      <wsdl:operation name="getUserPic">
 
-         <wsdl:input message="impl:getAllMessagesRequest" name="getAllMessagesRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getAllMessagesResponse" name="getAllMessagesResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="removeMessage">
-
-         <wsdl:input message="impl:removeMessageRequest" name="removeMessageRequest">
+         <wsdl:input message="impl:getUserPicRequest" name="getUserPicRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:removeMessageResponse" name="removeMessageResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="deleteTask">
-
-         <wsdl:input message="impl:deleteTaskRequest" name="deleteTaskRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:deleteTaskResponse" name="deleteTaskResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getTasks">
-
-         <wsdl:input message="impl:getTasksRequest" name="getTasksRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getTasksResponse" name="getTasksResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTask">
-
-         <wsdl:input message="impl:addTaskRequest" name="addTaskRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addTaskResponse" name="addTaskResponse">
+         <wsdl:output message="impl:getUserPicResponse" name="getUserPicResponse">
 
        </wsdl:output>
 
@@ -3641,6 +3005,642 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="getSubSpec">
+
+         <wsdl:input message="impl:getSubSpecRequest" name="getSubSpecRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getSubSpecResponse" name="getSubSpecResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSpec">
+
+         <wsdl:input message="impl:getSpecRequest" name="getSpecRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getSpecResponse" name="getSpecResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="register2">
+
+         <wsdl:input message="impl:register2Request" name="register2Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:register2Response" name="register2Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="login2">
+
+         <wsdl:input message="impl:login2Request" name="login2Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:login2Response" name="login2Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="registerOffice">
+
+         <wsdl:input message="impl:registerOfficeRequest" name="registerOfficeRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:registerOfficeResponse" name="registerOfficeResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateOfficeInfo">
+
+         <wsdl:input message="impl:updateOfficeInfoRequest" name="updateOfficeInfoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateOfficeInfoResponse" name="updateOfficeInfoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addBiography">
+
+         <wsdl:input message="impl:addBiographyRequest" name="addBiographyRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addBiographyResponse" name="addBiographyResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addTurn">
+
+         <wsdl:input message="impl:addTurnRequest" name="addTurnRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addTurnResponse" name="addTurnResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addTurnByDate">
+
+         <wsdl:input message="impl:addTurnByDateRequest" name="addTurnByDateRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addTurnByDateResponse" name="addTurnByDateResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllTurn">
+
+         <wsdl:input message="impl:getAllTurnRequest" name="getAllTurnRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllTurnResponse" name="getAllTurnResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getBiography">
+
+         <wsdl:input message="impl:getBiographyRequest" name="getBiographyRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getBiographyResponse" name="getBiographyResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reserveForMe">
+
+         <wsdl:input message="impl:reserveForMeRequest" name="reserveForMeRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:reserveForMeResponse" name="reserveForMeResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCityName">
+
+         <wsdl:input message="impl:getCityNameRequest" name="getCityNameRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getCityNameResponse" name="getCityNameResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProvinceName">
+
+         <wsdl:input message="impl:getProvinceNameRequest" name="getProvinceNameRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getProvinceNameResponse" name="getProvinceNameResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="helloWorld">
+
+         <wsdl:input message="impl:helloWorldRequest" name="helloWorldRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:helloWorldResponse" name="helloWorldResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProvince">
+
+         <wsdl:input message="impl:getProvinceRequest" name="getProvinceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getProvinceResponse" name="getProvinceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCity">
+
+         <wsdl:input message="impl:getCityRequest" name="getCityRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getCityResponse" name="getCityResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reserveForUser">
+
+         <wsdl:input message="impl:reserveForUserRequest" name="reserveForUserRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:reserveForUserResponse" name="reserveForUserResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reserveForGuest">
+
+         <wsdl:input message="impl:reserveForGuestRequest" name="reserveForGuestRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:reserveForGuestResponse" name="reserveForGuestResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reserveForUser2">
+
+         <wsdl:input message="impl:reserveForUser2Request" name="reserveForUser2Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:reserveForUser2Response" name="reserveForUser2Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reserveForGuest2">
+
+         <wsdl:input message="impl:reserveForGuest2Request" name="reserveForGuest2Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:reserveForGuest2Response" name="reserveForGuest2Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getReservation">
+
+         <wsdl:input message="impl:getReservationRequest" name="getReservationRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getReservationResponse" name="getReservationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateUserInfo">
+
+         <wsdl:input message="impl:updateUserInfoRequest" name="updateUserInfoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateUserInfoResponse" name="updateUserInfoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateUserInfo2">
+
+         <wsdl:input message="impl:updateUserInfo2Request" name="updateUserInfo2Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateUserInfo2Response" name="updateUserInfo2Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateUserInfo3">
+
+         <wsdl:input message="impl:updateUserInfo3Request" name="updateUserInfo3Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateUserInfo3Response" name="updateUserInfo3Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateUserPic2">
+
+         <wsdl:input message="impl:updateUserPic2Request" name="updateUserPic2Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateUserPic2Response" name="updateUserPic2Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteTask">
+
+         <wsdl:input message="impl:deleteTaskRequest" name="deleteTaskRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteTaskResponse" name="deleteTaskResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getTasks">
+
+         <wsdl:input message="impl:getTasksRequest" name="getTasksRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getTasksResponse" name="getTasksResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addTask">
+
+         <wsdl:input message="impl:addTaskRequest" name="addTaskRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addTaskResponse" name="addTaskResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDoctorOffice">
+
+         <wsdl:input message="impl:getDoctorOfficeRequest" name="getDoctorOfficeRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getDoctorOfficeResponse" name="getDoctorOfficeResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOfficeInfo">
+
+         <wsdl:input message="impl:getOfficeInfoRequest" name="getOfficeInfoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getOfficeInfoResponse" name="getOfficeInfoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeMessage">
+
+         <wsdl:input message="impl:removeMessageRequest" name="removeMessageRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:removeMessageResponse" name="removeMessageResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setMessageRead">
+
+         <wsdl:input message="impl:setMessageReadRequest" name="setMessageReadRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:setMessageReadResponse" name="setMessageReadResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchUser">
+
+         <wsdl:input message="impl:searchUserRequest" name="searchUserRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:searchUserResponse" name="searchUserResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sendMessageBatch">
+
+         <wsdl:input message="impl:sendMessageBatchRequest" name="sendMessageBatchRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:sendMessageBatchResponse" name="sendMessageBatchResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllMessages">
+
+         <wsdl:input message="impl:getAllMessagesRequest" name="getAllMessagesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllMessagesResponse" name="getAllMessagesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDoctorPic">
+
+         <wsdl:input message="impl:getDoctorPicRequest" name="getDoctorPicRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getDoctorPicResponse" name="getDoctorPicResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGalleryPic">
+
+         <wsdl:input message="impl:getGalleryPicRequest" name="getGalleryPicRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getGalleryPicResponse" name="getGalleryPicResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reception">
+
+         <wsdl:input message="impl:receptionRequest" name="receptionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:receptionResponse" name="receptionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setGalleryPic">
+
+         <wsdl:input message="impl:setGalleryPicRequest" name="setGalleryPicRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:setGalleryPicResponse" name="setGalleryPicResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPatientFile">
+
+         <wsdl:input message="impl:getPatientFileRequest" name="getPatientFileRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getPatientFileResponse" name="getPatientFileResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getTodayPatient">
+
+         <wsdl:input message="impl:getTodayPatientRequest" name="getTodayPatientRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getTodayPatientResponse" name="getTodayPatientResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOfficesBySpec">
+
+         <wsdl:input message="impl:getOfficesBySpecRequest" name="getOfficesBySpecRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getOfficesBySpecResponse" name="getOfficesBySpecResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeTurn">
+
+         <wsdl:input message="impl:removeTurnRequest" name="removeTurnRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:removeTurnResponse" name="removeTurnResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getTaskGroups">
+
+         <wsdl:input message="impl:getTaskGroupsRequest" name="getTaskGroupsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getTaskGroupsResponse" name="getTaskGroupsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addTaskGroup">
+
+         <wsdl:input message="impl:addTaskGroupRequest" name="addTaskGroupRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addTaskGroupResponse" name="addTaskGroupResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addTaskGroup2">
+
+         <wsdl:input message="impl:addTaskGroup2Request" name="addTaskGroup2Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addTaskGroup2Response" name="addTaskGroup2Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateTaskGroup">
+
+         <wsdl:input message="impl:updateTaskGroupRequest" name="updateTaskGroupRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateTaskGroupResponse" name="updateTaskGroupResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteTaskGroup">
+
+         <wsdl:input message="impl:deleteTaskGroupRequest" name="deleteTaskGroupRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteTaskGroupResponse" name="deleteTaskGroupResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateTaskPrice">
+
+         <wsdl:input message="impl:updateTaskPriceRequest" name="updateTaskPriceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateTaskPriceResponse" name="updateTaskPriceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateTaskName">
+
+         <wsdl:input message="impl:updateTaskNameRequest" name="updateTaskNameRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateTaskNameResponse" name="updateTaskNameResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOfficeInfo2">
+
+         <wsdl:input message="impl:getOfficeInfo2Request" name="getOfficeInfo2Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getOfficeInfo2Response" name="getOfficeInfo2Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sendMessage">
+
+         <wsdl:input message="impl:sendMessageRequest" name="sendMessageRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:sendMessageResponse" name="sendMessageResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:portType>
 
    <wsdl:binding name="WebservicesSoapBinding" type="impl:Webservices">
@@ -3683,888 +3683,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getSubSpec">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getSubSpecRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getSubSpecResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getSpec">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getSpecRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getSpecResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="register2">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="register2Request">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="register2Response">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="login2">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="login2Request">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="login2Response">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="registerOffice">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="registerOfficeRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="registerOfficeResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateOfficeInfo">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateOfficeInfoRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateOfficeInfoResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addBiography">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addBiographyRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addBiographyResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTurn">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addTurnRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addTurnResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTurnByDate">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addTurnByDateRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addTurnByDateResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getAllTurn">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getAllTurnRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getAllTurnResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reserveForMe">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="reserveForMeRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="reserveForMeResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getBiography">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getBiographyRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getBiographyResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getCityName">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getCityNameRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getCityNameResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getProvinceName">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getProvinceNameRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getProvinceNameResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="helloWorld">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="helloWorldRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="helloWorldResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getProvince">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getProvinceRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getProvinceResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getCity">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getCityRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getCityResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reserveForUser">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="reserveForUserRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="reserveForUserResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reserveForGuest">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="reserveForGuestRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="reserveForGuestResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reserveForUser2">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="reserveForUser2Request">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="reserveForUser2Response">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reserveForGuest2">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="reserveForGuest2Request">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="reserveForGuest2Response">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getReservation">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getReservationRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getReservationResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateUserInfo">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateUserInfoRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateUserInfoResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateUserInfo2">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateUserInfo2Request">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateUserInfo2Response">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateUserInfo3">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateUserInfo3Request">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateUserInfo3Response">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateUserPic2">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateUserPic2Request">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateUserPic2Response">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getOfficeInfo">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getOfficeInfoRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getOfficeInfoResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getDoctorOffice">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getDoctorOfficeRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getDoctorOfficeResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getUserPic">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getUserPicRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getUserPicResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getDoctorPic">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getDoctorPicRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getDoctorPicResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="searchUser">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="searchUserRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="searchUserResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="sendMessage">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="sendMessageRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="sendMessageResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="sendMessageBatch">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="sendMessageBatchRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="sendMessageBatchResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="setMessageRead">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="setMessageReadRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="setMessageReadResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="removeTurn">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="removeTurnRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="removeTurnResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getOfficesBySpec">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getOfficesBySpecRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getOfficesBySpecResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getTodayPatient">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getTodayPatientRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getTodayPatientResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="reception">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="receptionRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="receptionResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getPatientFile">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getPatientFileRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getPatientFileResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getGalleryPic">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getGalleryPicRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getGalleryPicResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="setGalleryPic">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="setGalleryPicRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="setGalleryPicResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getTaskGroups">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getTaskGroupsRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getTaskGroupsResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTaskGroup">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addTaskGroupRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addTaskGroupResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTaskGroup2">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addTaskGroup2Request">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addTaskGroup2Response">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateTaskGroup">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateTaskGroupRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateTaskGroupResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="deleteTaskGroup">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="deleteTaskGroupRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="deleteTaskGroupResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateTaskPrice">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateTaskPriceRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateTaskPriceResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateTaskName">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="updateTaskNameRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="updateTaskNameResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getOfficeInfo2">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getOfficeInfo2Request">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getOfficeInfo2Response">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="login">
 
          <wsdlsoap:operation soapAction=""/>
@@ -4583,89 +3701,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getAllMessages">
+      <wsdl:operation name="getUserPic">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="getAllMessagesRequest">
+         <wsdl:input name="getUserPicRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="getAllMessagesResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="removeMessage">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="removeMessageRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="removeMessageResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="deleteTask">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="deleteTaskRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="deleteTaskResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getTasks">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getTasksRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getTasksResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTask">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addTaskRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addTaskResponse">
+         <wsdl:output name="getUserPicResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -5015,13 +4061,967 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="getSubSpec">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getSubSpecRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getSubSpecResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getSpec">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getSpecRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getSpecResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="register2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="register2Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="register2Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="login2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="login2Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="login2Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="registerOffice">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="registerOfficeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="registerOfficeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateOfficeInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateOfficeInfoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateOfficeInfoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addBiography">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addBiographyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addBiographyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addTurn">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addTurnRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addTurnResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addTurnByDate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addTurnByDateRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addTurnByDateResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllTurn">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllTurnRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllTurnResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getBiography">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getBiographyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getBiographyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reserveForMe">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="reserveForMeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="reserveForMeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCityName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCityNameRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCityNameResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProvinceName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProvinceNameRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProvinceNameResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="helloWorld">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="helloWorldRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="helloWorldResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProvince">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProvinceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProvinceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCity">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCityRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCityResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reserveForUser">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="reserveForUserRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="reserveForUserResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reserveForGuest">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="reserveForGuestRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="reserveForGuestResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reserveForUser2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="reserveForUser2Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="reserveForUser2Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reserveForGuest2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="reserveForGuest2Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="reserveForGuest2Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getReservation">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getReservationRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getReservationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateUserInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateUserInfoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateUserInfoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateUserInfo2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateUserInfo2Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateUserInfo2Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateUserInfo3">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateUserInfo3Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateUserInfo3Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateUserPic2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateUserPic2Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateUserPic2Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteTask">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteTaskRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteTaskResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getTasks">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getTasksRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getTasksResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addTask">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addTaskRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addTaskResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDoctorOffice">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDoctorOfficeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDoctorOfficeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOfficeInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getOfficeInfoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getOfficeInfoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeMessage">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="removeMessageRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="removeMessageResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setMessageRead">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setMessageReadRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setMessageReadResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="searchUser">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="searchUserRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="searchUserResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sendMessageBatch">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="sendMessageBatchRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="sendMessageBatchResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllMessages">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllMessagesRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllMessagesResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDoctorPic">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDoctorPicRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDoctorPicResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGalleryPic">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getGalleryPicRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getGalleryPicResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="reception">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="receptionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="receptionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setGalleryPic">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setGalleryPicRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setGalleryPicResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPatientFile">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPatientFileRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPatientFileResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getTodayPatient">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getTodayPatientRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getTodayPatientResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOfficesBySpec">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getOfficesBySpecRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getOfficesBySpecResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeTurn">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="removeTurnRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="removeTurnResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getTaskGroups">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getTaskGroupsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getTaskGroupsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addTaskGroup">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addTaskGroupRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addTaskGroupResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addTaskGroup2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addTaskGroup2Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addTaskGroup2Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateTaskGroup">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateTaskGroupRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateTaskGroupResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteTaskGroup">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteTaskGroupRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteTaskGroupResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateTaskPrice">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateTaskPriceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateTaskPriceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateTaskName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateTaskNameRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateTaskNameResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOfficeInfo2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getOfficeInfo2Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getOfficeInfo2Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="sendMessage">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="sendMessageRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="sendMessageResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:binding>
 
    <wsdl:service name="WebservicesService">
 
       <wsdl:port binding="impl:WebservicesSoapBinding" name="Webservices">
 
-         <wsdlsoap:address location="http://localhost:8080/pirayeshyar/services/Webservices"/>
+         <wsdlsoap:address location="http://localhost:8080/pezeshkyar/services/Webservices"/>
 
       </wsdl:port>
 
