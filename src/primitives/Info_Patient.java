@@ -11,4 +11,6 @@ public class Info_Patient {
 		public String taskName;
 		public int payment;
 		public String description;
+		public int taskGroupId;
+		public String taskGroupName;
 }
