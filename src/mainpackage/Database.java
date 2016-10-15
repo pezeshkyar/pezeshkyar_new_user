@@ -324,14 +324,14 @@ public class Database {
 		return (sum > 0) ?true :false;
 	}
 	
-	public Info_User InsertInSecretary2(int officeid, String secName) throws SQLException{
+	public User InsertInSecretary2(int officeid, String secName) throws SQLException{
 		String[] secNames = new String[1];
 		secNames[0] = secName;
 		boolean b = InsertInSecretary(officeid,secNames);
 		if (b) {
-			return getUserInfoWithoutPic(secName).getInfoUser();
+			return getUserInfoWithoutPic(secName);
 		} else {
-			return User.getErrorUser().getInfoUser();
+			return User.getErrorUser();
 		}
 	}
 	

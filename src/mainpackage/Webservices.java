@@ -236,8 +236,8 @@ public class Webservices {
 		return ret;
 	}
 	
-	public Info_User addSecretaryToOffice2(String username, String password, int officeId, String secretary){
-		Info_User ret = User.getErrorUser().getInfoUser();
+	public User addSecretaryToOffice2(String username, String password, int officeId, String secretary){
+		User ret = User.getErrorUser();
 		Database db = new Database();
 		try{
 			if(db.openConnection()){
