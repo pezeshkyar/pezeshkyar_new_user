@@ -1505,6 +1505,20 @@ public class Database {
 		ps.executeUpdate();
 	}
 	
+	public boolean isHaveDoctorPermission(String username, String password, int officeId) {
+		try{
+			if(checkUserPass(username, password)){
+				int role = getPermissionOnOffice(officeId, username);
+				if(role == Role.doctor){
+					return true;
+				}
+			}
+		}catch(SQLException e){
+
+		}
+		return false;
+	}
+	
 	public boolean isHaveSecretaryPermission(String username, String password, int officeId) {
 		try{
 			if(checkUserPass(username, password)){
@@ -1829,5 +1843,30 @@ public class Database {
 		}
 		
 		return (picno < maxno);
+	}
+	
+	public Vector<Info_User> getAllSecretary(int officeId) throws SQLException{
+		String query = "select username, user.name, lastname, mobileno, cityid, city.name "
+				+ "from user join city on user.cityid = city.id "
+				+ " join secretary on user.id = secretaryid "
+				+ " where secretary.officeid = ? ";
+		
+		Vector<Info_User> vec = new Vector<Info_User>();
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, officeId);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			Info_User info = new Info_User();
+			info.username = rs.getString(1);
+			info.name = rs.getString(2);
+			info.lastname = rs.getString(3);
+			info.mobileno = rs.getString(4);
+			info.cityId = rs.getInt(5);
+			info.pic = null;
+			info.city = rs.getString(6);
+			
+			vec.addElement(info);
+		}
+		return vec;
 	}
 }

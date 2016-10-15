@@ -199,18 +199,14 @@ public class Webservices {
 	public boolean updateOfficeInfo(String username, String password, int officeId,
 			int cityId, int spec, int subspec, String address, String tellNo, String biography) {
 		Database db = new Database();
-		int perm;
 		boolean ret = false;
 		System.out.println("address = " + address);
 		if(db.openConnection()){
 			try{
-				if(db.checkUserPass(username, password)){
-					perm = db.getPermissionOnOffice(officeId, username);
-					if(perm == Role.doctor || perm == Role.secretary){
-						db.updateOffice(officeId, spec, subspec, address, tellNo, cityId);
-						db.addBiography(officeId, biography);
-						ret = true;
-					}
+				if(db.isHaveSecretaryPermission(username, password, officeId)){
+					db.updateOffice(officeId, spec, subspec, address, tellNo, cityId);
+					db.addBiography(officeId, biography);
+					ret = true;
 				}
 			}catch (SQLException e){
 				ret = false;
@@ -226,15 +222,11 @@ public class Webservices {
 		sec[0] = secretary;
 		boolean ret = false;
 		Database db = new Database();
-		int perm;
 		try{
 			if(db.openConnection()){
-				if(db.checkUserPass(username, password)){
-					perm = db.getPermissionOnOffice(officeId, username);
-					if(perm == Role.doctor || perm == Role.secretary){
+				if(db.isHaveSecretaryPermission(username, password, officeId)){
 						db.InsertInSecretary(officeId, sec);
 						ret = true;
-					}
 				}
 			}
 		} catch(SQLException e){
@@ -249,15 +241,11 @@ public class Webservices {
 	public boolean removeSecretaryFromOffice(String username, String password, int officeId, String secretary){
 		boolean ret = false;
 		Database db = new Database();
-		int perm;
 		try{
 			if(db.openConnection()){
-				if(db.checkUserPass(username, password)){
-					perm = db.getPermissionOnOffice(officeId, username);
-					if(perm == Role.doctor){
+				if(db.isHaveDoctorPermission(username, password, officeId)){
 						db.removeFromSecretary(officeId, secretary);
 						ret = true;
-					}
 				}
 			}
 		} catch(SQLException e){
@@ -274,9 +262,7 @@ public class Webservices {
 		if(capacity <= 0 || duration <= 0 || startHour <=0 || startMin <= 0) return false;
 		try{
 			if(!db.openConnection()) return false;
-			if(!db.checkUserPass(username, password)) return false;
-			int perm = db.getPermissionOnOffice(officeId, username);
-			if(perm != Role.doctor && perm != Role.secretary) return false;
+			if(!db.isHaveSecretaryPermission(username, password, officeId)) return false;
 			if(Helper.isBeforeToday(date)) return false;
 			
 			Turn t = new Turn();
@@ -423,9 +409,7 @@ public class Webservices {
 		Database db = new Database();
 		try{
 			if(!db.openConnection()) return false;
-			if(!db.checkUserPass(username, password)) return false;
-			int perm = db.getPermissionOnOffice(officeId, username);
-			if(perm != Role.doctor && perm != Role.secretary) return false;
+			if(!db.isHaveSecretaryPermission(username, password, officeId)) return false;
 			
 			db.addBiography(officeId, biography);
 		}catch(Exception e){
@@ -1320,28 +1304,18 @@ public class Webservices {
 	public PhotoDesc getGalleryPic(String username, String password, int officeId, int picId){
 		PhotoDesc res = null;
 		Database db = new Database();
-		System.out.println("*********** picId = " + picId);
 		if(db.openConnection()){
-			System.out.println("*********** 1 ");
 			if(db.isHavePatientPermission(username, password, officeId, username)){
-				System.out.println("*********** 2 ");
 				try{
-					System.out.println("*********** 3 ");
-
 					res = db.getGalleryPic(officeId, picId);
-					System.out.println("*********** 4 ");
 
 				}catch(SQLException e) {
-					System.out.println("*********** 5 : " + e.getMessage());
-
 					e.printStackTrace();
 				} finally {
 					db.closeConnection();
 				}
 			}
 		}
-		System.out.println("*********** 6 ");
-
 		return res;
 	}
 	
@@ -1659,6 +1633,27 @@ public class Webservices {
 			return office;
 		}
 		return office;
+	}
+	
+	public Info_User[] getSecretaryInfo(String username, String password, int officeId){
+		Info_User[] result = null;
+		Database db = new Database();
+		
+		if(db.openConnection()){
+			try {
+				if(db.isHaveSecretaryPermission(username, password, officeId)){
+					Vector<Info_User> vec = db.getAllSecretary(officeId);
+					result = new Info_User[vec.size()];
+					for(int i = 0; i < vec.size(); i++){
+						result[i] = vec.elementAt(i);
+					}
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		
+		return result;
 	}
 }
 
