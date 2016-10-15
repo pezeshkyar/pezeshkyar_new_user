@@ -726,7 +726,7 @@ public class Webservices {
 				} else {
 					user = db.getUserInfoWithoutPic(username);
 				}
-				if(user.role == Role.doctor)
+				if(user.role != Role.guest && user.role != Role.none)
 					user.role = db.getPermissionOnOffice(officeId, username);
 			}
 		}catch(SQLException e){
