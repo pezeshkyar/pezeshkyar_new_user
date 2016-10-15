@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="sendXsiTypes" value="true"/>
   <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -48,463 +48,463 @@
    <ns1:parameter qname="ns2:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns2:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getSubSpec" qname="ns4:getSubSpec" returnQName="ns4:getSubSpecReturn" returnType="ns5:Subspec" soapAction="" xmlns:ns4="http://mainpackage" xmlns:ns5="http://primitives">
-   <ns1:parameter qname="ns4:specId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="login" qname="ns4:login" returnQName="ns4:loginReturn" returnType="xsd:int" soapAction="" xmlns:ns4="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns4:username" type="xsd:string"/>
+   <ns1:parameter qname="ns4:password" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="getSpec" qname="ns6:getSpec" returnQName="ns6:getSpecReturn" returnType="ns7:Spec" soapAction="" xmlns:ns6="http://mainpackage" xmlns:ns7="http://primitives"/>
-  <ns1:operation name="register2" qname="ns8:register2" returnQName="ns8:register2Return" returnType="xsd:string" soapAction="" xmlns:ns8="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns8:name" type="xsd:string"/>
-   <ns1:parameter qname="ns8:lastname" type="xsd:string"/>
-   <ns1:parameter qname="ns8:mobileno" type="xsd:string"/>
+  <ns1:operation name="getUserPic" qname="ns5:getUserPic" returnQName="ns5:getUserPicReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns5:username" type="xsd:string"/>
+   <ns1:parameter qname="ns5:password" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="getAllTasks" qname="ns6:getAllTasks" returnQName="ns6:getAllTasksReturn" returnType="ns7:Task" soapAction="" xmlns:ns6="http://mainpackage" xmlns:ns7="http://primitives">
+   <ns1:parameter qname="ns6:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns6:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns6:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="isUserNameAvailable" qname="ns8:isUserNameAvailable" returnQName="ns8:isUserNameAvailableReturn" returnType="xsd:boolean" soapAction="" xmlns:ns8="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns8:username" type="xsd:string"/>
-   <ns1:parameter qname="ns8:password" type="xsd:string"/>
-   <ns1:parameter qname="ns8:role" type="xsd:int"/>
-   <ns1:parameter qname="ns8:cityid" type="xsd:int"/>
-   <ns1:parameter qname="ns8:pic" type="xsd:string"/>
-   <ns1:parameter qname="ns8:email" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="login2" qname="ns9:login2" returnQName="ns9:login2Return" returnType="xsd:int" soapAction="" xmlns:ns9="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns9:username" type="xsd:string"/>
-   <ns1:parameter qname="ns9:password" type="xsd:string"/>
-   <ns1:parameter qname="ns9:officeId" type="xsd:int"/>
+  <ns1:operation name="getCityOfProvince" qname="ns9:getCityOfProvince" returnQName="ns9:getCityOfProvinceReturn" returnType="ns10:City" soapAction="" xmlns:ns10="http://primitives" xmlns:ns9="http://mainpackage">
+   <ns1:parameter qname="ns9:provinceID" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="registerOffice" qname="ns10:registerOffice" returnQName="ns10:registerOfficeReturn" returnType="xsd:int" soapAction="" xmlns:ns10="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns10:username" type="xsd:string"/>
-   <ns1:parameter qname="ns10:password" type="xsd:string"/>
-   <ns1:parameter qname="ns10:cityid" type="xsd:int"/>
-   <ns1:parameter qname="ns10:spec" type="xsd:int"/>
-   <ns1:parameter qname="ns10:subspec" type="xsd:int"/>
-   <ns1:parameter qname="ns10:address" type="xsd:string"/>
-   <ns1:parameter qname="ns10:tellNo" type="xsd:string"/>
-   <ns1:parameter qname="ns10:latitude" type="xsd:double"/>
-   <ns1:parameter qname="ns10:longitude" type="xsd:double"/>
-   <ns1:parameter qname="ns10:secretaryNames" type="xsd:string"/>
-  </ns1:operation>
-  <ns1:operation name="updateOfficeInfo" qname="ns11:updateOfficeInfo" returnQName="ns11:updateOfficeInfoReturn" returnType="xsd:boolean" soapAction="" xmlns:ns11="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="addSecretaryToOffice" qname="ns11:addSecretaryToOffice" returnQName="ns11:addSecretaryToOfficeReturn" returnType="xsd:boolean" soapAction="" xmlns:ns11="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns11:username" type="xsd:string"/>
    <ns1:parameter qname="ns11:password" type="xsd:string"/>
    <ns1:parameter qname="ns11:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns11:cityId" type="xsd:int"/>
-   <ns1:parameter qname="ns11:spec" type="xsd:int"/>
-   <ns1:parameter qname="ns11:subspec" type="xsd:int"/>
-   <ns1:parameter qname="ns11:address" type="xsd:string"/>
-   <ns1:parameter qname="ns11:tellNo" type="xsd:string"/>
-   <ns1:parameter qname="ns11:biography" type="xsd:string"/>
+   <ns1:parameter qname="ns11:secretary" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="addBiography" qname="ns12:addBiography" returnQName="ns12:addBiographyReturn" returnType="xsd:boolean" soapAction="" xmlns:ns12="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="removeSecretaryFromOffice" qname="ns12:removeSecretaryFromOffice" returnQName="ns12:removeSecretaryFromOfficeReturn" returnType="xsd:boolean" soapAction="" xmlns:ns12="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns12:username" type="xsd:string"/>
    <ns1:parameter qname="ns12:password" type="xsd:string"/>
    <ns1:parameter qname="ns12:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns12:biography" type="xsd:string"/>
+   <ns1:parameter qname="ns12:secretary" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="addTurn" qname="ns13:addTurn" returnQName="ns13:addTurnReturn" returnType="xsd:boolean" soapAction="" xmlns:ns13="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns13:username" type="xsd:string"/>
-   <ns1:parameter qname="ns13:password" type="xsd:string"/>
-   <ns1:parameter qname="ns13:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns13:date" type="xsd:string"/>
-   <ns1:parameter qname="ns13:startHour" type="xsd:int"/>
-   <ns1:parameter qname="ns13:startMin" type="xsd:int"/>
-   <ns1:parameter qname="ns13:duration" type="xsd:int"/>
-   <ns1:parameter qname="ns13:capacity" type="xsd:int"/>
+  <ns1:operation name="getAllTurnFromToday" qname="ns13:getAllTurnFromToday" returnQName="ns13:getAllTurnFromTodayReturn" returnType="ns14:Turn" soapAction="" xmlns:ns13="http://mainpackage" xmlns:ns14="http://primitives">
+   <ns1:parameter qname="ns13:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns13:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns13:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addTurnByDate" qname="ns14:addTurnByDate" returnQName="ns14:addTurnByDateReturn" returnType="xsd:boolean" soapAction="" xmlns:ns14="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns14:username" type="xsd:string"/>
-   <ns1:parameter qname="ns14:password" type="xsd:string"/>
-   <ns1:parameter qname="ns14:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns14:fromDate" type="xsd:string"/>
-   <ns1:parameter qname="ns14:toDate" type="xsd:string"/>
-   <ns1:parameter qname="ns14:hour" type="xsd:int"/>
-   <ns1:parameter qname="ns14:min" type="xsd:int"/>
-   <ns1:parameter qname="ns14:duration" type="xsd:int"/>
-   <ns1:parameter qname="ns14:capacity" type="xsd:int"/>
-   <ns1:parameter qname="ns14:dayOfWeek" type="xsd:string"/>
-  </ns1:operation>
-  <ns1:operation name="getAllTurn" qname="ns15:getAllTurn" returnQName="ns15:getAllTurnReturn" returnType="ns16:Turn" soapAction="" xmlns:ns15="http://mainpackage" xmlns:ns16="http://primitives">
+  <ns1:operation name="getReservationByTurnId" qname="ns15:getReservationByTurnId" returnQName="ns15:getReservationByTurnIdReturn" returnType="ns16:Reservation2" soapAction="" xmlns:ns15="http://mainpackage" xmlns:ns16="http://primitives">
    <ns1:parameter qname="ns15:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns15:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns15:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns15:fromDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns15:toDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns15:turnId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="reserveForMe" qname="ns17:reserveForMe" returnQName="ns17:reserveForMeReturn" returnType="xsd:int" soapAction="" xmlns:ns17="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns17:username" type="xsd:string"/>
-   <ns1:parameter qname="ns17:password" type="xsd:string"/>
-   <ns1:parameter qname="ns17:turnId" type="xsd:int"/>
-   <ns1:parameter qname="ns17:firstReservationId" type="xsd:int"/>
-   <ns1:parameter qname="ns17:taskId" type="xsd:int"/>
-   <ns1:parameter qname="ns17:numberOfTurns" type="xsd:int"/>
+  <ns1:operation name="getReservationByUser" qname="ns17:getReservationByUser" returnQName="ns17:getReservationByUserReturn" returnType="ns18:Reservation4" soapAction="" xmlns:ns17="http://mainpackage" xmlns:ns18="http://primitives">
+   <ns1:parameter qname="ns17:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns17:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns17:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns17:count" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns17:index" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getBiography" qname="ns18:getBiography" returnQName="ns18:getBiographyReturn" returnType="xsd:string" soapAction="" xmlns:ns18="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns18:username" type="xsd:string"/>
-   <ns1:parameter qname="ns18:password" type="xsd:string"/>
-   <ns1:parameter qname="ns18:officeId" type="xsd:int"/>
+  <ns1:operation name="getReservationByDate" qname="ns19:getReservationByDate" returnQName="ns19:getReservationByDateReturn" returnType="ns20:Reservation2" soapAction="" xmlns:ns19="http://mainpackage" xmlns:ns20="http://primitives">
+   <ns1:parameter qname="ns19:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns19:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns19:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns19:fromDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns19:toDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getCityName" qname="ns19:getCityName" returnQName="ns19:getCityNameReturn" returnType="xsd:string" soapAction="" xmlns:ns19="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="getProvinceName" qname="ns20:getProvinceName" returnQName="ns20:getProvinceNameReturn" returnType="xsd:string" soapAction="" xmlns:ns20="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="helloWorld" qname="ns21:helloWorld" returnQName="ns21:helloWorldReturn" returnType="xsd:string" soapAction="" xmlns:ns21="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="getProvince" qname="ns22:getProvince" returnQName="ns22:getProvinceReturn" returnType="ns23:Province" soapAction="" xmlns:ns22="http://mainpackage" xmlns:ns23="http://primitives"/>
-  <ns1:operation name="getCity" qname="ns24:getCity" returnQName="ns24:getCityReturn" returnType="ns25:City" soapAction="" xmlns:ns24="http://mainpackage" xmlns:ns25="http://primitives"/>
-  <ns1:operation name="reserveForUser" qname="ns26:reserveForUser" returnQName="ns26:reserveForUserReturn" returnType="xsd:int" soapAction="" xmlns:ns26="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns26:username" type="xsd:string"/>
-   <ns1:parameter qname="ns26:password" type="xsd:string"/>
-   <ns1:parameter qname="ns26:turnId" type="xsd:int"/>
-   <ns1:parameter qname="ns26:firstReservationId" type="xsd:int"/>
-   <ns1:parameter qname="ns26:taskId" type="xsd:int"/>
-   <ns1:parameter qname="ns26:numberOfTurns" type="xsd:int"/>
-   <ns1:parameter qname="ns26:patientUserName" type="xsd:string"/>
+  <ns1:operation name="getUserInfoWithoutPic" qname="ns21:getUserInfoWithoutPic" returnQName="ns21:getUserInfoWithoutPicReturn" returnType="ns22:User" soapAction="" xmlns:ns21="http://mainpackage" xmlns:ns22="http://primitives">
+   <ns1:parameter qname="ns21:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns21:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns21:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="reserveForGuest" qname="ns27:reserveForGuest" returnQName="ns27:reserveForGuestReturn" returnType="xsd:int" soapAction="" xmlns:ns27="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns27:username" type="xsd:string"/>
-   <ns1:parameter qname="ns27:password" type="xsd:string"/>
-   <ns1:parameter qname="ns27:turnId" type="xsd:int"/>
-   <ns1:parameter qname="ns27:firstReservationId" type="xsd:int"/>
-   <ns1:parameter qname="ns27:taskId" type="xsd:int"/>
-   <ns1:parameter qname="ns27:numberOfTurns" type="xsd:int"/>
-   <ns1:parameter qname="ns27:patientFirstName" type="xsd:string"/>
-   <ns1:parameter qname="ns27:patientLastName" type="xsd:string"/>
-   <ns1:parameter qname="ns27:patientPhoneNo" type="xsd:string"/>
-   <ns1:parameter qname="ns27:patientCityId" type="xsd:int"/>
+  <ns1:operation name="updateUserPassword" qname="ns23:updateUserPassword" returnQName="ns23:updateUserPasswordReturn" returnType="xsd:boolean" soapAction="" xmlns:ns23="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns23:username" type="xsd:string"/>
+   <ns1:parameter qname="ns23:password" type="xsd:string"/>
+   <ns1:parameter qname="ns23:newPassword" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="reserveForUser2" qname="ns28:reserveForUser2" returnQName="ns28:reserveForUser2Return" returnType="xsd:int" soapAction="" xmlns:ns28="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns28:username" type="xsd:string"/>
-   <ns1:parameter qname="ns28:password" type="xsd:string"/>
-   <ns1:parameter qname="ns28:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns28:turnId" type="xsd:int"/>
-   <ns1:parameter qname="ns28:firstReservationId" type="xsd:int"/>
-   <ns1:parameter qname="ns28:taskId" type="xsd:int"/>
-   <ns1:parameter qname="ns28:numberOfTurns" type="xsd:int"/>
-   <ns1:parameter qname="ns28:patientUserName" type="xsd:string"/>
-   <ns1:parameter qname="ns28:price" type="xsd:int"/>
+  <ns1:operation name="updateOfficeLocation" qname="ns24:updateOfficeLocation" returnQName="ns24:updateOfficeLocationReturn" returnType="xsd:boolean" soapAction="" xmlns:ns24="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns24:username" type="xsd:string"/>
+   <ns1:parameter qname="ns24:password" type="xsd:string"/>
+   <ns1:parameter qname="ns24:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns24:latitude" type="xsd:string"/>
+   <ns1:parameter qname="ns24:longitude" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="reserveForGuest2" qname="ns29:reserveForGuest2" returnQName="ns29:reserveForGuest2Return" returnType="xsd:int" soapAction="" xmlns:ns29="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns29:username" type="xsd:string"/>
-   <ns1:parameter qname="ns29:password" type="xsd:string"/>
-   <ns1:parameter qname="ns29:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns29:turnId" type="xsd:int"/>
-   <ns1:parameter qname="ns29:firstReservationId" type="xsd:int"/>
-   <ns1:parameter qname="ns29:taskId" type="xsd:int"/>
-   <ns1:parameter qname="ns29:numberOfTurns" type="xsd:int"/>
-   <ns1:parameter qname="ns29:patientFirstName" type="xsd:string"/>
-   <ns1:parameter qname="ns29:patientLastName" type="xsd:string"/>
-   <ns1:parameter qname="ns29:patientPhoneNo" type="xsd:string"/>
-   <ns1:parameter qname="ns29:patientCityId" type="xsd:int"/>
-   <ns1:parameter qname="ns29:price" type="xsd:int"/>
+  <ns1:operation name="cancelReservation" qname="ns25:cancelReservation" returnQName="ns25:cancelReservationReturn" returnType="xsd:boolean" soapAction="" xmlns:ns25="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns25:username" type="xsd:string"/>
+   <ns1:parameter qname="ns25:password" type="xsd:string"/>
+   <ns1:parameter qname="ns25:reservationId" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="getReservation" qname="ns30:getReservation" returnQName="ns30:getReservationReturn" returnType="ns31:Info_Reservation2" soapAction="" xmlns:ns30="http://mainpackage" xmlns:ns31="http://primitives">
-   <ns1:parameter qname="ns30:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns30:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns30:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns30:turnId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getUnreadMessages" qname="ns26:getUnreadMessages" returnQName="ns26:getUnreadMessagesReturn" returnType="ns27:Info_Message" soapAction="" xmlns:ns26="http://mainpackage" xmlns:ns27="http://primitives">
+   <ns1:parameter qname="ns26:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns26:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns26:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateUserInfo" qname="ns32:updateUserInfo" returnQName="ns32:updateUserInfoReturn" returnType="xsd:string" soapAction="" xmlns:ns32="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns32:username" type="xsd:string"/>
-   <ns1:parameter qname="ns32:password" type="xsd:string"/>
-   <ns1:parameter qname="ns32:name" type="xsd:string"/>
-   <ns1:parameter qname="ns32:lastname" type="xsd:string"/>
-   <ns1:parameter qname="ns32:mobileno" type="xsd:string"/>
-   <ns1:parameter qname="ns32:cityid" type="xsd:int"/>
+  <ns1:operation name="setAllMessageRead" qname="ns28:setAllMessageRead" soapAction="" xmlns:ns28="http://mainpackage">
+   <ns1:parameter qname="ns28:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns28:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns28:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateUserInfo2" qname="ns33:updateUserInfo2" returnQName="ns33:updateUserInfo2Return" returnType="xsd:string" soapAction="" xmlns:ns33="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns33:username" type="xsd:string"/>
-   <ns1:parameter qname="ns33:password" type="xsd:string"/>
-   <ns1:parameter qname="ns33:name" type="xsd:string"/>
-   <ns1:parameter qname="ns33:lastname" type="xsd:string"/>
-   <ns1:parameter qname="ns33:mobileno" type="xsd:string"/>
-   <ns1:parameter qname="ns33:cityid" type="xsd:int"/>
-   <ns1:parameter qname="ns33:newPassword" type="xsd:string"/>
+  <ns1:operation name="getPatientTurnInfoByDate" qname="ns29:getPatientTurnInfoByDate" returnQName="ns29:getPatientTurnInfoByDateReturn" returnType="ns30:UserTurn" soapAction="" xmlns:ns29="http://mainpackage" xmlns:ns30="http://primitives">
+   <ns1:parameter qname="ns29:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns29:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns29:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns29:fromDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns29:toDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateUserInfo3" qname="ns34:updateUserInfo3" returnQName="ns34:updateUserInfo3Return" returnType="xsd:string" soapAction="" xmlns:ns34="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns34:username" type="xsd:string"/>
-   <ns1:parameter qname="ns34:password" type="xsd:string"/>
-   <ns1:parameter qname="ns34:name" type="xsd:string"/>
-   <ns1:parameter qname="ns34:lastname" type="xsd:string"/>
-   <ns1:parameter qname="ns34:mobileno" type="xsd:string"/>
-   <ns1:parameter qname="ns34:cityid" type="xsd:int"/>
-   <ns1:parameter qname="ns34:newPassword" type="xsd:string"/>
-   <ns1:parameter qname="ns34:email" type="xsd:string"/>
+  <ns1:operation name="getAllGalleyPicId" qname="ns31:getAllGalleyPicId" returnQName="ns31:getAllGalleyPicIdReturn" returnType="xsd:string" soapAction="" xmlns:ns31="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns31:username" type="xsd:string"/>
+   <ns1:parameter qname="ns31:password" type="xsd:string"/>
+   <ns1:parameter qname="ns31:officeId" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="updateUserPic2" qname="ns35:updateUserPic2" returnQName="ns35:updateUserPic2Return" returnType="xsd:boolean" soapAction="" xmlns:ns35="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns35:username" type="xsd:string"/>
-   <ns1:parameter qname="ns35:password" type="xsd:string"/>
-   <ns1:parameter qname="ns35:pic" type="xsd:string"/>
+  <ns1:operation name="deleteFromGallery" qname="ns32:deleteFromGallery" soapAction="" xmlns:ns32="http://mainpackage">
+   <ns1:parameter qname="ns32:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns32:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns32:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns32:picId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getOfficeInfo" qname="ns36:getOfficeInfo" returnQName="ns36:getOfficeInfoReturn" returnType="ns37:Office" soapAction="" xmlns:ns36="http://mainpackage" xmlns:ns37="http://primitives">
-   <ns1:parameter qname="ns36:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns36:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns36:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="changeGalleryPicDescription" qname="ns33:changeGalleryPicDescription" soapAction="" xmlns:ns33="http://mainpackage">
+   <ns1:parameter qname="ns33:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns33:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns33:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns33:picId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns33:description" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getDoctorOffice" qname="ns38:getDoctorOffice" returnQName="ns38:getDoctorOfficeReturn" returnType="xsd:int" soapAction="" xmlns:ns38="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns38:doctorUsername" type="xsd:string"/>
+  <ns1:operation name="getSubSpec" qname="ns34:getSubSpec" returnQName="ns34:getSubSpecReturn" returnType="ns35:Subspec" soapAction="" xmlns:ns34="http://mainpackage" xmlns:ns35="http://primitives">
+   <ns1:parameter qname="ns34:specId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getUserPic" qname="ns39:getUserPic" returnQName="ns39:getUserPicReturn" returnType="xsd:string" soapAction="" xmlns:ns39="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="getSpec" qname="ns36:getSpec" returnQName="ns36:getSpecReturn" returnType="ns37:Spec" soapAction="" xmlns:ns36="http://mainpackage" xmlns:ns37="http://primitives"/>
+  <ns1:operation name="register2" qname="ns38:register2" returnQName="ns38:register2Return" returnType="xsd:string" soapAction="" xmlns:ns38="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns38:name" type="xsd:string"/>
+   <ns1:parameter qname="ns38:lastname" type="xsd:string"/>
+   <ns1:parameter qname="ns38:mobileno" type="xsd:string"/>
+   <ns1:parameter qname="ns38:username" type="xsd:string"/>
+   <ns1:parameter qname="ns38:password" type="xsd:string"/>
+   <ns1:parameter qname="ns38:role" type="xsd:int"/>
+   <ns1:parameter qname="ns38:cityid" type="xsd:int"/>
+   <ns1:parameter qname="ns38:pic" type="xsd:string"/>
+   <ns1:parameter qname="ns38:email" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="login2" qname="ns39:login2" returnQName="ns39:login2Return" returnType="xsd:int" soapAction="" xmlns:ns39="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns39:username" type="xsd:string"/>
    <ns1:parameter qname="ns39:password" type="xsd:string"/>
+   <ns1:parameter qname="ns39:officeId" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="getDoctorPic" qname="ns40:getDoctorPic" returnQName="ns40:getDoctorPicReturn" returnType="xsd:string" soapAction="" xmlns:ns40="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="registerOffice" qname="ns40:registerOffice" returnQName="ns40:registerOfficeReturn" returnType="xsd:int" soapAction="" xmlns:ns40="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns40:username" type="xsd:string"/>
    <ns1:parameter qname="ns40:password" type="xsd:string"/>
-   <ns1:parameter qname="ns40:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns40:cityid" type="xsd:int"/>
+   <ns1:parameter qname="ns40:spec" type="xsd:int"/>
+   <ns1:parameter qname="ns40:subspec" type="xsd:int"/>
+   <ns1:parameter qname="ns40:address" type="xsd:string"/>
+   <ns1:parameter qname="ns40:tellNo" type="xsd:string"/>
+   <ns1:parameter qname="ns40:latitude" type="xsd:double"/>
+   <ns1:parameter qname="ns40:longitude" type="xsd:double"/>
+   <ns1:parameter qname="ns40:secretaryNames" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="searchUser" qname="ns41:searchUser" returnQName="ns41:searchUserReturn" returnType="ns42:Info_User" soapAction="" xmlns:ns41="http://mainpackage" xmlns:ns42="http://primitives">
-   <ns1:parameter qname="ns41:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns41:name" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns41:lastName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns41:mobileNo" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateOfficeInfo" qname="ns41:updateOfficeInfo" returnQName="ns41:updateOfficeInfoReturn" returnType="xsd:boolean" soapAction="" xmlns:ns41="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns41:username" type="xsd:string"/>
+   <ns1:parameter qname="ns41:password" type="xsd:string"/>
+   <ns1:parameter qname="ns41:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns41:cityId" type="xsd:int"/>
+   <ns1:parameter qname="ns41:spec" type="xsd:int"/>
+   <ns1:parameter qname="ns41:subspec" type="xsd:int"/>
+   <ns1:parameter qname="ns41:address" type="xsd:string"/>
+   <ns1:parameter qname="ns41:tellNo" type="xsd:string"/>
+   <ns1:parameter qname="ns41:biography" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="sendMessage" qname="ns43:sendMessage" returnQName="ns43:sendMessageReturn" returnType="xsd:boolean" soapAction="" xmlns:ns43="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="addBiography" qname="ns42:addBiography" returnQName="ns42:addBiographyReturn" returnType="xsd:boolean" soapAction="" xmlns:ns42="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns42:username" type="xsd:string"/>
+   <ns1:parameter qname="ns42:password" type="xsd:string"/>
+   <ns1:parameter qname="ns42:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns42:biography" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="addTurn" qname="ns43:addTurn" returnQName="ns43:addTurnReturn" returnType="xsd:boolean" soapAction="" xmlns:ns43="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns43:username" type="xsd:string"/>
    <ns1:parameter qname="ns43:password" type="xsd:string"/>
    <ns1:parameter qname="ns43:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns43:receiver" type="xsd:string"/>
-   <ns1:parameter qname="ns43:subject" type="xsd:string"/>
-   <ns1:parameter qname="ns43:message" type="xsd:string"/>
+   <ns1:parameter qname="ns43:date" type="xsd:string"/>
+   <ns1:parameter qname="ns43:startHour" type="xsd:int"/>
+   <ns1:parameter qname="ns43:startMin" type="xsd:int"/>
+   <ns1:parameter qname="ns43:duration" type="xsd:int"/>
+   <ns1:parameter qname="ns43:capacity" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="sendMessageBatch" qname="ns44:sendMessageBatch" returnQName="ns44:sendMessageBatchReturn" returnType="xsd:boolean" soapAction="" xmlns:ns44="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="addTurnByDate" qname="ns44:addTurnByDate" returnQName="ns44:addTurnByDateReturn" returnType="xsd:boolean" soapAction="" xmlns:ns44="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns44:username" type="xsd:string"/>
    <ns1:parameter qname="ns44:password" type="xsd:string"/>
    <ns1:parameter qname="ns44:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns44:receivers" type="xsd:string"/>
-   <ns1:parameter qname="ns44:phoneNo" type="xsd:string"/>
-   <ns1:parameter qname="ns44:subject" type="xsd:string"/>
-   <ns1:parameter qname="ns44:message" type="xsd:string"/>
+   <ns1:parameter qname="ns44:fromDate" type="xsd:string"/>
+   <ns1:parameter qname="ns44:toDate" type="xsd:string"/>
+   <ns1:parameter qname="ns44:hour" type="xsd:int"/>
+   <ns1:parameter qname="ns44:min" type="xsd:int"/>
+   <ns1:parameter qname="ns44:duration" type="xsd:int"/>
+   <ns1:parameter qname="ns44:capacity" type="xsd:int"/>
+   <ns1:parameter qname="ns44:dayOfWeek" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="setMessageRead" qname="ns45:setMessageRead" soapAction="" xmlns:ns45="http://mainpackage">
+  <ns1:operation name="getAllTurn" qname="ns45:getAllTurn" returnQName="ns45:getAllTurnReturn" returnType="ns46:Turn" soapAction="" xmlns:ns45="http://mainpackage" xmlns:ns46="http://primitives">
    <ns1:parameter qname="ns45:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns45:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns45:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns45:messageId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns45:fromDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns45:toDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="removeTurn" qname="ns46:removeTurn" returnQName="ns46:removeTurnReturn" returnType="xsd:boolean" soapAction="" xmlns:ns46="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns46:username" type="xsd:string"/>
-   <ns1:parameter qname="ns46:password" type="xsd:string"/>
-   <ns1:parameter qname="ns46:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns46:turnId" type="xsd:int"/>
+  <ns1:operation name="getBiography" qname="ns47:getBiography" returnQName="ns47:getBiographyReturn" returnType="xsd:string" soapAction="" xmlns:ns47="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns47:username" type="xsd:string"/>
+   <ns1:parameter qname="ns47:password" type="xsd:string"/>
+   <ns1:parameter qname="ns47:officeId" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="getOfficesBySpec" qname="ns47:getOfficesBySpec" returnQName="ns47:getOfficesBySpecReturn" returnType="ns48:Office" soapAction="" xmlns:ns47="http://mainpackage" xmlns:ns48="http://primitives">
-   <ns1:parameter qname="ns47:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns47:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns47:specId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="reserveForMe" qname="ns48:reserveForMe" returnQName="ns48:reserveForMeReturn" returnType="xsd:int" soapAction="" xmlns:ns48="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns48:username" type="xsd:string"/>
+   <ns1:parameter qname="ns48:password" type="xsd:string"/>
+   <ns1:parameter qname="ns48:turnId" type="xsd:int"/>
+   <ns1:parameter qname="ns48:firstReservationId" type="xsd:int"/>
+   <ns1:parameter qname="ns48:taskId" type="xsd:int"/>
+   <ns1:parameter qname="ns48:numberOfTurns" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="getTodayPatient" qname="ns49:getTodayPatient" returnQName="ns49:getTodayPatientReturn" returnType="ns50:Info_Patient" soapAction="" xmlns:ns49="http://mainpackage" xmlns:ns50="http://primitives">
-   <ns1:parameter qname="ns49:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns49:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns49:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  </ns1:operation>
-  <ns1:operation name="reception" qname="ns51:reception" returnQName="ns51:receptionReturn" returnType="xsd:boolean" soapAction="" xmlns:ns51="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns51:username" type="xsd:string"/>
-   <ns1:parameter qname="ns51:password" type="xsd:string"/>
-   <ns1:parameter qname="ns51:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns51:reservationId" type="xsd:int"/>
-   <ns1:parameter qname="ns51:payment" type="xsd:int"/>
-   <ns1:parameter qname="ns51:description" type="xsd:string"/>
-  </ns1:operation>
-  <ns1:operation name="getPatientFile" qname="ns52:getPatientFile" returnQName="ns52:getPatientFileReturn" returnType="ns53:Info_patientFile" soapAction="" xmlns:ns52="http://mainpackage" xmlns:ns53="http://primitives">
-   <ns1:parameter qname="ns52:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns52:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns52:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns52:patientUsername" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  </ns1:operation>
-  <ns1:operation name="getGalleryPic" qname="ns54:getGalleryPic" returnQName="ns54:getGalleryPicReturn" returnType="ns55:PhotoDesc" soapAction="" xmlns:ns54="http://mainpackage" xmlns:ns55="http://primitives">
-   <ns1:parameter qname="ns54:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns54:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns54:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns54:picId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  </ns1:operation>
-  <ns1:operation name="setGalleryPic" qname="ns56:setGalleryPic" returnQName="ns56:setGalleryPicReturn" returnType="xsd:int" soapAction="" xmlns:ns56="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="getCityName" qname="ns49:getCityName" returnQName="ns49:getCityNameReturn" returnType="xsd:string" soapAction="" xmlns:ns49="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getProvinceName" qname="ns50:getProvinceName" returnQName="ns50:getProvinceNameReturn" returnType="xsd:string" soapAction="" xmlns:ns50="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="helloWorld" qname="ns51:helloWorld" returnQName="ns51:helloWorldReturn" returnType="xsd:string" soapAction="" xmlns:ns51="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getProvince" qname="ns52:getProvince" returnQName="ns52:getProvinceReturn" returnType="ns53:Province" soapAction="" xmlns:ns52="http://mainpackage" xmlns:ns53="http://primitives"/>
+  <ns1:operation name="getCity" qname="ns54:getCity" returnQName="ns54:getCityReturn" returnType="ns55:City" soapAction="" xmlns:ns54="http://mainpackage" xmlns:ns55="http://primitives"/>
+  <ns1:operation name="reserveForUser" qname="ns56:reserveForUser" returnQName="ns56:reserveForUserReturn" returnType="xsd:int" soapAction="" xmlns:ns56="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns56:username" type="xsd:string"/>
    <ns1:parameter qname="ns56:password" type="xsd:string"/>
-   <ns1:parameter qname="ns56:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns56:pic" type="xsd:string"/>
-   <ns1:parameter qname="ns56:description" type="xsd:string"/>
+   <ns1:parameter qname="ns56:turnId" type="xsd:int"/>
+   <ns1:parameter qname="ns56:firstReservationId" type="xsd:int"/>
+   <ns1:parameter qname="ns56:taskId" type="xsd:int"/>
+   <ns1:parameter qname="ns56:numberOfTurns" type="xsd:int"/>
+   <ns1:parameter qname="ns56:patientUserName" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="getTaskGroups" qname="ns57:getTaskGroups" returnQName="ns57:getTaskGroupsReturn" returnType="ns58:TaskGroup" soapAction="" xmlns:ns57="http://mainpackage" xmlns:ns58="http://primitives">
-   <ns1:parameter qname="ns57:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns57:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns57:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="reserveForGuest" qname="ns57:reserveForGuest" returnQName="ns57:reserveForGuestReturn" returnType="xsd:int" soapAction="" xmlns:ns57="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns57:username" type="xsd:string"/>
+   <ns1:parameter qname="ns57:password" type="xsd:string"/>
+   <ns1:parameter qname="ns57:turnId" type="xsd:int"/>
+   <ns1:parameter qname="ns57:firstReservationId" type="xsd:int"/>
+   <ns1:parameter qname="ns57:taskId" type="xsd:int"/>
+   <ns1:parameter qname="ns57:numberOfTurns" type="xsd:int"/>
+   <ns1:parameter qname="ns57:patientFirstName" type="xsd:string"/>
+   <ns1:parameter qname="ns57:patientLastName" type="xsd:string"/>
+   <ns1:parameter qname="ns57:patientPhoneNo" type="xsd:string"/>
+   <ns1:parameter qname="ns57:patientCityId" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="addTaskGroup" qname="ns59:addTaskGroup" returnQName="ns59:addTaskGroupReturn" returnType="xsd:int" soapAction="" xmlns:ns59="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="reserveForUser2" qname="ns58:reserveForUser2" returnQName="ns58:reserveForUser2Return" returnType="xsd:int" soapAction="" xmlns:ns58="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns58:username" type="xsd:string"/>
+   <ns1:parameter qname="ns58:password" type="xsd:string"/>
+   <ns1:parameter qname="ns58:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns58:turnId" type="xsd:int"/>
+   <ns1:parameter qname="ns58:firstReservationId" type="xsd:int"/>
+   <ns1:parameter qname="ns58:taskId" type="xsd:int"/>
+   <ns1:parameter qname="ns58:numberOfTurns" type="xsd:int"/>
+   <ns1:parameter qname="ns58:patientUserName" type="xsd:string"/>
+   <ns1:parameter qname="ns58:price" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="reserveForGuest2" qname="ns59:reserveForGuest2" returnQName="ns59:reserveForGuest2Return" returnType="xsd:int" soapAction="" xmlns:ns59="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns59:username" type="xsd:string"/>
    <ns1:parameter qname="ns59:password" type="xsd:string"/>
    <ns1:parameter qname="ns59:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns59:taskGroupName" type="xsd:string"/>
+   <ns1:parameter qname="ns59:turnId" type="xsd:int"/>
+   <ns1:parameter qname="ns59:firstReservationId" type="xsd:int"/>
+   <ns1:parameter qname="ns59:taskId" type="xsd:int"/>
+   <ns1:parameter qname="ns59:numberOfTurns" type="xsd:int"/>
+   <ns1:parameter qname="ns59:patientFirstName" type="xsd:string"/>
+   <ns1:parameter qname="ns59:patientLastName" type="xsd:string"/>
+   <ns1:parameter qname="ns59:patientPhoneNo" type="xsd:string"/>
+   <ns1:parameter qname="ns59:patientCityId" type="xsd:int"/>
+   <ns1:parameter qname="ns59:price" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="addTaskGroup2" qname="ns60:addTaskGroup2" returnQName="ns60:addTaskGroup2Return" returnType="xsd:string" soapAction="" xmlns:ns60="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns60:username" type="xsd:string"/>
-   <ns1:parameter qname="ns60:password" type="xsd:string"/>
-   <ns1:parameter qname="ns60:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns60:taskGroupName" type="xsd:string"/>
+  <ns1:operation name="getReservation" qname="ns60:getReservation" returnQName="ns60:getReservationReturn" returnType="ns61:Info_Reservation2" soapAction="" xmlns:ns60="http://mainpackage" xmlns:ns61="http://primitives">
+   <ns1:parameter qname="ns60:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns60:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns60:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns60:turnId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateTaskGroup" qname="ns61:updateTaskGroup" returnQName="ns61:updateTaskGroupReturn" returnType="xsd:string" soapAction="" xmlns:ns61="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns61:username" type="xsd:string"/>
-   <ns1:parameter qname="ns61:password" type="xsd:string"/>
-   <ns1:parameter qname="ns61:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns61:taskGroupId" type="xsd:int"/>
-   <ns1:parameter qname="ns61:taskGroupName" type="xsd:string"/>
-  </ns1:operation>
-  <ns1:operation name="deleteTaskGroup" qname="ns62:deleteTaskGroup" returnQName="ns62:deleteTaskGroupReturn" returnType="xsd:string" soapAction="" xmlns:ns62="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="updateUserInfo" qname="ns62:updateUserInfo" returnQName="ns62:updateUserInfoReturn" returnType="xsd:string" soapAction="" xmlns:ns62="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns62:username" type="xsd:string"/>
    <ns1:parameter qname="ns62:password" type="xsd:string"/>
-   <ns1:parameter qname="ns62:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns62:taskGroupId" type="xsd:int"/>
+   <ns1:parameter qname="ns62:name" type="xsd:string"/>
+   <ns1:parameter qname="ns62:lastname" type="xsd:string"/>
+   <ns1:parameter qname="ns62:mobileno" type="xsd:string"/>
+   <ns1:parameter qname="ns62:cityid" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="updateTaskPrice" qname="ns63:updateTaskPrice" returnQName="ns63:updateTaskPriceReturn" returnType="xsd:string" soapAction="" xmlns:ns63="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="updateUserInfo2" qname="ns63:updateUserInfo2" returnQName="ns63:updateUserInfo2Return" returnType="xsd:string" soapAction="" xmlns:ns63="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns63:username" type="xsd:string"/>
    <ns1:parameter qname="ns63:password" type="xsd:string"/>
-   <ns1:parameter qname="ns63:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns63:taskId" type="xsd:int"/>
-   <ns1:parameter qname="ns63:price" type="xsd:int"/>
+   <ns1:parameter qname="ns63:name" type="xsd:string"/>
+   <ns1:parameter qname="ns63:lastname" type="xsd:string"/>
+   <ns1:parameter qname="ns63:mobileno" type="xsd:string"/>
+   <ns1:parameter qname="ns63:cityid" type="xsd:int"/>
+   <ns1:parameter qname="ns63:newPassword" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="updateTaskName" qname="ns64:updateTaskName" returnQName="ns64:updateTaskNameReturn" returnType="xsd:string" soapAction="" xmlns:ns64="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="updateUserInfo3" qname="ns64:updateUserInfo3" returnQName="ns64:updateUserInfo3Return" returnType="xsd:string" soapAction="" xmlns:ns64="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns64:username" type="xsd:string"/>
    <ns1:parameter qname="ns64:password" type="xsd:string"/>
-   <ns1:parameter qname="ns64:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns64:taskId" type="xsd:int"/>
-   <ns1:parameter qname="ns64:taskName" type="xsd:string"/>
+   <ns1:parameter qname="ns64:name" type="xsd:string"/>
+   <ns1:parameter qname="ns64:lastname" type="xsd:string"/>
+   <ns1:parameter qname="ns64:mobileno" type="xsd:string"/>
+   <ns1:parameter qname="ns64:cityid" type="xsd:int"/>
+   <ns1:parameter qname="ns64:newPassword" type="xsd:string"/>
+   <ns1:parameter qname="ns64:email" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="getOfficeInfo2" qname="ns65:getOfficeInfo2" returnQName="ns65:getOfficeInfo2Return" returnType="ns66:Office" soapAction="" xmlns:ns65="http://mainpackage" xmlns:ns66="http://primitives">
-   <ns1:parameter qname="ns65:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateUserPic2" qname="ns65:updateUserPic2" returnQName="ns65:updateUserPic2Return" returnType="xsd:boolean" soapAction="" xmlns:ns65="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns65:username" type="xsd:string"/>
+   <ns1:parameter qname="ns65:password" type="xsd:string"/>
+   <ns1:parameter qname="ns65:pic" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="login" qname="ns67:login" returnQName="ns67:loginReturn" returnType="xsd:int" soapAction="" xmlns:ns67="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns67:username" type="xsd:string"/>
-   <ns1:parameter qname="ns67:password" type="xsd:string"/>
+  <ns1:operation name="deleteTask" qname="ns66:deleteTask" returnQName="ns66:deleteTaskReturn" returnType="xsd:string" soapAction="" xmlns:ns66="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns66:username" type="xsd:string"/>
+   <ns1:parameter qname="ns66:password" type="xsd:string"/>
+   <ns1:parameter qname="ns66:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns66:taskId" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="getAllMessages" qname="ns68:getAllMessages" returnQName="ns68:getAllMessagesReturn" returnType="ns69:Info_Message" soapAction="" xmlns:ns68="http://mainpackage" xmlns:ns69="http://primitives">
-   <ns1:parameter qname="ns68:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns68:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns68:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getTasks" qname="ns67:getTasks" returnQName="ns67:getTasksReturn" returnType="ns68:Task" soapAction="" xmlns:ns67="http://mainpackage" xmlns:ns68="http://primitives">
+   <ns1:parameter qname="ns67:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns67:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns67:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns67:taskGroupId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="removeMessage" qname="ns70:removeMessage" returnQName="ns70:removeMessageReturn" returnType="xsd:boolean" soapAction="" xmlns:ns70="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns70:username" type="xsd:string"/>
-   <ns1:parameter qname="ns70:password" type="xsd:string"/>
-   <ns1:parameter qname="ns70:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns70:messageId" type="xsd:int"/>
+  <ns1:operation name="addTask" qname="ns69:addTask" returnQName="ns69:addTaskReturn" returnType="xsd:int" soapAction="" xmlns:ns69="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns69:username" type="xsd:string"/>
+   <ns1:parameter qname="ns69:password" type="xsd:string"/>
+   <ns1:parameter qname="ns69:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns69:name" type="xsd:string"/>
+   <ns1:parameter qname="ns69:taskGroupId" type="xsd:int"/>
+   <ns1:parameter qname="ns69:price" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="deleteTask" qname="ns71:deleteTask" returnQName="ns71:deleteTaskReturn" returnType="xsd:string" soapAction="" xmlns:ns71="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns71:username" type="xsd:string"/>
-   <ns1:parameter qname="ns71:password" type="xsd:string"/>
-   <ns1:parameter qname="ns71:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns71:taskId" type="xsd:int"/>
+  <ns1:operation name="getDoctorOffice" qname="ns70:getDoctorOffice" returnQName="ns70:getDoctorOfficeReturn" returnType="xsd:int" soapAction="" xmlns:ns70="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns70:doctorUsername" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="getTasks" qname="ns72:getTasks" returnQName="ns72:getTasksReturn" returnType="ns73:Task" soapAction="" xmlns:ns72="http://mainpackage" xmlns:ns73="http://primitives">
-   <ns1:parameter qname="ns72:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns72:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns72:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns72:taskGroupId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getOfficeInfo" qname="ns71:getOfficeInfo" returnQName="ns71:getOfficeInfoReturn" returnType="ns72:Office" soapAction="" xmlns:ns71="http://mainpackage" xmlns:ns72="http://primitives">
+   <ns1:parameter qname="ns71:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns71:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns71:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addTask" qname="ns74:addTask" returnQName="ns74:addTaskReturn" returnType="xsd:int" soapAction="" xmlns:ns74="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns74:username" type="xsd:string"/>
-   <ns1:parameter qname="ns74:password" type="xsd:string"/>
-   <ns1:parameter qname="ns74:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns74:name" type="xsd:string"/>
-   <ns1:parameter qname="ns74:taskGroupId" type="xsd:int"/>
-   <ns1:parameter qname="ns74:price" type="xsd:int"/>
+  <ns1:operation name="removeMessage" qname="ns73:removeMessage" returnQName="ns73:removeMessageReturn" returnType="xsd:boolean" soapAction="" xmlns:ns73="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns73:username" type="xsd:string"/>
+   <ns1:parameter qname="ns73:password" type="xsd:string"/>
+   <ns1:parameter qname="ns73:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns73:messageId" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="getAllTasks" qname="ns75:getAllTasks" returnQName="ns75:getAllTasksReturn" returnType="ns76:Task" soapAction="" xmlns:ns75="http://mainpackage" xmlns:ns76="http://primitives">
+  <ns1:operation name="setMessageRead" qname="ns74:setMessageRead" soapAction="" xmlns:ns74="http://mainpackage">
+   <ns1:parameter qname="ns74:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns74:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns74:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns74:messageId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="searchUser" qname="ns75:searchUser" returnQName="ns75:searchUserReturn" returnType="ns76:Info_User" soapAction="" xmlns:ns75="http://mainpackage" xmlns:ns76="http://primitives">
    <ns1:parameter qname="ns75:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns75:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns75:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns75:name" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns75:lastName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns75:mobileNo" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="isUserNameAvailable" qname="ns77:isUserNameAvailable" returnQName="ns77:isUserNameAvailableReturn" returnType="xsd:boolean" soapAction="" xmlns:ns77="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="sendMessageBatch" qname="ns77:sendMessageBatch" returnQName="ns77:sendMessageBatchReturn" returnType="xsd:boolean" soapAction="" xmlns:ns77="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns77:username" type="xsd:string"/>
+   <ns1:parameter qname="ns77:password" type="xsd:string"/>
+   <ns1:parameter qname="ns77:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns77:receivers" type="xsd:string"/>
+   <ns1:parameter qname="ns77:phoneNo" type="xsd:string"/>
+   <ns1:parameter qname="ns77:subject" type="xsd:string"/>
+   <ns1:parameter qname="ns77:message" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="getCityOfProvince" qname="ns78:getCityOfProvince" returnQName="ns78:getCityOfProvinceReturn" returnType="ns79:City" soapAction="" xmlns:ns78="http://mainpackage" xmlns:ns79="http://primitives">
-   <ns1:parameter qname="ns78:provinceID" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getAllMessages" qname="ns78:getAllMessages" returnQName="ns78:getAllMessagesReturn" returnType="ns79:Info_Message" soapAction="" xmlns:ns78="http://mainpackage" xmlns:ns79="http://primitives">
+   <ns1:parameter qname="ns78:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns78:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns78:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="addSecretaryToOffice" qname="ns80:addSecretaryToOffice" returnQName="ns80:addSecretaryToOfficeReturn" returnType="xsd:boolean" soapAction="" xmlns:ns80="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="getDoctorPic" qname="ns80:getDoctorPic" returnQName="ns80:getDoctorPicReturn" returnType="xsd:string" soapAction="" xmlns:ns80="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns80:username" type="xsd:string"/>
    <ns1:parameter qname="ns80:password" type="xsd:string"/>
    <ns1:parameter qname="ns80:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns80:secretary" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="removeSecretaryFromOffice" qname="ns81:removeSecretaryFromOffice" returnQName="ns81:removeSecretaryFromOfficeReturn" returnType="xsd:boolean" soapAction="" xmlns:ns81="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns81:username" type="xsd:string"/>
-   <ns1:parameter qname="ns81:password" type="xsd:string"/>
-   <ns1:parameter qname="ns81:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns81:secretary" type="xsd:string"/>
+  <ns1:operation name="getGalleryPic" qname="ns81:getGalleryPic" returnQName="ns81:getGalleryPicReturn" returnType="ns82:PhotoDesc" soapAction="" xmlns:ns81="http://mainpackage" xmlns:ns82="http://primitives">
+   <ns1:parameter qname="ns81:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns81:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns81:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns81:picId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getAllTurnFromToday" qname="ns82:getAllTurnFromToday" returnQName="ns82:getAllTurnFromTodayReturn" returnType="ns83:Turn" soapAction="" xmlns:ns82="http://mainpackage" xmlns:ns83="http://primitives">
-   <ns1:parameter qname="ns82:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns82:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns82:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="reception" qname="ns83:reception" returnQName="ns83:receptionReturn" returnType="xsd:boolean" soapAction="" xmlns:ns83="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns83:username" type="xsd:string"/>
+   <ns1:parameter qname="ns83:password" type="xsd:string"/>
+   <ns1:parameter qname="ns83:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns83:reservationId" type="xsd:int"/>
+   <ns1:parameter qname="ns83:payment" type="xsd:int"/>
+   <ns1:parameter qname="ns83:description" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="getReservationByTurnId" qname="ns84:getReservationByTurnId" returnQName="ns84:getReservationByTurnIdReturn" returnType="ns85:Reservation2" soapAction="" xmlns:ns84="http://mainpackage" xmlns:ns85="http://primitives">
-   <ns1:parameter qname="ns84:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns84:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns84:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns84:turnId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="setGalleryPic" qname="ns84:setGalleryPic" returnQName="ns84:setGalleryPicReturn" returnType="xsd:int" soapAction="" xmlns:ns84="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns84:username" type="xsd:string"/>
+   <ns1:parameter qname="ns84:password" type="xsd:string"/>
+   <ns1:parameter qname="ns84:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns84:pic" type="xsd:string"/>
+   <ns1:parameter qname="ns84:description" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="getReservationByUser" qname="ns86:getReservationByUser" returnQName="ns86:getReservationByUserReturn" returnType="ns87:Reservation4" soapAction="" xmlns:ns86="http://mainpackage" xmlns:ns87="http://primitives">
-   <ns1:parameter qname="ns86:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns86:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns86:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns86:count" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns86:index" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getPatientFile" qname="ns85:getPatientFile" returnQName="ns85:getPatientFileReturn" returnType="ns86:Info_patientFile" soapAction="" xmlns:ns85="http://mainpackage" xmlns:ns86="http://primitives">
+   <ns1:parameter qname="ns85:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns85:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns85:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns85:patientUsername" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getReservationByDate" qname="ns88:getReservationByDate" returnQName="ns88:getReservationByDateReturn" returnType="ns89:Reservation2" soapAction="" xmlns:ns88="http://mainpackage" xmlns:ns89="http://primitives">
-   <ns1:parameter qname="ns88:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns88:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns88:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns88:fromDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns88:toDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getTodayPatient" qname="ns87:getTodayPatient" returnQName="ns87:getTodayPatientReturn" returnType="ns88:Info_Patient" soapAction="" xmlns:ns87="http://mainpackage" xmlns:ns88="http://primitives">
+   <ns1:parameter qname="ns87:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns87:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns87:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="getUserInfoWithoutPic" qname="ns90:getUserInfoWithoutPic" returnQName="ns90:getUserInfoWithoutPicReturn" returnType="ns91:User" soapAction="" xmlns:ns90="http://mainpackage" xmlns:ns91="http://primitives">
-   <ns1:parameter qname="ns90:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns90:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns90:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getOfficesBySpec" qname="ns89:getOfficesBySpec" returnQName="ns89:getOfficesBySpecReturn" returnType="ns90:Office" soapAction="" xmlns:ns89="http://mainpackage" xmlns:ns90="http://primitives">
+   <ns1:parameter qname="ns89:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns89:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns89:specId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="updateUserPassword" qname="ns92:updateUserPassword" returnQName="ns92:updateUserPasswordReturn" returnType="xsd:boolean" soapAction="" xmlns:ns92="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns92:username" type="xsd:string"/>
-   <ns1:parameter qname="ns92:password" type="xsd:string"/>
-   <ns1:parameter qname="ns92:newPassword" type="xsd:string"/>
+  <ns1:operation name="removeTurn" qname="ns91:removeTurn" returnQName="ns91:removeTurnReturn" returnType="xsd:boolean" soapAction="" xmlns:ns91="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns91:username" type="xsd:string"/>
+   <ns1:parameter qname="ns91:password" type="xsd:string"/>
+   <ns1:parameter qname="ns91:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns91:turnId" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="updateOfficeLocation" qname="ns93:updateOfficeLocation" returnQName="ns93:updateOfficeLocationReturn" returnType="xsd:boolean" soapAction="" xmlns:ns93="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns93:username" type="xsd:string"/>
-   <ns1:parameter qname="ns93:password" type="xsd:string"/>
-   <ns1:parameter qname="ns93:officeId" type="xsd:int"/>
-   <ns1:parameter qname="ns93:latitude" type="xsd:string"/>
-   <ns1:parameter qname="ns93:longitude" type="xsd:string"/>
+  <ns1:operation name="getTaskGroups" qname="ns92:getTaskGroups" returnQName="ns92:getTaskGroupsReturn" returnType="ns93:TaskGroup" soapAction="" xmlns:ns92="http://mainpackage" xmlns:ns93="http://primitives">
+   <ns1:parameter qname="ns92:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns92:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns92:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="cancelReservation" qname="ns94:cancelReservation" returnQName="ns94:cancelReservationReturn" returnType="xsd:boolean" soapAction="" xmlns:ns94="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="addTaskGroup" qname="ns94:addTaskGroup" returnQName="ns94:addTaskGroupReturn" returnType="xsd:int" soapAction="" xmlns:ns94="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns94:username" type="xsd:string"/>
    <ns1:parameter qname="ns94:password" type="xsd:string"/>
-   <ns1:parameter qname="ns94:reservationId" type="xsd:int"/>
+   <ns1:parameter qname="ns94:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns94:taskGroupName" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="getUnreadMessages" qname="ns95:getUnreadMessages" returnQName="ns95:getUnreadMessagesReturn" returnType="ns96:Info_Message" soapAction="" xmlns:ns95="http://mainpackage" xmlns:ns96="http://primitives">
-   <ns1:parameter qname="ns95:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns95:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns95:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="addTaskGroup2" qname="ns95:addTaskGroup2" returnQName="ns95:addTaskGroup2Return" returnType="xsd:string" soapAction="" xmlns:ns95="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns95:username" type="xsd:string"/>
+   <ns1:parameter qname="ns95:password" type="xsd:string"/>
+   <ns1:parameter qname="ns95:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns95:taskGroupName" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="setAllMessageRead" qname="ns97:setAllMessageRead" soapAction="" xmlns:ns97="http://mainpackage">
-   <ns1:parameter qname="ns97:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns97:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns97:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateTaskGroup" qname="ns96:updateTaskGroup" returnQName="ns96:updateTaskGroupReturn" returnType="xsd:string" soapAction="" xmlns:ns96="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns96:username" type="xsd:string"/>
+   <ns1:parameter qname="ns96:password" type="xsd:string"/>
+   <ns1:parameter qname="ns96:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns96:taskGroupId" type="xsd:int"/>
+   <ns1:parameter qname="ns96:taskGroupName" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="getPatientTurnInfoByDate" qname="ns98:getPatientTurnInfoByDate" returnQName="ns98:getPatientTurnInfoByDateReturn" returnType="ns99:UserTurn" soapAction="" xmlns:ns98="http://mainpackage" xmlns:ns99="http://primitives">
-   <ns1:parameter qname="ns98:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns98:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns98:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns98:fromDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns98:toDate" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="deleteTaskGroup" qname="ns97:deleteTaskGroup" returnQName="ns97:deleteTaskGroupReturn" returnType="xsd:string" soapAction="" xmlns:ns97="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns97:username" type="xsd:string"/>
+   <ns1:parameter qname="ns97:password" type="xsd:string"/>
+   <ns1:parameter qname="ns97:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns97:taskGroupId" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="getAllGalleyPicId" qname="ns100:getAllGalleyPicId" returnQName="ns100:getAllGalleyPicIdReturn" returnType="xsd:string" soapAction="" xmlns:ns100="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns100:username" type="xsd:string"/>
-   <ns1:parameter qname="ns100:password" type="xsd:string"/>
-   <ns1:parameter qname="ns100:officeId" type="xsd:int"/>
+  <ns1:operation name="updateTaskPrice" qname="ns98:updateTaskPrice" returnQName="ns98:updateTaskPriceReturn" returnType="xsd:string" soapAction="" xmlns:ns98="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns98:username" type="xsd:string"/>
+   <ns1:parameter qname="ns98:password" type="xsd:string"/>
+   <ns1:parameter qname="ns98:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns98:taskId" type="xsd:int"/>
+   <ns1:parameter qname="ns98:price" type="xsd:int"/>
   </ns1:operation>
-  <ns1:operation name="deleteFromGallery" qname="ns101:deleteFromGallery" soapAction="" xmlns:ns101="http://mainpackage">
-   <ns1:parameter qname="ns101:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns101:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns101:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns101:picId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateTaskName" qname="ns99:updateTaskName" returnQName="ns99:updateTaskNameReturn" returnType="xsd:string" soapAction="" xmlns:ns99="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns99:username" type="xsd:string"/>
+   <ns1:parameter qname="ns99:password" type="xsd:string"/>
+   <ns1:parameter qname="ns99:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns99:taskId" type="xsd:int"/>
+   <ns1:parameter qname="ns99:taskName" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="changeGalleryPicDescription" qname="ns102:changeGalleryPicDescription" soapAction="" xmlns:ns102="http://mainpackage">
-   <ns1:parameter qname="ns102:username" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns102:password" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns102:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns102:picId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-   <ns1:parameter qname="ns102:description" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getOfficeInfo2" qname="ns100:getOfficeInfo2" returnQName="ns100:getOfficeInfo2Return" returnType="ns101:Office" soapAction="" xmlns:ns100="http://mainpackage" xmlns:ns101="http://primitives">
+   <ns1:parameter qname="ns100:officeId" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="getProvinceName getAllTasks getSubSpec registerOffice reserveForGuest setGalleryPic getAllGalleyPicId getUserPic sendMessageBatch getCityName addTaskGroup2 getReservationByTurnId cancelReservation getPatientTurnInfoByDate deleteTaskGroup isUserNameAvailable getCity getDoctorOffice addSecretaryToOffice deleteFromGallery getDoctorPic getOfficeInfo reserveForGuest2 getUserInfoWithoutPic updateUserInfo2 updateUserInfo3 addBiography getSpec addTurn searchUser updateUserPassword updateTaskPrice reserveForUser getBiography helloWorld getReservation changeGalleryPicDescription reserveForMe updateUserPic2 register2 getTodayPatient setMessageRead login getReservationByUser getPatientFile getOfficeInfo2 removeMessage addTask updateOfficeInfo getTaskGroups getProvince removeTurn reception addTurnByDate updateTaskGroup addTaskGroup getAllTurn getUnreadMessages sendMessage updateOfficeLocation getAllMessages setAllMessageRead reserveForUser2 updateTaskName getOfficesBySpec updateUserInfo getTasks getCityOfProvince getAllTurnFromToday getReservationByDate getUserInfo getGalleryPic deleteTask login2 removeSecretaryFromOffice register"/>
+  <ns1:operation name="sendMessage" qname="ns102:sendMessage" returnQName="ns102:sendMessageReturn" returnType="xsd:boolean" soapAction="" xmlns:ns102="http://mainpackage" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns102:username" type="xsd:string"/>
+   <ns1:parameter qname="ns102:password" type="xsd:string"/>
+   <ns1:parameter qname="ns102:officeId" type="xsd:int"/>
+   <ns1:parameter qname="ns102:receiver" type="xsd:string"/>
+   <ns1:parameter qname="ns102:subject" type="xsd:string"/>
+   <ns1:parameter qname="ns102:message" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="getProvinceName getAllTasks getSubSpec registerOffice reserveForGuest getAllGalleyPicId setGalleryPic getUserPic sendMessageBatch getCityName getReservationByTurnId addTaskGroup2 cancelReservation getPatientTurnInfoByDate deleteTaskGroup isUserNameAvailable addSecretaryToOffice getCity getDoctorOffice deleteFromGallery getDoctorPic getOfficeInfo reserveForGuest2 getUserInfoWithoutPic updateUserInfo2 updateUserInfo3 addBiography updateUserPassword getSpec addTurn searchUser updateTaskPrice reserveForUser getBiography helloWorld getReservation changeGalleryPicDescription reserveForMe updateUserPic2 register2 getTodayPatient setMessageRead login getReservationByUser addTask removeMessage getPatientFile getOfficeInfo2 updateOfficeInfo getTaskGroups getProvince removeTurn reception addTurnByDate updateTaskGroup addTaskGroup getAllTurn getUnreadMessages sendMessage updateOfficeLocation setAllMessageRead getAllMessages reserveForUser2 updateTaskName getOfficesBySpec updateUserInfo getCityOfProvince getTasks getAllTurnFromToday getReservationByDate getUserInfo deleteTask getGalleryPic removeSecretaryFromOffice login2 register"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="Webservices"/>
   <ns1:parameter name="className" value="mainpackage.Webservices"/>
