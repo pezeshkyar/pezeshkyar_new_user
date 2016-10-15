@@ -1320,18 +1320,28 @@ public class Webservices {
 	public PhotoDesc getGalleryPic(String username, String password, int officeId, int picId){
 		PhotoDesc res = null;
 		Database db = new Database();
-		System.out.println();
+		System.out.println("*********** picId = " + picId);
 		if(db.openConnection()){
+			System.out.println("*********** 1 ");
 			if(db.isHavePatientPermission(username, password, officeId, username)){
+				System.out.println("*********** 2 ");
 				try{
+					System.out.println("*********** 3 ");
+
 					res = db.getGalleryPic(officeId, picId);
+					System.out.println("*********** 4 ");
+
 				}catch(SQLException e) {
+					System.out.println("*********** 5 : " + e.getMessage());
+
 					e.printStackTrace();
 				} finally {
 					db.closeConnection();
 				}
 			}
 		}
+		System.out.println("*********** 6 ");
+
 		return res;
 	}
 	

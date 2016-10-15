@@ -560,25 +560,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="reserveForMe">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="turnId" type="xsd:int"/>
-      <element name="firstReservationId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="numberOfTurns" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="reserveForMeResponse">
-    <complexType>
-     <sequence>
-      <element name="reserveForMeReturn" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="getBiography">
     <complexType>
      <sequence>
@@ -595,53 +576,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="getCityName">
-    <complexType/>
-   </element>
-   <element name="getCityNameResponse">
+   <element name="reserveForMe">
     <complexType>
      <sequence>
-      <element maxOccurs="unbounded" name="getCityNameReturn" type="xsd:string"/>
+      <element name="username" type="xsd:string"/>
+      <element name="password" type="xsd:string"/>
+      <element name="turnId" type="xsd:int"/>
+      <element name="firstReservationId" type="xsd:int"/>
+      <element name="taskId" type="xsd:int"/>
+      <element name="numberOfTurns" type="xsd:int"/>
      </sequence>
     </complexType>
    </element>
-   <element name="getProvinceName">
-    <complexType/>
-   </element>
-   <element name="getProvinceNameResponse">
+   <element name="reserveForMeResponse">
     <complexType>
      <sequence>
-      <element maxOccurs="unbounded" name="getProvinceNameReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="helloWorld">
-    <complexType/>
-   </element>
-   <element name="helloWorldResponse">
-    <complexType>
-     <sequence>
-      <element name="helloWorldReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getProvince">
-    <complexType/>
-   </element>
-   <element name="getProvinceResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getProvinceReturn" type="tns1:Province"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getCity">
-    <complexType/>
-   </element>
-   <element name="getCityResponse">
-    <complexType>
-     <sequence>
-      <element maxOccurs="unbounded" name="getCityReturn" type="tns1:City"/>
+      <element name="reserveForMeReturn" type="xsd:int"/>
      </sequence>
     </complexType>
    </element>
@@ -1180,42 +1130,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="updateTaskPrice">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="price" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTaskPriceResponse">
-    <complexType>
-     <sequence>
-      <element name="updateTaskPriceReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTaskName">
-    <complexType>
-     <sequence>
-      <element name="username" type="xsd:string"/>
-      <element name="password" type="xsd:string"/>
-      <element name="officeId" type="xsd:int"/>
-      <element name="taskId" type="xsd:int"/>
-      <element name="taskName" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTaskNameResponse">
-    <complexType>
-     <sequence>
-      <element name="updateTaskNameReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="getTaskGroups">
     <complexType>
      <sequence>
@@ -1387,11 +1301,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="email" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
-   <complexType name="Subspec">
+   <complexType name="Task">
     <sequence>
      <element name="id" type="xsd:int"/>
-     <element name="specId" type="xsd:int"/>
+     <element name="officeId" type="xsd:int"/>
      <element name="name" nillable="true" type="xsd:string"/>
+     <element name="price" type="xsd:int"/>
+     <element name="taskGroupId" type="xsd:int"/>
     </sequence>
    </complexType>
    <complexType name="City">
@@ -1453,10 +1369,16 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="doctorSubSpec" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
-   <complexType name="Spec">
+   <complexType name="Info_Message">
     <sequence>
      <element name="id" type="xsd:int"/>
-     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="senderUsername" nillable="true" type="xsd:string"/>
+     <element name="senderFirstName" nillable="true" type="xsd:string"/>
+     <element name="senderLastName" nillable="true" type="xsd:string"/>
+     <element name="subject" nillable="true" type="xsd:string"/>
+     <element name="message" nillable="true" type="xsd:string"/>
+     <element name="date" nillable="true" type="xsd:string"/>
+     <element name="time" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
    <complexType name="UserTurn">
@@ -1577,6 +1499,8 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="taskName" nillable="true" type="xsd:string"/>
      <element name="payment" type="xsd:int"/>
      <element name="description" nillable="true" type="xsd:string"/>
+     <element name="taskGroupId" type="xsd:int"/>
+     <element name="taskGroupName" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
    <complexType name="TaskGroup">
@@ -3491,30 +3415,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateTaskPrice">
-
-         <wsdl:input message="impl:updateTaskPriceRequest" name="updateTaskPriceRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateTaskPriceResponse" name="updateTaskPriceResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="updateTaskName">
-
-         <wsdl:input message="impl:updateTaskNameRequest" name="updateTaskNameRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateTaskNameResponse" name="updateTaskNameResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="sendMessageBatch">
 
          <wsdl:input message="impl:sendMessageBatchRequest" name="sendMessageBatchRequest">
@@ -3522,90 +3422,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:sendMessageBatchResponse" name="sendMessageBatchResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="login">
-
-         <wsdl:input message="impl:loginRequest" name="loginRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:loginResponse" name="loginResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getAllMessages">
-
-         <wsdl:input message="impl:getAllMessagesRequest" name="getAllMessagesRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getAllMessagesResponse" name="getAllMessagesResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="removeMessage">
-
-         <wsdl:input message="impl:removeMessageRequest" name="removeMessageRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:removeMessageResponse" name="removeMessageResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="deleteTask">
-
-         <wsdl:input message="impl:deleteTaskRequest" name="deleteTaskRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:deleteTaskResponse" name="deleteTaskResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getTasks">
-
-         <wsdl:input message="impl:getTasksRequest" name="getTasksRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getTasksResponse" name="getTasksResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addTask">
-
-         <wsdl:input message="impl:addTaskRequest" name="addTaskRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addTaskResponse" name="addTaskResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="getAllTasks">
-
-         <wsdl:input message="impl:getAllTasksRequest" name="getAllTasksRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getAllTasksResponse" name="getAllTasksResponse">
 
        </wsdl:output>
 
