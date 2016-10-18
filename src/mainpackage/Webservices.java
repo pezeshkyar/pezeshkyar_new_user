@@ -865,13 +865,13 @@ public class Webservices {
 		}
 	}
 
-	public String getUserPic(String username, String password){
+	public String getUserPic(String username, String password, String patientusername){
 		Database db = new Database();
 		byte[] res = null;
 		if(!db.openConnection()) return null;
 		try {
 			if(!db.checkUserPass(username, password)) res = null;
-			int userId = db.getUserId(username);
+			int userId = db.getUserId(patientusername);
 			res = db.getUserPic(userId);
 		} catch (SQLException e) {
 			res = null;
