@@ -59,12 +59,12 @@ public class Database {
 				databaseName = "pirayeshyar";
 				break;
 			case Version.PEZESHKYAR: 
-				databaseName = "doctorturn";
+				databaseName = "pezeshkyar";
 				break;
 				default:
 					databaseName = "unknown";
 			}
-			databaseName += Constants.CUSTOMER_NAME;
+			databaseName += ("_" + Constants.CUSTOMER_NAME);
 			
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + databaseName, "root", "dreadlord");
 
