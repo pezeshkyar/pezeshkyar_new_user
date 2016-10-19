@@ -176,7 +176,10 @@ public class Database {
 		String query = "insert into user(username, password, name, lastname, mobileno, "
 				+ "role, cityid, photo, id, email) values(?,?,?,?,?,?,?,?,?,?)";
 		if(!openConnection()){
-			msg = "مشکلی در پایگاه داده سمت سرور به وجود آمده است";
+			msg = "\u0645\u0634\u06a9\u0644\u06cc \u062f\u0631 \u067e\u0627\u06cc\u06af\u0627\u0647 "
+					+ "\u062f\u0627\u062f\u0647 \u0633\u0645\u062a \u0633\u0631\u0648\u0631 "
+					+ "\u0628\u0647 \u0648\u062c\u0648\u062f \u0622\u0645\u062f\u0647 "
+					+ "\u0627\u0633\u062a";
 		} else {
 			int id = getMaxId("user") + 1;
 			try {
