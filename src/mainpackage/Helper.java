@@ -22,16 +22,16 @@ public class Helper {
 		String res;
 		switch(Constants.CURRENT_VERSION){
 		case Version.ARAYESHYAR:
-			res = "آرایشگاه";
+			res = "\u0622\u0631\u0627\u06cc\u0634\u06af\u0627\u0647";
 			break;
 		case Version.PIRAYESHYAR:
-			res = "پیرایشگاه";
+			res = "\u067e\u06cc\u0631\u0627\u06cc\u0634\u06af\u0627\u0647";
 			break;
 		case Version.PEZESHKYAR:
-			res = "مطب";
+			res = "\u0645\u0637\u0628";
 			break;
 			default:
-				res = "د�?تر";
+				res = "\u062f\u0641\u062a\u0631";
 				break;
 		}
 		return res;
@@ -41,16 +41,16 @@ public class Helper {
 		String res;
 		switch(Constants.CURRENT_VERSION){
 		case Version.ARAYESHYAR:
-			res = "آرایشگر";
+			res = "\u0622\u0631\u0627\u06cc\u0634\u06af\u0631";
 			break;
 		case Version.PIRAYESHYAR:
-			res = "پیرایشگر";
+			res = "\u067e\u06cc\u0631\u0627\u06cc\u0634\u06af\u0631";
 			break;
 		case Version.PEZESHKYAR:
-			res = "پزشک";
+			res = "\u067e\u0632\u0634\u06a9";
 			break;
 			default:
-				res = "مسئول مربوطه";
+				res = "\u0645\u0633\u0626\u0648\u0644 \u0645\u0631\u0628\u0648\u0637\u0647";
 				break;
 		}
 		return res;
@@ -61,22 +61,21 @@ public class Helper {
 		String res;
 		switch(Constants.CURRENT_VERSION){
 		case Version.ARAYESHYAR:
-			res = "دستیار آرایشگر";
+			res = "\u062f\u0633\u062a\u06cc\u0627\u0631 \u0622\u0631\u0627\u06cc\u0634\u06af\u0631";
 			break;
 		case Version.PIRAYESHYAR:
-			res = "دستیار پیرایشگر";
+			res = "\u062f\u0633\u062a\u06cc\u0627\u0631 \u067e\u06cc\u0631\u0627\u06cc\u0634\u06af\u0631";
 			break;
 		case Version.PEZESHKYAR:
-			res = "منشی مطب";
+			res = "\u0645\u0646\u0634\u06cc \u0645\u0637\u0628";
 			break;
 			default:
-				res = "دستیار";
+				res = "\u062f\u0633\u062a\u06cc\u0627\u0631";
 				break;
 		}
 		return res;
 
 	}
-
 	
 	public static String getString(byte[] bytes) {
 		if(bytes == null) return null;
@@ -209,7 +208,7 @@ public class Helper {
 		res = get2digitNumber(hour) + ":" + get2digitNumber(min);
 		hour += (duration / 60);
 		min += (duration % 60);
-		res += " تا " + get2digitNumber(hour) + ":" + get2digitNumber(min);
+		res += " \u062a\u0627 " + get2digitNumber(hour) + ":" + get2digitNumber(min);
 		return res;
 	}
 	
