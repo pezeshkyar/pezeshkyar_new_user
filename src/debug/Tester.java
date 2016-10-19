@@ -19,7 +19,8 @@ public class Tester {
 //		ws.deleteFromGallery("khorshid", "123", 1, 6);
 //		ws.updateTask("khorshid", "123", 1, 3, "تست", 19000);
 //		ws.getTodayPatient("khorshid", "123", 1);
-		ws.addSecretaryToOffice("khorshid", "123", 1, "dsfvwr");
+//		ws.addSecretaryToOffice("khorshid", "123", 1, "dsfvwr");
+		ws.getAllGalleyPicId2("drmostafavi", "123456", 1);
 	}
 	
 	private static void sendMessages(Webservices ws) {

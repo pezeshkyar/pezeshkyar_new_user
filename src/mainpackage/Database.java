@@ -1914,4 +1914,23 @@ public class Database {
 		}
 		return info;
 	}
+	
+	public Vector<PhotoDesc> getAllPicIdDesc(int officeId) throws SQLException{
+		String query = "select id, description, date from gallery where officeid = ? ";
+		Vector<PhotoDesc> res = new Vector<PhotoDesc>();
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, officeId);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()){
+			PhotoDesc p = new PhotoDesc();
+			p.id = rs.getInt(1);
+			p.description = rs.getString(2);
+			p.date = rs.getString(3);
+			p.photo = null;
+			res.add(p);
+		}
+		
+		return res;
+	}
 }

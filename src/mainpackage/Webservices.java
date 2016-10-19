@@ -1664,6 +1664,30 @@ public class Webservices {
 		return result;
 	}
 	
+	public PhotoDesc[] getAllGalleyPicId2(String username, String password, int officeId){
+		PhotoDesc[] res = null;
+		Vector<PhotoDesc> vec = null;
+		Database db = new Database();
+		
+		if(db.openConnection()){
+			if(db.isHavePatientPermission(username, password, officeId, username)){
+				try {
+					vec = db.getAllPicIdDesc(officeId);
+				} catch (SQLException e) {
+					
+				} finally {
+					db.closeConnection();
+				}
+				res = new PhotoDesc[vec.size()];
+				for(int i = 0; i < res.length; i++){
+					res[i] = vec.elementAt(i);
+				}
+			}
+		}
+		
+		return res;
+	}
+	
 }
 
 
