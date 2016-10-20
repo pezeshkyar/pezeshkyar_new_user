@@ -1037,7 +1037,7 @@ public class Webservices {
 
 	public boolean sendMessage(String username, String password, int officeId, String receiver, String subject,
 			String message) {
-		boolean res = true;
+		boolean res = false;
 		Database db = new Database();
 		if (db.openConnection()) {
 			try {
@@ -1048,9 +1048,10 @@ public class Webservices {
 					String timeStr = Helper.getCurrentTime();
 
 					db.sendMessage(officeId, senderId, receiverId, subject, message, dateStr, timeStr);
-
+					res = true;
 				}
 			} catch (SQLException e) {
+				System.out.println("******************** err = " + e.getMessage());
 				res = false;
 			}
 		} else {

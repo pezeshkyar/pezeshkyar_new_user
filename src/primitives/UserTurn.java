@@ -2,6 +2,7 @@ package primitives;
 
 public class UserTurn {
 	public String username;
+	public String patientUsername;
 	public String patientFirstName;
 	public String patientLastName;
 	public String patientPhoneNo;

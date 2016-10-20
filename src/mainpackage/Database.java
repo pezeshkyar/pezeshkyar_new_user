@@ -64,7 +64,8 @@ public class Database {
 				default:
 					databaseName = "unknown";
 			}
-			databaseName += ("_" + Constants.CUSTOMER_NAME);
+			if(Constants.CUSTOMER_NAME.length() > 0)
+				databaseName += ("_" + Constants.CUSTOMER_NAME);
 			
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + databaseName, "root", "dreadlord");
 
@@ -1298,7 +1299,9 @@ public class Database {
 			String message, String date, String time) throws SQLException{
 		int[] recieverIds = new int[1];
 		recieverIds[0] = receiverid;
+		System.out.println("******************** 1");
 		sendMessageBatch(officeId, senderid, recieverIds, subject, message, date, time);
+		System.out.println("******************** 2");
 	}
 	
 	public void sendMessageBatch(int officeId, int senderid, int[] receiverid, String subject, 
@@ -1308,8 +1311,11 @@ public class Database {
 				+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		int id = getMaxId("message") + 1;
+		System.out.println("******************** 3");
 		PreparedStatement ps = connection.prepareStatement(query);
+		System.out.println("******************** 4");
 		for(int i : receiverid){
+			System.out.println("******************** 5");
 			ps.setInt(1, id++);
 			ps.setInt(2, officeId);
 			ps.setInt(3, senderid);
@@ -1320,10 +1326,12 @@ public class Database {
 			ps.setString(8, date);
 			ps.setString(9, time);
 			
+			System.out.println("******************** 6");
 			ps.addBatch();
+			System.out.println("******************** 7");
 		}
 		ps.executeBatch();
-		
+		System.out.println("******************** 8");
 	}
 	
 	public void setMessageRead(int officeId, int userId, int messageId) throws SQLException{
@@ -1386,7 +1394,7 @@ public class Database {
 		String query = "select u1.username, u2.name, u2.lastname, u2.mobileno, "
 				+ "reserve.numberofturns, turn.date, turn.starthour, turn.startminute, "
 				+ "turn.duration, turn.capacity, turn.reserved, reserve.id, turn.id, "
-				+ "task.id, task.name, reserve.price "
+				+ "task.id, task.name, reserve.price, u2.username "
 				+ "from reserve join turn on reserve.turnid = turn.id "
 				+ "join user as u1 on reserve.userid = u1.id "
 				+ "join user as u2 on reserve.patientid = u2.id "
@@ -1418,6 +1426,7 @@ public class Database {
 			ut.taskId = rs.getInt(14);
 			ut.taskName = rs.getString(15);
 			ut.price = rs.getInt(16);
+			ut.patientUsername = rs.getString(17);
 			
 			vec.addElement(ut);
 		}
