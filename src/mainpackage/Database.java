@@ -1299,9 +1299,7 @@ public class Database {
 			String message, String date, String time) throws SQLException{
 		int[] recieverIds = new int[1];
 		recieverIds[0] = receiverid;
-		System.out.println("******************** 1");
 		sendMessageBatch(officeId, senderid, recieverIds, subject, message, date, time);
-		System.out.println("******************** 2");
 	}
 	
 	public void sendMessageBatch(int officeId, int senderid, int[] receiverid, String subject, 
@@ -1311,11 +1309,8 @@ public class Database {
 				+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		int id = getMaxId("message") + 1;
-		System.out.println("******************** 3");
 		PreparedStatement ps = connection.prepareStatement(query);
-		System.out.println("******************** 4");
 		for(int i : receiverid){
-			System.out.println("******************** 5");
 			ps.setInt(1, id++);
 			ps.setInt(2, officeId);
 			ps.setInt(3, senderid);
@@ -1326,12 +1321,9 @@ public class Database {
 			ps.setString(8, date);
 			ps.setString(9, time);
 			
-			System.out.println("******************** 6");
 			ps.addBatch();
-			System.out.println("******************** 7");
 		}
 		ps.executeBatch();
-		System.out.println("******************** 8");
 	}
 	
 	public void setMessageRead(int officeId, int userId, int messageId) throws SQLException{

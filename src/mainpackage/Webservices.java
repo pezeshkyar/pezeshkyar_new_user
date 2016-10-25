@@ -1051,7 +1051,7 @@ public class Webservices {
 					res = true;
 				}
 			} catch (SQLException e) {
-				System.out.println("******************** err = " + e.getMessage());
+				System.out.println("err = " + e.getMessage());
 				res = false;
 			}
 		} else {
@@ -1714,6 +1714,7 @@ public class Webservices {
 		try {
 			office = db.getOfficeInfo(officeId);
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			return office;
 		}
 		return office;
