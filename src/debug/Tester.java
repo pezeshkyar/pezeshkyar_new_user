@@ -23,7 +23,7 @@ public class Tester {
 		ws.getAllGalleyPicId2("drmostafavi", "123456", 1);
 	}
 	
-	private static void sendMessages(Webservices ws) {
+	public static void sendMessages(Webservices ws) {
 		String[] receiver = new String[3];
 		receiver[0] = "bahar";
 		receiver[1] = "ahodasht";
@@ -66,6 +66,6 @@ public class Tester {
 		cal.add(PersianCalendar.DAY_OF_MONTH, 24);
 		System.out.println(cal.getPersianLongDate());
 		PersianCalendar cal2 = new PersianCalendar();
-		
+		System.out.println(cal2.getPersianDay());
 	}
 }
