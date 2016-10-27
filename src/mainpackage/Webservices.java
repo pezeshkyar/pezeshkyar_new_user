@@ -110,16 +110,18 @@ public class Webservices {
 
 	}
 
-	public boolean isUserNameAvailable(String username) {
+	//Add officeId to input parameters
+	public boolean isUserNameAvailable(String username, int officeId) {
 		Database db = new Database();
-		return db.isUsernameAvailable(username);
+		return db.isUsernameAvailable(username, officeId);
 	}
 
-	public String register(String name, String lastname, String mobileno, String username, String password, int role,
-			int cityid, String pic) {
+	//input params: remove role, add officeId, add email
+	public String register(String name, String lastname, String mobileno,
+			String username, String password, int cityid, String pic,
+			String email, int officeId) {
 		Database db = new Database();
-		if (!db.isUsernameAvailable(username)) {
-			// "نام کاربری انتخابی مجاز نیست";
+		if (!db.isUsernameAvailable(username, officeId)) {
 			return "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
 					+ "\u0627\u0646\u062a\u062e\u0627\u0628\u06cc "
 					+ "\u0645\u062c\u0627\u0632 \u0646\u06cc\u0633\u062a";
@@ -128,28 +130,7 @@ public class Webservices {
 		if (pic != null && pic.length() > 0) {
 			picbyte = Helper.getBytes(pic);
 		}
-		return db.register(name, lastname, mobileno, username, password, role, cityid, picbyte, "");
-	}
-
-	public String register2(String name, String lastname, String mobileno, String username, String password, int role,
-			int cityid, String pic, String email) {
-		Database db = new Database();
-		if (!db.isUsernameAvailable(username)) {
-			// "نام کاربری انتخابی مجاز نیست";
-			return "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
-					+ "\u0627\u0646\u062a\u062e\u0627\u0628\u06cc "
-					+ "\u0645\u062c\u0627\u0632 \u0646\u06cc\u0633\u062a";
-		}
-		byte[] picbyte = null;
-		if (pic != null && pic.length() > 0) {
-			picbyte = Helper.getBytes(pic);
-		}
-		return db.register(name, lastname, mobileno, username, password, role, cityid, picbyte, email);
-	}
-
-	public int login(String username, String password) {
-		Database db = new Database();
-		return db.loginAndGetRole(username, password);
+		return db.register(name, lastname, mobileno, username, password, officeId, cityid, picbyte, email);
 	}
 
 	public int login2(String username, String password, int officeId) {
@@ -159,7 +140,7 @@ public class Webservices {
 			return role;
 
 		try {
-			if (db.checkUserPass(username, password)) {
+			if (db.checkUserPass(username, password, officeId)) {
 				role = db.getPermissionOnOffice(officeId, username);
 			}
 		} catch (Exception ex) {
@@ -168,21 +149,17 @@ public class Webservices {
 		return role;
 	}
 
-	public int registerOffice(String username, String password, int cityid, int spec, int subspec, String address,
-			String tellNo, double latitude, double longitude, String[] secretaryNames) {
+	public int registerOffice(String username, String password, int cityid,
+			int spec, int subspec, String address, String tellNo, 
+			double latitude, double longitude, int timeQuantum, String biography) {
 		Database db = new Database();
-		int role;
 		int id;
 		if (db.openConnection()) {
 			try {
-				int userId = db.getUserId(username);
-				if (userId > 0) {
-					role = db.getRole(userId);
-					if (role == Role.doctor) {
-						id = db.InsertInOffice(userId, spec, subspec, address, tellNo, cityid, latitude, longitude);
-						if (secretaryNames != null && secretaryNames.length > 0)
-							db.InsertInSecretary(id, secretaryNames);
-					}
+				if(db.checkMasterPassword(username, password)){
+					id = db.InsertInOffice(spec, subspec, address, tellNo, 
+							cityid, latitude, longitude, timeQuantum, biography);
+					return id;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -193,11 +170,11 @@ public class Webservices {
 		return -1;
 	}
 
-	public boolean updateOfficeInfo(String username, String password, int officeId, int cityId, int spec, int subspec,
+	public boolean updateOfficeInfo(String username, String password, 
+			int officeId, int cityId, int spec, int subspec,
 			String address, String tellNo, String biography) {
 		Database db = new Database();
 		boolean ret = false;
-		System.out.println("address = " + address);
 		if (db.openConnection()) {
 			try {
 				if (db.isHaveSecretaryPermission(username, password, officeId)) {
@@ -213,16 +190,33 @@ public class Webservices {
 		}
 		return ret;
 	}
-
-	public boolean addSecretaryToOffice(String username, String password, int officeId, String secretary) {
-		String[] sec = new String[1];
-		sec[0] = secretary;
+	
+	public boolean addDoctorToOffice(String username, String password, int officeId, String doctor){
 		boolean ret = false;
 		Database db = new Database();
+		int doctorId = db.getUserId(doctor, officeId);
+		try{
+			if(db.openConnection()){
+				if(db.checkMasterPassword(username, password)){
+					db.InsertInDoctorOffice(officeId, doctorId);
+					ret = true;
+				}
+			}
+		} catch (SQLException e){
+			ret = false;
+		}
+		return ret;
+	}
+	
+	public boolean addSecretaryToOffice(String username, String password, int officeId, String secretary) {
+		boolean ret = false;
+		Database db = new Database();
+		int secretaryId = db.getUserId(secretary, officeId);
 		try {
 			if (db.openConnection()) {
 				if (db.isHaveSecretaryPermission(username, password, officeId)) {
-					ret = db.InsertInSecretary(officeId, sec);
+					db.InsertInSecretary(officeId, secretaryId);
+					ret = true;
 				}
 			}
 		} catch (SQLException e) {
@@ -236,10 +230,11 @@ public class Webservices {
 	public User addSecretaryToOffice2(String username, String password, int officeId, String secretary) {
 		User ret = User.getErrorUser();
 		Database db = new Database();
+		int secretaryId = db.getUserId(secretary, officeId);
 		try {
 			if (db.openConnection()) {
 				if (db.isHaveSecretaryPermission(username, password, officeId)) {
-					ret = db.InsertInSecretary2(officeId, secretary);
+					ret = db.InsertInSecretary2(officeId, secretaryId);
 				}
 			}
 		} catch (Exception e) {
@@ -267,8 +262,8 @@ public class Webservices {
 		return ret;
 	}
 
-	public boolean addTurn(String username, String password, int officeId, String date, int startHour, int startMin,
-			int duration, int capacity) {
+	public boolean addTurn(String username, String password, int officeId,
+			String date, int startHour, int startMin, int duration, int capacity) {
 		Database db = new Database();
 		if (capacity <= 0 || duration <= 0 || startHour <= 0 || startMin <= 0)
 			return false;
@@ -444,7 +439,7 @@ public class Webservices {
 		try {
 			if (!db.openConnection())
 				return str;
-			if (!db.checkUserPass(username, password))
+			if(!db.isHavePatientPermission(username, password, officeId, username)) 
 				return str;
 
 			str = db.getBiography(officeId);
@@ -453,14 +448,15 @@ public class Webservices {
 		return str;
 	}
 
-	public int reserveForMe(String username, String password, int turnId, int firstReservationId, int taskId,
-			int numberOfTurns) {
+	public int reserveForMe(String username, String password, int turnId,
+			int firstReservationId, int taskId, int numberOfTurns) {
 		Database db = new Database();
 		Reservation_new r = new Reservation_new();
 		try {
 			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
-					int userId = db.getUserId(username);
+				int officeId = db.getOfficeIdByTurnId(turnId);
+				if (db.checkUserPass(username, password, officeId)) {
+					int userId = db.getUserId(username, officeId);
 					r.userId = userId;
 					r.firstReservationId = firstReservationId;
 					r.numberOfTurns = numberOfTurns;
@@ -491,12 +487,13 @@ public class Webservices {
 		Reservation_new r = new Reservation_new();
 		try {
 			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
+				int officeId = db.getOfficeIdByTurnId(turnId);
+				if (db.checkUserPass(username, password, officeId)) {
 
-					r.userId = db.getUserId(username);
+					r.userId = db.getUserId(username, officeId);
 					r.firstReservationId = firstReservationId;
 					r.numberOfTurns = numberOfTurns;
-					r.patientId = db.getUserId(patientUserName);
+					r.patientId = db.getUserId(patientUserName, officeId);
 					r.payment = 0;
 					r.taskId = taskId;
 					r.turnId = turnId;
@@ -527,9 +524,10 @@ public class Webservices {
 		Reservation_new r = new Reservation_new();
 		try {
 			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
+				int officeId = db.getOfficeIdByTurnId(turnId);
+				if (db.checkUserPass(username, password, officeId)) {
 					int guestId = db.insertGuest(patientFirstName, patientLastName, patientPhoneNo, patientCityId);
-					r.userId = db.getUserId(username);
+					r.userId = db.getUserId(username, officeId);
 					r.firstReservationId = firstReservationId;
 					r.numberOfTurns = numberOfTurns;
 					r.patientId = guestId;
@@ -559,12 +557,11 @@ public class Webservices {
 		Reservation_new r = new Reservation_new();
 		try {
 			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
-
-					r.userId = db.getUserId(username);
+				if (db.checkUserPass(username, password, officeId)) {
+					r.userId = db.getUserId(username, officeId);
 					r.firstReservationId = firstReservationId;
 					r.numberOfTurns = numberOfTurns;
-					r.patientId = db.getUserId(patientUserName);
+					r.patientId = db.getUserId(patientUserName, officeId);
 					r.payment = 0;
 					r.taskId = taskId;
 					r.turnId = turnId;
@@ -599,9 +596,9 @@ public class Webservices {
 		Reservation_new r = new Reservation_new();
 		try {
 			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
+				if (db.checkUserPass(username, password, officeId)) {
 					int guestId = db.insertGuest(patientFirstName, patientLastName, patientPhoneNo, patientCityId);
-					r.userId = db.getUserId(username);
+					r.userId = db.getUserId(username, officeId);
 					r.firstReservationId = firstReservationId;
 					r.numberOfTurns = numberOfTurns;
 					r.patientId = guestId;
@@ -636,7 +633,7 @@ public class Webservices {
 		try {
 			if (!db.openConnection())
 				return null;
-			if (!db.checkUserPass(username, password))
+			if (!db.checkUserPass(username, password, officeId))
 				return null;
 			int perm = db.getPermissionOnOffice(officeId, username);
 			if (perm == Role.doctor || perm == Role.secretary) {
@@ -661,7 +658,7 @@ public class Webservices {
 		try {
 			if (!db.openConnection())
 				return null;
-			if (!db.checkUserPass(username, password))
+			if (!db.checkUserPass(username, password, officeId))
 				return null;
 
 			vec = db.getReservation(username, officeId);
@@ -689,7 +686,7 @@ public class Webservices {
 				return null;
 			if (!db.openConnection())
 				return null;
-			if (db.checkUserPass(username, password)) {
+			if (db.checkUserPass(username, password, officeId)) {
 				int perm = db.getPermissionOnOffice(officeId, username);
 				if (perm != Role.doctor && perm != Role.secretary) {
 					vec = db.getReservation(officeId, fromDate, toDate);
@@ -721,17 +718,17 @@ public class Webservices {
 		if (!db.openConnection())
 			return user;
 		try {
-			if (!db.checkUserPass(username, password)) {
+			if (!db.checkUserPass(username, password, officeId)) {
 				user.name = "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
 						+ "\u06cc\u0627 \u0631\u0645\u0632 \u0639\u0628\u0648\u0631 "
 						+ "\u0627\u0634\u062a\u0628\u0627\u0647 \u0627\u0633\u062a";
 				user.lastname = "Username or Password is incorrect";
 			} else {
-				int userId = db.getUserId(username);
+				int userId = db.getUserId(username, officeId);
 				if (picSw) {
 					user = db.getUserInfo(userId);
 				} else {
-					user = db.getUserInfoWithoutPic(username);
+					user = db.getUserInfoWithoutPic(userId);
 				}
 				if (user.role != Role.guest && user.role != Role.none)
 					user.role = db.getPermissionOnOffice(officeId, username);
@@ -742,21 +739,22 @@ public class Webservices {
 		return user;
 	}
 
-	public String updateUserInfo(String username, String password, String name, String lastname, String mobileno,
-			int cityid) {
+	//add Office id
+	public String updateUserInfo(String username, String password, int officeId, 
+			String name, String lastname, String mobileno, int cityid) {
 		String res = "OK";
 		Database db = new Database();
 		if (!db.openConnection()) {
 			res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a \u0633\u0631\u0648\u0631";
 		}
 		try {
-			if (!db.checkUserPass(username, password)) {
+			if (!db.checkUserPass(username, password, officeId)) {
 				res = "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
 						+ "\u06cc\u0627 \u0631\u0645\u0632 \u0639\u0628\u0648\u0631 "
 						+ "\u0627\u0634\u062a\u0628\u0627\u0647 \u0627\u0633\u062a";
 			}
-
-			if (!db.updateUserInfo(username, name, lastname, mobileno, cityid)) {
+			int userId = db.getUserId(username, officeId);
+			if (!db.updateUserInfo(userId, name, lastname, mobileno, cityid)) {
 				res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a \u0633\u0631\u0648\u0631";
 			}
 		} catch (SQLException e) {
@@ -765,31 +763,9 @@ public class Webservices {
 		return res;
 	}
 
-	public String updateUserInfo2(String username, String password, String name, String lastname, String mobileno,
-			int cityid, String newPassword) {
-		String res = "OK";
-		Database db = new Database();
-		if (!db.openConnection()) {
-			res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a \u0633\u0631\u0648\u0631";
-		}
-		try {
-			if (!db.checkUserPass(username, password)) {
-				res = "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
-						+ "\u06cc\u0627 \u0631\u0645\u0632 \u0639\u0628\u0648\u0631 "
-						+ "\u0627\u0634\u062a\u0628\u0627\u0647 \u0627\u0633\u062a";
-			}
-
-			if (!db.updateUserInfo(username, name, lastname, mobileno, cityid, newPassword)) {
-				res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a \u0633\u0631\u0648\u0631";
-			}
-		} catch (SQLException e) {
-			res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a \u0633\u0631\u0648\u0631";
-			;
-		}
-		return res;
-	}
-
-	public String updateUserInfo3(String username, String password, String name, String lastname, String mobileno,
+	//add officeId
+	public String updateUserInfo3(String username, String password, int officeId,
+			String name, String lastname, String mobileno,
 			int cityid, String newPassword, String email) {
 		String res = "OK";
 		Database db = new Database();
@@ -797,13 +773,13 @@ public class Webservices {
 			res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a \u0633\u0631\u0648\u0631";
 		}
 		try {
-			if (!db.checkUserPass(username, password)) {
+			if (!db.checkUserPass(username, password, officeId)) {
 				res = "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
 						+ "\u06cc\u0627 \u0631\u0645\u0632 \u0639\u0628\u0648\u0631 "
 						+ "\u0627\u0634\u062a\u0628\u0627\u0647 \u0627\u0633\u062a";
 			}
-
-			if (!db.updateUserInfo(username, name, lastname, mobileno, cityid, newPassword, email)) {
+			int userId = db.getUserId(username, officeId);
+			if (!db.updateUserInfo(userId, name, lastname, mobileno, cityid, newPassword, email)) {
 				res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a \u0633\u0631\u0648\u0631";
 			}
 		} catch (SQLException e) {
@@ -813,18 +789,19 @@ public class Webservices {
 		return res;
 	}
 
-	public boolean updateUserPic2(String username, String password, String pic) {
+	public boolean updateUserPic2(String username, String password, int officeId, String pic) {
 		boolean result = false;
 		Database db = new Database();
 		if (!db.openConnection()) {
 			return false;
 		}
 		try {
-			if (!db.checkUserPass(username, password)) {
+			if (!db.checkUserPass(username, password, officeId)) {
 				result = false;
 			}
 			byte[] imageAsBytes = Helper.getBytes(pic);
-			result = db.updateUserPic(username, imageAsBytes);
+			int userId = db.getUserId(username, officeId);
+			result = db.updateUserPic(userId, imageAsBytes);
 			result = true;
 		} catch (SQLException e) {
 
@@ -833,14 +810,15 @@ public class Webservices {
 		return result;
 	}
 
-	public boolean updateUserPassword(String username, String password, String newPassword) {
+	public boolean updateUserPassword(String username, String password, int officeId, String newPassword) {
 		Database db = new Database();
 		if (!db.openConnection())
 			return false;
 		try {
-			if (!db.checkUserPass(username, password))
+			if (!db.checkUserPass(username, password, officeId))
 				return false;
-			return db.updateUserPassword(username, newPassword);
+			int userId = db.getUserId(username, officeId);
+			return db.updateUserPassword(userId, newPassword);
 		} catch (SQLException e) {
 			return false;
 		}
@@ -853,7 +831,7 @@ public class Webservices {
 			return office;
 		}
 		try {
-			if (!db.checkUserPass(username, password)) {
+			if (!db.checkUserPass(username, password, officeId)) {
 				return office;
 			}
 			office = db.getOfficeInfo(officeId);
@@ -880,15 +858,15 @@ public class Webservices {
 		}
 	}
 
-	public String getUserPic(String username, String password) {
+	public String getUserPic(String username, String password, int officeId) {
 		Database db = new Database();
 		byte[] res = null;
 		if (!db.openConnection())
 			return null;
 		try {
-			if (!db.checkUserPass(username, password))
+			if (!db.checkUserPass(username, password, officeId))
 				res = null;
-			int userId = db.getUserId(username);
+			int userId = db.getUserId(username, officeId);
 			res = db.getUserPic(userId);
 		} catch (SQLException e) {
 			res = null;
@@ -905,7 +883,7 @@ public class Webservices {
 		if (!db.openConnection())
 			return null;
 		try {
-			if (!db.checkUserPass(username, password))
+			if (!db.checkUserPass(username, password, officeId))
 				res = null;
 			res = db.getDrPic(officeId);
 		} catch (SQLException e) {
@@ -938,14 +916,14 @@ public class Webservices {
 		return ret;
 	}
 
-	public boolean cancelReservation(String username, String password, int reservationId) {
+	public boolean cancelReservation(String username, String password,int officeId, int reservationId) {
 		boolean res = false;
 		Database db = new Database();
 		Info_Reservation info;
 		try {
 			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
-					int userId = db.getUserId(username);
+				if (db.checkUserPass(username, password, officeId)) {
+					int userId = db.getUserId(username, officeId);
 					info = db.getUserOfficeTurn(reservationId);
 					if (info.username == null)
 						return false;
@@ -975,12 +953,13 @@ public class Webservices {
 		if (!db.openConnection())
 			return null;
 		try {
-			if (db.checkUserPass(username, password)) {
+			if (db.checkUserPass(username, password, officeId)) {
 				int role = db.getPermissionOnOffice(officeId, username);
 				if (role == Role.doctor || role == Role.secretary) {
-					vec = db.getAllReservation(turnId, "");
+					vec = db.getAllReservation(turnId, false, 0);
 				} else {
-					vec = db.getAllReservation(turnId, username);
+					int userId = db.getUserId(username, officeId);
+					vec = db.getAllReservation(turnId, true, userId);
 				}
 				result = new Info_Reservation2[vec.size()];
 				for (int i = 0; i < vec.size(); i++) {
@@ -1041,9 +1020,9 @@ public class Webservices {
 		Database db = new Database();
 		if (db.openConnection()) {
 			try {
-				if (db.checkUserPass(username, password)) {
-					int senderId = db.getUserId(username);
-					int receiverId = db.getUserId(receiver);
+				if (db.checkUserPass(username, password, officeId)) {
+					int senderId = db.getUserId(username, officeId);
+					int receiverId = db.getUserId(receiver, officeId);
 					String dateStr = Helper.getTodayShortDate();
 					String timeStr = Helper.getCurrentTime();
 
@@ -1068,14 +1047,14 @@ public class Webservices {
 		Vector<String> phoneVec;
 		if (db.openConnection()) {
 			try {
-				if (db.checkUserPass(username, password)) {
+				if (db.checkUserPass(username, password, officeId)) {
 					receiverVec = Helper.removeDuplicates(receivers);
 					phoneVec = Helper.removeDuplicates(phoneNo);
 					int[] receiverIds = new int[receiverVec.size()];
 					for (int i = 0; i < receiverIds.length; i++) {
-						receiverIds[i] = db.getUserId(receiverVec.elementAt(i));
+						receiverIds[i] = db.getUserId(receiverVec.elementAt(i), officeId);
 					}
-					int senderId = db.getUserId(username);
+					int senderId = db.getUserId(username, officeId);
 					String dateStr = Helper.getTodayShortDate();
 					String timeStr = Helper.getCurrentTime();
 
@@ -1105,8 +1084,9 @@ public class Webservices {
 		Database db = new Database();
 		if (db.openConnection()) {
 			try {
-				if (db.checkUserPass(username, password)) {
-					vec = db.getMessages(username, officeId, onlyUnread);
+				if (db.checkUserPass(username, password, officeId)) {
+					int userId = db.getUserId(username, officeId);
+					vec = db.getMessages(userId, officeId, onlyUnread);
 					res = new Info_Message[vec.size()];
 					for (int i = 0; i < res.length; i++) {
 						res[i] = vec.elementAt(i);
@@ -1125,9 +1105,9 @@ public class Webservices {
 		Database db = new Database();
 
 		if (db.openConnection()) {
-			int receiverId = db.getUserId(username);
+			int receiverId = db.getUserId(username, officeId);
 			try {
-				if (db.checkUserPass(username, password)) {
+				if (db.checkUserPass(username, password, officeId)) {
 					db.setMessageRead(officeId, receiverId, messageId);
 				}
 			} catch (SQLException e) {
@@ -1143,9 +1123,9 @@ public class Webservices {
 		Database db = new Database();
 
 		if (db.openConnection()) {
-			int receiverId = db.getUserId(username);
+			int receiverId = db.getUserId(username, officeId);
 			try {
-				if (db.checkUserPass(username, password)) {
+				if (db.checkUserPass(username, password, officeId)) {
 					db.setAllMessageRead(officeId, receiverId);
 				}
 			} catch (SQLException e) {
@@ -1201,58 +1181,13 @@ public class Webservices {
 		return res;
 	}
 
-	// public Info_Office[] getOfficesBySpec(String username, String password,
-	// int specId){
-	// Vector<Info_Office> vec;
-	// Info_Office[] offices = null;
-	// Database db = new Database();
-	// if(!db.openConnection()) {
-	// return offices;
-	// }
-	// try {
-	// if(!db.checkUserPass(username, password)){
-	// return offices;
-	// }
-	// vec = db.getOfficeBySpec(specId);
-	// offices = new Office[vec.size()];
-	// for(int i = 0; i < offices.length; i++){
-	// offices[i] = vec.elementAt(i);
-	// }
-	// } catch (SQLException e) {
-	// return offices;
-	// }
-	// return offices;
-	// }
-
-	public Office[] getOfficesBySpec(String username, String password, int specId) {
-		Office[] offices = null;
-		Vector<Office> vec = new Vector<Office>();
-		Database db = new Database();
-		if (!db.openConnection()) {
-			return offices;
-		}
-		try {
-			if (!db.checkUserPass(username, password)) {
-				return offices;
-			}
-			vec = db.getOfficeBySpec(specId);
-			offices = new Office[vec.size()];
-			for (int i = 0; i < offices.length; i++) {
-				offices[i] = vec.elementAt(i);
-			}
-		} catch (SQLException e) {
-			return offices;
-		}
-		return offices;
-	}
-
 	public boolean removeMessage(String username, String password, int officeId, int messageId) {
 		boolean res = false;
 		Database db = new Database();
 		if (db.openConnection()) {
 			try {
-				if (db.checkUserPass(username, password)) {
-					int userid = db.getUserId(username);
+				if (db.checkUserPass(username, password, officeId)) {
+					int userid = db.getUserId(username, officeId);
 					db.removeMessage(officeId, userid, messageId);
 					res = true;
 				}
@@ -1429,7 +1364,7 @@ public class Webservices {
 		Database db = new Database();
 		if (db.openConnection()) {
 			try {
-				if (db.checkUserPass(username, password)) {
+				if (db.checkUserPass(username, password, officeId)) {
 					Vector<TaskGroup> vec = db.getTaskGroups(officeId);
 					res = new TaskGroup[vec.size()];
 					for (int i = 0; i < res.length; i++) {
@@ -1450,7 +1385,7 @@ public class Webservices {
 		Database db = new Database();
 		if (db.openConnection()) {
 			try {
-				if (db.checkUserPass(username, password)) {
+				if (db.checkUserPass(username, password, officeId)) {
 					Vector<Task> vec = db.getAllTasks(officeId, taskGroupId);
 					res = new Task[vec.size()];
 					for (int i = 0; i < res.length; i++) {

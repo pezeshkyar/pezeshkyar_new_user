@@ -154,13 +154,14 @@ public class Database {
 		return res;
 	}
 	
-	public boolean isUsernameAvailable(String username){
-		String query = "select * from user where username = ?";
+	public boolean isUsernameAvailable(String username, int officeId){
+		String query = "select * from user where username = ? and officeid = ?";
 		boolean res;
 		if(!openConnection()) return false;
 		try{
 			PreparedStatement ps = connection.prepareStatement(query);
 			ps.setString(1, username);
+			ps.setInt(2, officeId);
 			ResultSet rs =  ps.executeQuery();
 			if(rs.next()) res =  false;
 			else res = true;
@@ -172,10 +173,10 @@ public class Database {
 	}
 	
 	public String register(String name, String lastname, String mobileno, String username,
-			String password, int role, int cityid, byte[] pic, String email){
+			String password, int officeId, int cityid, byte[] pic, String email){
 		String msg = "OK";
 		String query = "insert into user(username, password, name, lastname, mobileno, "
-				+ "role, cityid, photo, id, email) values(?,?,?,?,?,?,?,?,?,?)";
+				+ "officeid, cityid, photo, id, email) values(?,?,?,?,?,?,?,?,?,?)";
 		if(!openConnection()){
 			msg = "\u0645\u0634\u06a9\u0644\u06cc \u062f\u0631 \u067e\u0627\u06cc\u06af\u0627\u0647 "
 					+ "\u062f\u0627\u062f\u0647 \u0633\u0645\u062a \u0633\u0631\u0648\u0631 "
@@ -190,7 +191,7 @@ public class Database {
 				ps.setString(3, name);
 				ps.setString(4, lastname);
 				ps.setString(5, mobileno);
-				ps.setInt(6, role);
+				ps.setInt(6, officeId);
 				ps.setInt(7, cityid);
 				if(pic == null || pic.length == 0){
 					ps.setNull(8, java.sql.Types.BLOB);
@@ -207,76 +208,20 @@ public class Database {
 				msg = e.getMessage();
 			} catch (Exception e){
 				e.printStackTrace();
-				e.printStackTrace();
+				msg = e.getMessage();
 			}
 		}
 		closeConnection();
 		return msg;
 	}
-
 	
-//	private Blob getBlobFromByte(byte[] bytes){
-//		if(bytes == null)
-//			return null;
-//		SerialBlob blob = null;
-//		try {
-//			blob = new javax.sql.rowset.serial.SerialBlob(bytes);
-//		} catch (SQLException e) {
-//		}
-//		return blob;
-//	}
-	
-	public int loginAndGetRole(String username, String password){
-		String query = "select role from user where username = ? and password = ?";
-		int role = Role.none;
-		if(openConnection()){
-			PreparedStatement ps;
-			try {
-				ps = connection.prepareStatement(query);
-				ps.setString(1, username);
-				ps.setString(2, password);
-				
-				ResultSet rs = ps.executeQuery();
-				if(rs.next())
-					role = rs.getInt(1);
-				ps.close();
-			} catch (SQLException e) {
-			}
-		}
-		closeConnection();
-		return role;
-	}
-	
-//	public int getRole(String username, String password) throws SQLException{
-//		int role = Role.none;
-//		if(checkUserPass(username, password)){
-//			int userid = getUserId(username);
-//			if(userid > 0){
-//				role = getRole(userid);
-//			}
-//		}
-//	
-//		return role;
-//	}
-	
-	public int getRole(int userId) throws SQLException{
-		int role = Role.none;
-		String query = "select role from user where id = ?";
-		PreparedStatement ps = connection.prepareStatement(query);
-		ps.setInt(1, userId);
-		ResultSet rs = ps.executeQuery();
-		if(rs.next())
-			role = rs.getInt(1);
-		ps.close();
-		return role;
-	}
-	
-	public int getUserId(String username) {
+	public int getUserId(String username, int officeId) {
 		int id = -1;
-		String query = "select id from user where username = ?";
+		String query = "select id from user where username = ? and officeid = ?";
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
 			ps.setString(1, username);
+			ps.setInt(2, officeId);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
 				id = rs.getInt(1);
@@ -287,60 +232,51 @@ public class Database {
 		return id;
 	}
 	
-	public int InsertInOffice(int userId, int spec, int subspec, 
-			String address, String tellNo, int cityid, double latitude, 
-			double longitude) throws SQLException{
+	public int InsertInOffice(int spec, int subspec, String address, 
+			String tellNo, int cityid, double latitude, double longitude, 
+			int timeQuantum, String bioghraphy) throws SQLException{
 		int id = getMaxOfficdId() + 1;
-		String query = "insert into office(id, doctorid, spec, subspec, "
-				+ " address, phoneno, cityid, latitude, longitude) "
-				+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "insert into office(id, spec, subspec, "
+				+ " address, phoneno, cityid, latitude, longitude,"
+				+ " timequantum, biography) "
+				+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, id);
-		ps.setInt(2, userId);
-		ps.setInt(3, spec);
-		ps.setInt(4, subspec);
-		ps.setString(5, address);
-		ps.setString(6, tellNo);
-		ps.setInt(7, cityid);
-		ps.setDouble(8, latitude);
-		ps.setDouble(9, longitude);
+		ps.setInt(2, spec);
+		ps.setInt(3, subspec);
+		ps.setString(4, address);
+		ps.setString(5, tellNo);
+		ps.setInt(6, cityid);
+		ps.setDouble(7, latitude);
+		ps.setDouble(8, longitude);
+		ps.setInt(9, timeQuantum);
+		ps.setString(10, bioghraphy);
 		
 		ps.executeUpdate();
 		ps.close();
 		return id;
 	}
 	
-	public boolean InsertInSecretary(int officeid, String[] secName) throws SQLException{
-		String query = "insert into secretary(officeid, secretaryid) "
-				+ "select ?, id from user where username = ?";
+	public void InsertInSecretary(int officeid, int secretaryId) throws SQLException{
+		String query = "insert into secretary(officeid, secretaryid) values (?, ?)";
 		PreparedStatement ps = connection.prepareStatement(query);
-		for(String secretary : secName){
-			ps.setInt(1, officeid);
-			ps.setString(2, secretary);
-			ps.addBatch();
-		}
-		int[] res = ps.executeBatch();
-		int sum = 0;
-		for(int i : res){
-			sum += i;
-		}
-		ps.close();
-		return (sum > 0) ?true :false;
+		ps.setInt(1, officeid);
+		ps.setInt(2, secretaryId);
+
+		ps.executeUpdate();
 	}
 	
-	public User InsertInSecretary2(int officeid, String secName) throws SQLException{
-		String[] secNames = new String[1];
-		secNames[0] = secName;
-		boolean b = InsertInSecretary(officeid,secNames);
-		if (b) {
-			return getUserInfoWithoutPic(secName);
-		} else {
+	public User InsertInSecretary2(int officeid, int secretaryId){
+		try{
+			InsertInSecretary(officeid, secretaryId);
+			return getUserInfoWithoutPic(secretaryId);
+		}catch(SQLException e){
 			return User.getErrorUser();
 		}
 	}
 	
 	public void removeFromSecretary(int officeid, String secName) throws SQLException{
-		int secId = getUserId(secName);
+		int secId = getUserId(secName, officeid);
 		String query = "delete from secretary where officeid = ? and secretaryid = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
 		
@@ -390,10 +326,11 @@ public class Database {
 
 	
 	public int getPermissionOnOffice(int officeId, String username){
-		int perm = Role.patient;
 		if(username.equals(GUEST_USERNAME)) return Role.guest;
-		int userId = getUserId(username);
-		String query1 = "Select * from office where id = ? and doctorid = ?";
+
+		int perm = Role.patient;
+		int userId = getUserId(username, officeId);
+		String query1 = "Select * from doctoroffice where officeid = ? and doctorid = ?";
 		String query2 = "Select * from secretary where officeid = ? and secretaryid = ?";
 		PreparedStatement ps1, ps2;
 		ResultSet rs1, rs2;
@@ -425,16 +362,19 @@ public class Database {
 		return perm;
 	}
 	
-	public boolean checkUserPass(String username, String password) throws SQLException{
+	public boolean checkUserPass(String username, String password,
+			int officeId) throws SQLException{
 		if(username.equals(GUEST_USERNAME) && password.equals(GUEST_PASSWORD)){
 			return true;
 		}
-		String query = "select * from user where username = ? and password = ?";
+		String query = "select * from user where username = ? "
+				+ "and password = ? and officeid = ?";
 		boolean ret = false;
 		PreparedStatement ps;
 		ps = connection.prepareStatement(query);
 		ps.setString(1, username);
 		ps.setString(2, password);
+		ps.setInt(3, officeId);
 
 		ResultSet rs = ps.executeQuery();
 		if(rs.next())
@@ -561,7 +501,7 @@ public class Database {
 			
 		}
 		for(Turn t : vec){
-			t.isReserved = isReserved(username, t.id);
+			t.isReserved = isReserved(username, officeId, t.id);
 		}
 
 		return vec;
@@ -674,26 +614,29 @@ public class Database {
 	}
 
 	public Vector<Reservation2> getReservationForAdmin(int turnId) throws SQLException{
-		return getReservation(turnId, false, "");
+		return getReservation(turnId, false, 0);
 	}
 	
 	public Vector<Reservation2> getReservationForUser(int turnId, String username) throws SQLException{
-		return getReservation(turnId, true, username);
+		int officeId = getOfficeIdByTurnId(turnId);
+		int userId = getUserId(username, officeId);
+		return getReservation(turnId, true, userId);
 	}
 
 	
-	private Vector<Reservation2> getReservation(int turnId, boolean isUser, String username) throws SQLException{
+	private Vector<Reservation2> getReservation(int turnId, boolean isUser, int userId) throws SQLException{
 		String query = "select reserve.id, u1.username, reserve.turnid, "
 				+ "reserve.taskid, reserve.numberofturns, u2.name, u2.lastname, "
 				+ "u2.mobileno, reserve.firstturn, reserve.payment "
 				+ "from reserve  join user as u1 on reserve.userid = u1.id "
 				+ "join user as u2 on reserve.patientid = u2.id "
 				+ "where turnid = ? ";
-		if(isUser) query += " and u1.username = ?";
+		if(isUser) query += " and u1.id = ?";
 		Vector<Reservation2> vec = new Vector<Reservation2>();
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, turnId);
-		if(isUser) ps.setString(2, username);
+		if(isUser) ps.setInt(2, userId);
+		
 		ResultSet rs = ps.executeQuery();
 		
 		while(rs.next()){
@@ -738,7 +681,7 @@ public class Database {
 	}
 	public Vector<Reservation4> getReservation(String username, int officeId) throws SQLException{
 		DoctorInfo Dinf = getDoctorInfo(officeId);
-		int userId = getUserId(username);
+		int userId = getUserId(username, officeId);
 		String query = "select reserve.id, reserve.turnid, reserve.taskid,"
 				+ " reserve.numberofturns, user.name, user.lastname, user.mobileno, "
 				+ " reserve.firstturn, reserve.payment, turn.date, turn.starthour, "
@@ -849,12 +792,12 @@ public class Database {
 		return res;
 	}
 	
-	public User getUserInfoWithoutPic(String username) throws SQLException{
+	public User getUserInfoWithoutPic(int userId) throws SQLException{
 		User res = User.getErrorUser();
 		String query = "select username, mobileno, name, lastname, role, cityid "
-				+ "from user where username = ?";
+				+ "from user where id = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
-		ps.setString(1, username);
+		ps.setInt(1, userId);
 		ResultSet rs = ps.executeQuery();
 		if(rs.next()){
 			res.username = rs.getString(1);
@@ -876,8 +819,8 @@ public class Database {
 		u.city = cp.city;
 	}
 
-	public boolean updateUserPic(String username, byte[] pic) throws SQLException{
-		String query = "update user set photo = ? where username = ?";
+	public boolean updateUserPic(int userId, byte[] pic) throws SQLException{
+		String query = "update user set photo = ? where id = ?";
 		if(!openConnection()){
 			return false;
 		} else {
@@ -889,7 +832,7 @@ public class Database {
 				ByteArrayInputStream temp = new ByteArrayInputStream(pic);
 				ps.setBinaryStream(1, temp, pic.length);
 			}
-			ps.setString(2, username);
+			ps.setInt(2, userId);
 			ps.executeUpdate();
 			ps.close();
 		}
@@ -898,29 +841,29 @@ public class Database {
 	}
 
 	
-	public boolean updateUserInfo(String username, String name, String lastname, 
+	public boolean updateUserInfo(int userId, String name, String lastname, 
 			String mobileno, int cityid) throws SQLException{
 		boolean result = true;
 		String query = "update user set name = ?, lastname = ?, mobileno = ?, "
-				+ "cityid = ? where username = ?";
+				+ "cityid = ? where id = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
 
 		ps.setString(1, name);
 		ps.setString(2, lastname);
 		ps.setString(3, mobileno);
 		ps.setInt(4, cityid);
-		ps.setString(5, username);
+		ps.setInt(5, userId);
 		ps.executeUpdate();
 		ps.close();
 		closeConnection();
 		return result;
 	}
 	
-	public boolean updateUserInfo(String username, String name, String lastname, 
+	public boolean updateUserInfo(int userId, String name, String lastname, 
 			String mobileno, int cityid, String newPassword) throws SQLException{
 		boolean result = true;
 		String query = "update user set name = ?, lastname = ?, mobileno = ?, "
-				+ "cityid = ?, password = ? where username = ?";
+				+ "cityid = ?, password = ? where id = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
 
 		ps.setString(1, name);
@@ -928,18 +871,18 @@ public class Database {
 		ps.setString(3, mobileno);
 		ps.setInt(4, cityid);
 		ps.setString(5, newPassword);
-		ps.setString(6, username);
+		ps.setInt(6, userId);
 		ps.executeUpdate();
 		ps.close();
 		closeConnection();
 		return result;
 	}
 
-	public boolean updateUserInfo(String username, String name, String lastname, 
+	public boolean updateUserInfo(int userId, String name, String lastname, 
 			String mobileno, int cityid, String newPassword, String email) throws SQLException{
 		boolean result = true;
 		String query = "update user set name = ?, lastname = ?, mobileno = ?, "
-				+ "cityid = ?, password = ?, email = ? where username = ?";
+				+ "cityid = ?, password = ?, email = ? where id = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
 
 		ps.setString(1, name);
@@ -948,7 +891,7 @@ public class Database {
 		ps.setInt(4, cityid);
 		ps.setString(5, newPassword);
 		ps.setString(6, email);
-		ps.setString(7, username);
+		ps.setInt(7, userId);
 		ps.executeUpdate();
 		ps.close();
 		closeConnection();
@@ -956,15 +899,15 @@ public class Database {
 	}
 
 
-	public boolean updateUserPassword(String username, String newPassword) throws SQLException{
-		String query = "update user set password = ? where username = ?";
+	public boolean updateUserPassword(int userId, String newPassword) throws SQLException{
+		String query = "update user set password = ? where id = ?";
 		if(!openConnection()){
 			return false;
 		} else {
 			PreparedStatement ps = connection.prepareStatement(query);
 
 			ps.setString(1, newPassword);
-			ps.setString(2, username);
+			ps.setInt(2, userId);
 			ps.executeUpdate();
 			ps.close();
 		}
@@ -1116,14 +1059,15 @@ public class Database {
 	}	
 
 	
-	public boolean isReserved(String username, int turnId) {
+	public boolean isReserved(String username, int officeId, int turnId) {
 		boolean res = false;
 		String query = " select * from reserve join user on user.id = reserve.userid "
-				+ "where user.username = ? and reserve.turnid = ? ";
+				+ "where user.username = ? and user.officeId = ? and reserve.turnid = ? ";
 		try{
 			PreparedStatement ps = connection.prepareStatement(query);
 			ps.setString(1,username);
-			ps.setInt(2, turnId);
+			ps.setInt(2, officeId);
+			ps.setInt(3, turnId);
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()) res = true;
@@ -1170,16 +1114,16 @@ public class Database {
 		ps.executeUpdate();
 	}
 	
-	public Vector<Info_Reservation2> getAllReservation(int turnId, String username) throws SQLException{
+	public Vector<Info_Reservation2> getAllReservation(int turnId, boolean isForAUser, int userId) throws SQLException{
 		Vector<Info_Reservation2> vec = new Vector<Info_Reservation2>();
 		String query = "select id, patientname, numberofturns "
 				+ "from reserve join turn on turn.id = reserve.turnid where turn.id = ? ";
-		if(!username.isEmpty()) query += " and (username = ? or patientname = ?)";
+		if(isForAUser) query += " and (userid = ? or patientid = ?)";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, turnId);
-		if(!username.isEmpty()) {
-			ps.setString(2, username);
-			ps.setString(3, username);
+		if(isForAUser) {
+			ps.setInt(2, userId);
+			ps.setInt(3, userId);
 		}
 		
 		ResultSet rs = ps.executeQuery();
@@ -1262,19 +1206,19 @@ public class Database {
 		return vec;
 	}
 		
-	public Vector<Info_Message> getMessages(String username, int officeId,
+	public Vector<Info_Message> getMessages(int userId, int officeId,
 			boolean onlyUnread) throws SQLException{
 		Vector<Info_Message> vec = new Vector<Info_Message>();
 		String query = "select M.id, M.subject, M.message, M.date, M.time, "
 				+ "U1.username, U1.name, U1.lastname "
 				+ "from message as M join user as U2 on M.receiverid = U2.id "
 				+ "join user as U1 on M.senderid = U1.id "
-				+ "where U2.username = ? and M.officeid = ? ";
+				+ "where U2.id = ? and M.officeid = ? ";
 		if(onlyUnread) query += " and M.isread = 0 ";
 		query += "order by M.date desc, M.time desc ";
 		
 		PreparedStatement ps = connection.prepareStatement(query);
-		ps.setString(1, username);
+		ps.setInt(1, userId);
 		ps.setInt(2, officeId);
 		ResultSet rs = ps.executeQuery();
 		
@@ -1425,49 +1369,6 @@ public class Database {
 		
 		return vec;
 	}
-
-	public Vector<Office> getOfficeBySpec(int specId) throws SQLException{
-		Vector<Office> vec = new Vector<Office>();
-		String query = "select office.id, user.username, user.name, user.lastname, "
-				+ "city.id, city.name, province.id, province.name, "
-				+ "spec.id, spec.spec, subspec.id, subspec.subspec, "
-				+ "office.address, office.phoneno, office.latitude, office.longitude, "
-				+ "office.biography, office.timequantum "
-				+ "from office join user on office.doctorid = user.id "
-				+ "join city on office.cityid = city.id "
-				+ "join province on city.provinceid = province.id "
-				+ "join spec on spec.id = office.spec "
-				+ "join subspec on subspec.id = office.subspec "
-				+ "where office.spec = ? ";
-		PreparedStatement ps = connection.prepareStatement(query);
-		ps.setInt(1, specId);
-		ResultSet rs = ps.executeQuery();
-		while(rs.next()){
-			Office office = new Office();
-			office.id = rs.getInt(1);
-			office.doctorUsername = rs.getString(2);
-			office.doctorName = rs.getString(3);
-			office.doctorLastName = rs.getString(4);
-			office.cityId = rs.getInt(5);
-			office.city = rs.getString(6);
-			office.provinceId = rs.getInt(7);
-			office.province = rs.getString(8);
-			office.specId = rs.getInt(9);
-			office.spec = rs.getString(10);
-			office.subspecId = rs.getInt(11);
-			office.subSpec = rs.getString(12);
-			office.address = rs.getString(13);
-			office.tellNo = rs.getString(14);
-			office.latitude = rs.getDouble(15);
-			office.longitude = rs.getDouble(16);
-			office.biograophy = rs.getString(17);
-			office.timeQuantum = rs.getInt(18);
-		
-			vec.addElement(office);
-		}
-
-		return vec;
-	}
 	
 	public void removeMessage(int officeId, int userId, int messageId) throws SQLException{
 		String query = "delete from message where id = ? and receiverid = ? and officeid = ? ";
@@ -1527,7 +1428,7 @@ public class Database {
 	
 	public boolean isHaveDoctorPermission(String username, String password, int officeId) {
 		try{
-			if(checkUserPass(username, password)){
+			if(checkUserPass(username, password, officeId)){
 				int role = getPermissionOnOffice(officeId, username);
 				if(role == Role.doctor){
 					return true;
@@ -1541,7 +1442,7 @@ public class Database {
 	
 	public boolean isHaveSecretaryPermission(String username, String password, int officeId) {
 		try{
-			if(checkUserPass(username, password)){
+			if(checkUserPass(username, password, officeId)){
 				int role = getPermissionOnOffice(officeId, username);
 				if(role == Role.doctor || role == Role.secretary){
 					return true;
@@ -1555,7 +1456,7 @@ public class Database {
 	
 	public boolean isHavePatientPermission(String username, String password, int officeId, String patientUsername) {
 		try{
-			if(checkUserPass(username, password)){
+			if(checkUserPass(username, password, officeId)){
 				if(username.equals(patientUsername)) 
 					return true;
 				int role = getPermissionOnOffice(officeId, username);
@@ -1572,7 +1473,7 @@ public class Database {
 	
 	public Vector<Info_patientFile> getPatientAllTurn(String username, int officeId) throws SQLException{
 		Vector<Info_patientFile> vec = new Vector<Info_patientFile>();
-		int userId = getUserId(username);
+		int userId = getUserId(username, officeId);
 		String query = "select reserve.id, reserve.taskid, turn.date, "
 				+ "turn.startHour, turn.startMinute, turn.duration, "
 				+ "task.name, reserve.price, "
@@ -1890,13 +1791,14 @@ public class Database {
 		return vec;
 	}
 	
-	public Info_User getUserInfo(String username) throws SQLException{
+	public Info_User getUserInfo(String username, int officeId) throws SQLException{
 		String query = "select username, user.name, lastname, mobileno, cityid, photo, city.name "
-				+ "from user join city on user.cityid = city.id where username = ?";
+				+ "from user join city on user.cityid = city.id where username = ? and officeId = ?";
 		
 		Info_User info = null;
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setString(1, username);
+		ps.setInt(2, officeId);
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()){
 			info = new Info_User();
@@ -1936,5 +1838,40 @@ public class Database {
 		}
 		
 		return res;
+	}
+	
+	public boolean checkMasterPassword(String username, String password) throws SQLException{
+		String dbuser, dbpass;
+		String query = "select username, password from master ";
+		
+		PreparedStatement ps = connection.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()){
+			dbuser = rs.getString(1);
+			dbpass = rs.getString(2);
+			return (dbuser.equals(username) && dbpass.equals(password));
+		} else {
+			return false;
+		}
+	}
+	
+	public void InsertInDoctorOffice(int officeId, int doctorId) throws SQLException{
+		String query = "insert into doctoroffice(officeid, doctorid) values(?, ?) ";
+		PreparedStatement ps = connection.prepareStatement(query);		
+		ps.setInt(1, officeId);
+		ps.setInt(2, doctorId);
+		ps.executeUpdate();
+	}
+	
+	public int getOfficeIdByTurnId(int turnId) throws SQLException{
+		int officeId = -1;
+		String query = "select officeid from turn where id = ?";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, turnId);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next()){
+			officeId = rs.getInt(1);
+		}
+		return officeId;
 	}
 }
