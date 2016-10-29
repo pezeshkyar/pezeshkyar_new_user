@@ -59,7 +59,7 @@ public class Database {
 				databaseName = "pirayeshyar";
 				break;
 			case Version.PEZESHKYAR: 
-				databaseName = "pezeshkyar";
+				databaseName = "pezeshkyar_all_in_one";
 				break;
 				default:
 					databaseName = "unknown";
@@ -323,13 +323,17 @@ public class Database {
 		ps.executeUpdate();
 		ps.close();
 	}
-
 	
 	public int getPermissionOnOffice(int officeId, String username){
 		if(username.equals(GUEST_USERNAME)) return Role.guest;
 
-		int perm = Role.patient;
 		int userId = getUserId(username, officeId);
+		
+		return getPermissionOnOffice(officeId, userId);
+	}
+	
+	public int getPermissionOnOffice(int officeId, int userId){
+		int perm = Role.patient;
 		String query1 = "Select * from doctoroffice where officeid = ? and doctorid = ?";
 		String query2 = "Select * from secretary where officeid = ? and secretaryid = ?";
 		PreparedStatement ps1, ps2;
@@ -361,6 +365,7 @@ public class Database {
 		
 		return perm;
 	}
+
 	
 	public boolean checkUserPass(String username, String password,
 			int officeId) throws SQLException{
@@ -765,7 +770,7 @@ public class Database {
 
 	public User getUserInfo(int userId) throws SQLException{
 		User res = new User();
-		String query = "select username, mobileno, name, lastname, role, cityid, photo, email "
+		String query = "select username, mobileno, name, lastname, cityid, photo, email "
 				+ "from user where id = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, userId);
@@ -775,18 +780,17 @@ public class Database {
 			res.mobileno = rs.getString(2);
 			res.name = rs.getString(3);
 			res.lastname = rs.getString(4);
-			res.role = rs.getInt(5);
-			res.cityid = rs.getInt(6);
+			res.cityid = rs.getInt(5);
 			res.pic = null;
 
-			Blob blob = rs.getBlob(7);
+			Blob blob = rs.getBlob(6);
 			if(blob != null){
 				int blobLength = (int) blob.length();  
 				byte[] blobAsBytes = blob.getBytes(1, blobLength);
 				blob.free();
 				res.pic = Helper.getString(blobAsBytes);
 			}
-			res.email = rs.getString(8);
+			res.email = rs.getString(7);
 		}
 		addProvinceToUser(res);
 		return res;
@@ -961,7 +965,9 @@ public class Database {
 				+ "office.address, office.phoneno, office.cityid, "
 				+ "office.latitude, office.longitude, office.timequantum, "
 				+ "office.biography, user.name, user.lastname "
-				+ "from office join user on office.doctorid = user.id where office.id = ? ";
+				+ "from office join doctoroffice on office.id = doctoroffice.officeid "
+				+ " join user on doctoroffice.doctorid = user.id "
+				+ " where office.id = ? ";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, id);
 		ResultSet rs = ps.executeQuery();
@@ -1138,9 +1144,10 @@ public class Database {
 		return vec;
 	}
 	
-	public Vector<Info_User> searchUser(String username, String name, String lastName, String mobileNo) throws SQLException{
+	public Vector<Info_User> searchUser(String username, String name, 
+			String lastName, String mobileNo, int officeId) throws SQLException{
 		String query = "select username, user.name, lastname, mobileno, cityid, photo, city.name "
-				+ "from user join city on user.cityid = city.id where ";
+				+ "from user join city on user.cityid = city.id where user.officeId = ? and ";
 		if(!username.isEmpty()) query += "username like '%" + username + "%' and ";
 		if(!name.isEmpty()) query += "user.name like '%" + name + "%' and ";
 		if(!lastName.isEmpty()) query += "lastname like '%" + lastName + "%' and ";
@@ -1149,6 +1156,7 @@ public class Database {
 		
 		Vector<Info_User> vec = new Vector<Info_User>();
 		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, officeId);
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()){
 			Info_User info = new Info_User();

@@ -481,8 +481,8 @@ public class Webservices {
 		return r.id;
 	}
 
-	public int reserveForUser(String username, String password, int turnId, int firstReservationId, int taskId,
-			int numberOfTurns, String patientUserName) {
+	public int reserveForUser(String username, String password, int turnId,
+			int firstReservationId, int taskId, int numberOfTurns, String patientUserName) {
 		Database db = new Database();
 		Reservation_new r = new Reservation_new();
 		try {
@@ -517,8 +517,9 @@ public class Webservices {
 		return r.id;
 	}
 
-	public int reserveForGuest(String username, String password, int turnId, int firstReservationId, int taskId,
-			int numberOfTurns, String patientFirstName, String patientLastName, String patientPhoneNo,
+	public int reserveForGuest(String username, String password, int turnId,
+			int firstReservationId, int taskId, int numberOfTurns, 
+			String patientFirstName, String patientLastName, String patientPhoneNo,
 			int patientCityId) {
 		Database db = new Database();
 		Reservation_new r = new Reservation_new();
@@ -676,8 +677,8 @@ public class Webservices {
 		return res;
 	}
 
-	public Reservation2[] getReservationByDate(String username, String password, int officeId, String fromDate,
-			String toDate) {
+	public Reservation2[] getReservationByDate(String username, String password,
+			int officeId, String fromDate, String toDate) {
 		Database db = new Database();
 		Vector<Reservation2> vec = new Vector<Reservation2>();
 		Reservation2[] res = null;
@@ -730,8 +731,7 @@ public class Webservices {
 				} else {
 					user = db.getUserInfoWithoutPic(userId);
 				}
-				if (user.role != Role.guest && user.role != Role.none)
-					user.role = db.getPermissionOnOffice(officeId, username);
+				user.role = db.getPermissionOnOffice(officeId, username);
 			}
 		} catch (SQLException e) {
 			return user;
@@ -824,22 +824,22 @@ public class Webservices {
 		}
 	}
 
-	public Office getOfficeInfo(String username, String password, int officeId) {
-		Office office = new Office();
-		Database db = new Database();
-		if (!db.openConnection()) {
-			return office;
-		}
-		try {
-			if (!db.checkUserPass(username, password, officeId)) {
-				return office;
-			}
-			office = db.getOfficeInfo(officeId);
-		} catch (SQLException e) {
-			return office;
-		}
-		return office;
-	}
+//	public Office getOfficeInfo(String username, String password, int officeId) {
+//		Office office = new Office();
+//		Database db = new Database();
+//		if (!db.openConnection()) {
+//			return office;
+//		}
+//		try {
+//			if (!db.checkUserPass(username, password, officeId)) {
+//				return office;
+//			}
+//			office = db.getOfficeInfo(officeId);
+//		} catch (SQLException e) {
+//			return office;
+//		}
+//		return office;
+//	}
 
 	public int[] getDoctorOffice(String doctorUsername) {
 		Database db = new Database();
@@ -895,8 +895,8 @@ public class Webservices {
 		return ret;
 	}
 
-	public boolean updateOfficeLocation(String username, String password, int officeId, String latitude,
-			String longitude) {
+	public boolean updateOfficeLocation(String username, String password,
+			int officeId, String latitude, String longitude) {
 		Database db = new Database();
 		double lat, lng;
 		boolean ret = false;
@@ -974,13 +974,13 @@ public class Webservices {
 		return result;
 	}
 
-	public Info_User[] searchUser(String username, String name, String lastName, String mobileNo) {
+	public Info_User[] searchUser(String username, String name, String lastName, String mobileNo, int officeId) {
 		Info_User[] result = null;
 		Database db = new Database();
 
 		if (db.openConnection()) {
 			try {
-				Vector<Info_User> vec = db.searchUser(username, name, lastName, mobileNo);
+				Vector<Info_User> vec = db.searchUser(username, name, lastName, mobileNo, officeId);
 				result = new Info_User[vec.size()];
 				for (int i = 0; i < vec.size(); i++) {
 					result[i] = vec.elementAt(i);
@@ -1303,29 +1303,6 @@ public class Webservices {
 			}
 		}
 		return picId;
-	}
-
-	public String[] getAllGalleyPicId(String username, String password, int officeId) {
-		String[] res = null;
-		Vector<Integer> vec = null;
-		Database db = new Database();
-		if (db.openConnection()) {
-			if (db.isHavePatientPermission(username, password, officeId, username)) {
-				try {
-					vec = db.getAllPicId(officeId);
-				} catch (SQLException e) {
-
-				} finally {
-					db.closeConnection();
-				}
-				res = new String[vec.size()];
-				for (int i = 0; i < res.length; i++) {
-					res[i] = String.valueOf(vec.elementAt(i));
-				}
-			}
-		}
-
-		return res;
 	}
 
 	public void deleteFromGallery(String username, String password, int officeId, int picId) {
@@ -1676,6 +1653,29 @@ public class Webservices {
 		return result;
 	}
 
+	public String[] getAllGalleyPicId(String username, String password, int officeId) {
+		String[] res = null;
+		Vector<Integer> vec = null;
+		Database db = new Database();
+		if (db.openConnection()) {
+			if (db.isHavePatientPermission(username, password, officeId, username)) {
+				try {
+					vec = db.getAllPicId(officeId);
+				} catch (SQLException e) {
+
+				} finally {
+					db.closeConnection();
+				}
+				res = new String[vec.size()];
+				for (int i = 0; i < res.length; i++) {
+					res[i] = String.valueOf(vec.elementAt(i));
+				}
+			}
+		}
+
+		return res;
+	}
+	
 	public PhotoDesc[] getAllGalleyPicId2(String username, String password, int officeId) {
 		PhotoDesc[] res = null;
 		Vector<PhotoDesc> vec = null;
