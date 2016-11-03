@@ -10,5 +10,5 @@ public class Tester {
 		ws.getOfficeInfo2(1);
 		ws.getUserInfo("doctor", "123456", 1);
 	}
-	
+
 }

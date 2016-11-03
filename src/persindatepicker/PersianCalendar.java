@@ -235,7 +235,7 @@ public class PersianCalendar extends GregorianCalendar {
 			}
 			a = a / 10;
 		}
-		return neg + res;
+		return res;
 	}
 	/**
 	 * 
