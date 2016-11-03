@@ -31,6 +31,9 @@ import primitives.Spec;
 import primitives.Subspec;
 import primitives.Task;
 import primitives.TaskGroup;
+import primitives.Ticket;
+import primitives.TicketMessage;
+import primitives.TicketSubject;
 import primitives.Turn;
 import primitives.User;
 import primitives.UserTurn;
@@ -1882,4 +1885,145 @@ public class Database {
 		}
 		return officeId;
 	}
+	
+	public Vector<Ticket> getUserTicket(int userId) throws SQLException{
+		Vector<Ticket> vec = new Vector<Ticket>();
+		String query = "select ticket.id, userId, ticket.subjectId, topic, priority, "
+				+ "startDate, endDate, ticketsubject.subject from ticket join ticketsubject on ticket.subjectId = ticketsubject.id where userId = ?"
+				+ " order by endDate desc ";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()){
+			Ticket temp = new Ticket();
+			temp.id = rs.getInt(1);
+			temp.userId = rs.getInt(2);
+			temp.subjectId = rs.getInt(3);
+			temp.topic = rs.getString(4);
+			temp.priority = rs.getInt(5);
+			temp.startDate = rs.getString(6);
+			temp.endDate = rs.getString(7);
+			temp.subject=rs.getString(8);
+			
+			vec.add(temp);
+		}
+		return vec;
+	}
+	public int setUserTicket(int userId, int subjectId, String topic, int priority) throws SQLException{
+
+		int id = getMaxId("ticket") + 1;
+		String msg="ok";
+		String startDate=Helper.getTodayShortDate() +"  "+ Helper.getCurrentTime();
+		String endDate=Helper.getTodayShortDate() +"  "+ Helper.getCurrentTime();
+		
+		String query = "insert into ticket (id, userId, subjectId, topic, priority, startDate, endDate) values (?,?,?,?,?,?,?) ";
+
+		if(!openConnection()){
+			msg = "\u0645\u0634\u06a9\u0644\u06cc \u062f\u0631 \u067e\u0627\u06cc\u06af\u0627\u0647 "
+					+ "\u062f\u0627\u062f\u0647 \u0633\u0645\u062a \u0633\u0631\u0648\u0631 "
+					+ "\u0628\u0647 \u0648\u062c\u0648\u062f \u0622\u0645\u062f\u0647 "
+					+ "\u0627\u0633\u062a";
+		} else {
+			try {
+				PreparedStatement ps = connection.prepareStatement(query);
+				ps.setInt(1, id);
+				ps.setInt(2, userId);
+				ps.setInt(3, subjectId);
+				ps.setString(4, topic);
+				ps.setInt(5, priority);
+				ps.setString(6, startDate);
+				ps.setString(7, endDate);
+				ps.executeUpdate();
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				msg = e.getMessage();
+			} catch (Exception e){
+				e.printStackTrace();
+				e.printStackTrace();
+			}
+		}
+		closeConnection();
+		return id;
+	}
+	public Vector<TicketMessage> getUserTicketMessage(int ticketId) throws SQLException{
+		Vector<TicketMessage> vec = new Vector<TicketMessage>();
+		String query = "select ticketmessage.id, userId, message, dateMessage, ticketId, username, name, lastname "
+				+ " from ticketmessage join user on user.id=userId where ticketId = ?";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, ticketId);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			TicketMessage temp = new TicketMessage();
+			temp.id = rs.getInt(1);
+			temp.userId = rs.getInt(2);
+			temp.message=rs.getString(3);
+			temp.dateMessage=rs.getString(4);
+			temp.ticketId=rs.getInt(5);
+			temp.username=rs.getString(6);
+			temp.firstName=rs.getString(7);
+			temp.lastName=rs.getString(8);
+
+			vec.add(temp);
+		}
+		System.out.println(vec.size());
+		return vec;
+	}
+	public String 	setUserTicketMessage(int userId, int ticketId, String message) throws SQLException{
+
+		String msg="ok";
+		String date=Helper.getTodayShortDate() +"  " + Helper.getCurrentTime();
+		String resiveMessage="salammmmmmm";
+		String query = "insert into ticketmessage (id, userId, message, dateMessage, ticketId) values (?,?,?,?,?) ";
+		String query2="update ticket set endDate=? where id=?";
+		
+		if(!openConnection()){
+			msg = "\u0645\u0634\u06a9\u0644\u06cc \u062f\u0631 \u067e\u0627\u06cc\u06af\u0627\u0647 "
+					+ "\u062f\u0627\u062f\u0647 \u0633\u0645\u062a \u0633\u0631\u0648\u0631 "
+					+ "\u0628\u0647 \u0648\u062c\u0648\u062f \u0622\u0645\u062f\u0647 "
+					+ "\u0627\u0633\u062a";
+		} else {
+			int id = getMaxId("ticketmessage") + 1;
+			try {
+				PreparedStatement ps = connection.prepareStatement(query);
+				ps.setInt(1, id);
+				ps.setInt(2, userId);
+				ps.setString(3, message);
+				ps.setString(4, date);
+				ps.setInt(5, ticketId);
+				ps.executeUpdate();
+				PreparedStatement ps2=connection.prepareStatement(query2);
+				ps2.setString(1, date);
+				ps2.setInt(2, ticketId);
+				ps2.executeUpdate();
+				ps.close();
+				ps2.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				msg = e.getMessage();
+			} catch (Exception e){
+				e.printStackTrace();
+				e.printStackTrace();
+			}
+		}
+		closeConnection();
+		return msg;
+	}
+	public Vector<TicketSubject> getUserTicketSubject() throws SQLException{
+		Vector<TicketSubject> vec = new Vector<TicketSubject>();
+		String query = "select id, subject from ticketsubject";
+
+		PreparedStatement ps = connection.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			TicketSubject temp = new TicketSubject();
+			temp.id=rs.getInt(1);
+			temp.subject=rs.getString(2);
+			vec.add(temp);
+		}
+		System.out.println(vec.size());
+		return vec;
+	}
+
 }

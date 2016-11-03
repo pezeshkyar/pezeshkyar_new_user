@@ -23,6 +23,9 @@ import primitives.Spec;
 import primitives.Subspec;
 import primitives.Task;
 import primitives.TaskGroup;
+import primitives.Ticket;
+import primitives.TicketMessage;
+import primitives.TicketSubject;
 import primitives.Turn;
 import primitives.User;
 import primitives.UserTurn;
@@ -1700,4 +1703,162 @@ public class Webservices {
 		return res;
 	}
 
+	public Ticket[] getUserTicket(String username, String password, int officeId){
+		Database db = new Database();
+		Vector<Ticket> vec;
+		Ticket[] res = null;
+		try{
+			db.openConnection();
+		}catch(Throwable t){
+			System.out.println(t.getMessage());
+		}
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password, officeId)){
+					int userId = db.getUserId(username, officeId);
+					vec = db.getUserTicket(userId);
+					res = new Ticket[vec.size()];
+					for(int i = 0; i < res.length; i++){
+						res[i] = vec.elementAt(i);
+					}
+				}
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+	public int setUserTicket(String username, String password, int officeId, int subject, String topic, int priority){
+		Database db = new Database();
+		int ticketId=0;
+		try{
+			db.openConnection();
+		}catch(Throwable t){
+			System.out.println(t.getMessage());
+		}
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password, officeId)){
+					int userId = db.getUserId(username, officeId);
+					ticketId=db.setUserTicket(userId, subject, topic, priority);
+				}
+			} catch (SQLException e) {
+				
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return ticketId;
+	}
+	
+	public TicketMessage[] getUserTicketMessage(int ticketId, String username, String password, int officeId){
+		Database db = new Database();
+		Vector<TicketMessage> vec;
+		TicketMessage[] res = null;
+		try{
+			db.openConnection();
+		}catch(Throwable t){
+			System.out.println(t.getMessage());
+		}
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password, officeId)){
+					//int ticketId = db.getUserId(username);
+					vec = db.getUserTicketMessage(ticketId);
+					res = new TicketMessage[vec.size()];
+
+					for(int i = 0; i < res.length; i++){
+						res[i] = vec.elementAt(i);
+					}
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+	
+	public String setUserTicketMessage(int ticketId, String username, String password, int officeId, String message){
+		Database db = new Database();
+		String Str="ok";
+		try{
+			db.openConnection();
+		}catch(Throwable t){
+			System.out.println(t.getMessage());
+		}
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password, officeId)){
+					int userId = db.getUserId(username, officeId);
+					Str=db.setUserTicketMessage(userId, ticketId, message);
+				}
+			} catch (SQLException e) {
+				
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return Str;
+	}
+	
+	public Ticket[] getUserAllTicket(String username, String password, int officeId){
+		Database db = new Database();
+		Vector<Ticket> vec;
+		Ticket[] res = null;
+		
+		try{
+			db.openConnection();
+		}catch(Throwable t){
+			System.out.println(t.getMessage());
+		}
+		
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password, officeId)){
+					int userId = db.getUserId(username, officeId);
+					vec = db.getUserTicket(userId);
+					res = new Ticket[vec.size()];
+					for(int i = 0; i < res.length; i++){
+						res[i] = vec.elementAt(i);
+					}
+				}
+			} catch (SQLException e) {
+				
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+	public TicketSubject[] getUserTicketSubject(String username, String password, int officeId){
+		Database db = new Database();
+		Vector<TicketSubject> vec;
+		TicketSubject[] res = null;
+		
+		try{
+			db.openConnection();
+		}catch(Throwable t){
+			System.out.println(t.getMessage());
+		}
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password, officeId)){
+					vec = db.getUserTicketSubject();
+					res = new TicketSubject[vec.size()];
+					for(int i = 0; i < res.length; i++){
+						res[i] = vec.elementAt(i);
+					}
+				}
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
 }
