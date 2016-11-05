@@ -1176,16 +1176,16 @@ public class Database {
 		return vec;
 	}
 	
-	public int insertGuest(String firstName, String lastName, String mobileNo, int cityId) throws SQLException{
+	public int insertGuest(String firstName, String lastName, String mobileNo, int cityId, int officeId) throws SQLException{
 		int id = getMaxId("user") + 1;
 		String query = "insert into user(id, username, password, mobileno, name,"
-				+ " lastname, role, cityid, photo) values(?, NULL, NULL, ?, ?, ?, ?, ?, NULL)";
+				+ " lastname, officeid, cityid, photo) values(?, NULL, NULL, ?, ?, ?, ?, ?, NULL)";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, id);
 		ps.setString(2, mobileNo);
 		ps.setString(3, firstName);
 		ps.setString(4, lastName);
-		ps.setInt(5, Role.guest);
+		ps.setInt(5, officeId);
 		ps.setInt(6, cityId);
 		ps.executeUpdate();
 		return id;

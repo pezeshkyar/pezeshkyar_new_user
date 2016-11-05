@@ -530,7 +530,7 @@ public class Webservices {
 			if (db.openConnection()) {
 				int officeId = db.getOfficeIdByTurnId(turnId);
 				if (db.checkUserPass(username, password, officeId)) {
-					int guestId = db.insertGuest(patientFirstName, patientLastName, patientPhoneNo, patientCityId);
+					int guestId = db.insertGuest(patientFirstName, patientLastName, patientPhoneNo, patientCityId, officeId);
 					r.userId = db.getUserId(username, officeId);
 					r.firstReservationId = firstReservationId;
 					r.numberOfTurns = numberOfTurns;
@@ -601,7 +601,7 @@ public class Webservices {
 		try {
 			if (db.openConnection()) {
 				if (db.checkUserPass(username, password, officeId)) {
-					int guestId = db.insertGuest(patientFirstName, patientLastName, patientPhoneNo, patientCityId);
+					int guestId = db.insertGuest(patientFirstName, patientLastName, patientPhoneNo, patientCityId, officeId);
 					r.userId = db.getUserId(username, officeId);
 					r.firstReservationId = firstReservationId;
 					r.numberOfTurns = numberOfTurns;
