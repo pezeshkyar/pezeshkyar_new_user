@@ -801,7 +801,7 @@ public class Database {
 	
 	public User getUserInfoWithoutPic(int userId) throws SQLException{
 		User res = User.getErrorUser();
-		String query = "select username, mobileno, name, lastname, role, cityid "
+		String query = "select username, mobileno, name, lastname, cityid "
 				+ "from user where id = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, userId);
@@ -811,8 +811,7 @@ public class Database {
 			res.mobileno = rs.getString(2);
 			res.name = rs.getString(3);
 			res.lastname = rs.getString(4);
-			res.role = rs.getInt(5);
-			res.cityid = rs.getInt(6);
+			res.cityid = rs.getInt(5);
 			res.pic = null;
 		}
 		addProvinceToUser(res);
