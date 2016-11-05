@@ -983,7 +983,7 @@ public class Webservices {
 
 		if (db.openConnection()) {
 			try {
-				Vector<Info_User> vec = db.searchUser(username, name, lastName, mobileNo, officeId);
+				Vector<Info_User> vec = db.searchUserWithoutPic(username, name, lastName, mobileNo, officeId);
 				result = new Info_User[vec.size()];
 				for (int i = 0; i < vec.size(); i++) {
 					result[i] = vec.elementAt(i);

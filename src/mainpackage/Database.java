@@ -1147,9 +1147,9 @@ public class Database {
 		return vec;
 	}
 	
-	public Vector<Info_User> searchUser(String username, String name, 
+	public Vector<Info_User> searchUserWithoutPic(String username, String name, 
 			String lastName, String mobileNo, int officeId) throws SQLException{
-		String query = "select username, user.name, lastname, mobileno, cityid, photo, city.name "
+		String query = "select username, user.name, lastname, mobileno, cityid, city.name "
 				+ "from user join city on user.cityid = city.id where user.officeId = ? and ";
 		if(!username.isEmpty()) query += "username like '%" + username + "%' and ";
 		if(!name.isEmpty()) query += "user.name like '%" + name + "%' and ";
@@ -1169,15 +1169,7 @@ public class Database {
 			info.mobileno = rs.getString(4);
 			info.cityId = rs.getInt(5);
 			info.pic = null;
-
-			Blob blob = rs.getBlob(6);
-			if(blob != null){
-				int blobLength = (int) blob.length();  
-				byte[] blobAsBytes = blob.getBytes(1, blobLength);
-				blob.free();
-				info.pic = Helper.getString(blobAsBytes);
-			}
-			info.city = rs.getString(7);
+			info.city = rs.getString(6);
 			
 			vec.addElement(info);
 		}
