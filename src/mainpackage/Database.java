@@ -70,7 +70,7 @@ public class Database {
 			if(Constants.CUSTOMER_NAME.length() > 0)
 				databaseName += ("_" + Constants.CUSTOMER_NAME);
 			
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + databaseName, "root", "dreadlord");
+			connection = DriverManager.getConnection("jdbc:mysql://185.129.168.135:3306/" + databaseName, "root", "dreadlord");
 
 		} catch (SQLException e) {
 			System.out.print("Error Opening connection: ");
@@ -1914,8 +1914,8 @@ public class Database {
 
 		int id = getMaxId("ticket") + 1;
 		String msg="ok";
-		String startDate=Helper.getTodayShortDate() +"  "+ Helper.getCurrentTime();
-		String endDate=Helper.getTodayShortDate() +"  "+ Helper.getCurrentTime();
+		String startDate=Helper.getTodayShortDate() +" "+ Helper.getCurrentTime();
+		String endDate=Helper.getTodayShortDate() +" "+ Helper.getCurrentTime();
 		
 		String query = "insert into ticket (id, userId, subjectId, topic, priority, startDate, endDate) values (?,?,?,?,?,?,?) ";
 
@@ -1973,7 +1973,7 @@ public class Database {
 	public String 	setUserTicketMessage(int userId, int ticketId, String message) throws SQLException{
 
 		String msg="ok";
-		String date=Helper.getTodayShortDate() +"  " + Helper.getCurrentTime();
+		String date=Helper.getTodayShortDate() +" " + Helper.getCurrentTime();
 		String resiveMessage="salammmmmmm";
 		String query = "insert into ticketmessage (id, userId, message, dateMessage, ticketId) values (?,?,?,?,?) ";
 		String query2="update ticket set endDate=? where id=?";
@@ -2025,5 +2025,28 @@ public class Database {
 		System.out.println(vec.size());
 		return vec;
 	}
-
+	public Vector<Ticket> getAllUserTicket() throws SQLException{
+		Vector<Ticket> vec = new Vector<Ticket>();
+		String query = "select ticket.id, userId, ticket.subjectId, topic, priority, "
+				+ "startDate, endDate, ticketsubject.subject from ticket join ticketsubject on ticket.subjectId = ticketsubject.id"
+				+ " order by endDate desc ";
+		PreparedStatement ps = connection.prepareStatement(query);
+//		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()){
+			Ticket temp = new Ticket();
+			temp.id = rs.getInt(1);
+			temp.userId = rs.getInt(2);
+			temp.subjectId = rs.getInt(3);
+			temp.topic = rs.getString(4);
+			temp.priority = rs.getInt(5);
+			temp.startDate = rs.getString(6);
+			temp.endDate = rs.getString(7);
+			temp.subject=rs.getString(8);
+			
+			vec.add(temp);
+		}
+		return vec;
+	}
 }

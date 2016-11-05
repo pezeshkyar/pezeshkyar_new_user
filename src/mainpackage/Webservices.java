@@ -1861,4 +1861,33 @@ public class Webservices {
 		}
 		return res;
 	}
+	public Ticket[] getAllUserAllTicket(String username, String password, int officeId){
+		Database db = new Database();
+		Vector<Ticket> vec;
+		Ticket[] res = null;
+		
+		try{
+			db.openConnection();
+		}catch(Throwable t){
+			System.out.println(t.getMessage());
+		}
+		
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password, officeId) && officeId==0){
+					//int userId = db.getUserId(username, officeId);
+					vec = db.getAllUserTicket();
+					res = new Ticket[vec.size()];
+					for(int i = 0; i < res.length; i++){
+						res[i] = vec.elementAt(i);
+					}
+				}
+			} catch (SQLException e) {
+				
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
 }
