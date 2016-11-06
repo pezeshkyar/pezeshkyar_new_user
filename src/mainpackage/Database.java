@@ -669,7 +669,8 @@ public class Database {
 		DoctorInfo res = new DoctorInfo();
 		String query = "select user.username, user.name, user.lastname, office.spec, office.subspec,"
 				+ "spec.spec, subspec.subspec "
-				+ "from office join user on office.doctorid=user.id "
+				+ "from office join doctoroffice on office.id = doctoroffice.officeid "
+				+ "join user on doctoroffice.doctorid=user.id "
 				+ "join spec on office.spec=spec.id "
 				+ "join subspec on office.subspec = subspec.id "
 				+ "where office.id = ? ";

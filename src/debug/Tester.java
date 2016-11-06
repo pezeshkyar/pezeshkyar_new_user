@@ -11,7 +11,8 @@ public class Tester {
 //		ws.getUserInfo("a.baharian", "123", 1);
 //		ws.getUserInfoWithoutPic("test", "123", 1);
 //		ws.getDoctorPic("test", "123", 1);
-		ws.addSecretaryToOffice2("test", "123", 1, "n1");
+//		ws.addSecretaryToOffice2("test", "123", 1, "n1");
+		ws.getReservationByUser("ahodasht", "123", 1, 10, 0);
 	}
 
 }
