@@ -233,11 +233,12 @@ public class Webservices {
 	public User addSecretaryToOffice2(String username, String password, int officeId, String secretary) {
 		User ret = User.getErrorUser();
 		Database db = new Database();
-		int secretaryId = db.getUserId(secretary, officeId);
 		try {
 			if (db.openConnection()) {
+				int secretaryId = db.getUserId(secretary, officeId);
 				if (db.isHaveSecretaryPermission(username, password, officeId)) {
 					ret = db.InsertInSecretary2(officeId, secretaryId);
+					ret.role = Role.secretary;
 				}
 			}
 		} catch (Exception e) {
@@ -530,7 +531,7 @@ public class Webservices {
 			if (db.openConnection()) {
 				int officeId = db.getOfficeIdByTurnId(turnId);
 				if (db.checkUserPass(username, password, officeId)) {
-					int guestId = db.insertGuest(patientFirstName, patientLastName, patientPhoneNo, patientCityId);
+					int guestId = db.insertGuest(patientFirstName, patientLastName, patientPhoneNo, patientCityId, officeId);
 					r.userId = db.getUserId(username, officeId);
 					r.firstReservationId = firstReservationId;
 					r.numberOfTurns = numberOfTurns;
@@ -601,7 +602,7 @@ public class Webservices {
 		try {
 			if (db.openConnection()) {
 				if (db.checkUserPass(username, password, officeId)) {
-					int guestId = db.insertGuest(patientFirstName, patientLastName, patientPhoneNo, patientCityId);
+					int guestId = db.insertGuest(patientFirstName, patientLastName, patientPhoneNo, patientCityId, officeId);
 					r.userId = db.getUserId(username, officeId);
 					r.firstReservationId = firstReservationId;
 					r.numberOfTurns = numberOfTurns;

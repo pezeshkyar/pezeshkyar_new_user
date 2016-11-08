@@ -669,7 +669,8 @@ public class Database {
 		DoctorInfo res = new DoctorInfo();
 		String query = "select user.username, user.name, user.lastname, office.spec, office.subspec,"
 				+ "spec.spec, subspec.subspec "
-				+ "from office join user on office.doctorid=user.id "
+				+ "from office join doctoroffice on office.id = doctoroffice.officeid "
+				+ "join user on doctoroffice.doctorid=user.id "
 				+ "join spec on office.spec=spec.id "
 				+ "join subspec on office.subspec = subspec.id "
 				+ "where office.id = ? ";
@@ -1028,8 +1029,8 @@ public class Database {
 	
 	public byte[] getDrPic(int officeId) throws SQLException{
 		String query = "select photo from user "
-				+ "join office on user.id = office.doctorid "
-				+ "where office.id = ? ";
+				+ "join doctoroffice on user.id = doctoroffice.doctorid "
+				+ "where doctoroffice.officeid = ? ";
 		byte[] res = null;
 		
 		PreparedStatement ps = connection.prepareStatement(query);
@@ -1175,16 +1176,16 @@ public class Database {
 		return vec;
 	}
 	
-	public int insertGuest(String firstName, String lastName, String mobileNo, int cityId) throws SQLException{
+	public int insertGuest(String firstName, String lastName, String mobileNo, int cityId, int officeId) throws SQLException{
 		int id = getMaxId("user") + 1;
 		String query = "insert into user(id, username, password, mobileno, name,"
-				+ " lastname, role, cityid, photo) values(?, NULL, NULL, ?, ?, ?, ?, ?, NULL)";
+				+ " lastname, officeid, cityid, photo) values(?, NULL, NULL, ?, ?, ?, ?, ?, NULL)";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, id);
 		ps.setString(2, mobileNo);
 		ps.setString(3, firstName);
 		ps.setString(4, lastName);
-		ps.setInt(5, Role.guest);
+		ps.setInt(5, officeId);
 		ps.setInt(6, cityId);
 		ps.executeUpdate();
 		return id;
@@ -1904,17 +1905,14 @@ public class Database {
 	public int setUserTicket(int userId, int subjectId, String topic, int priority) throws SQLException{
 
 		int id = getMaxId("ticket") + 1;
-		String msg="ok";
+
 		String startDate=Helper.getTodayShortDate() +" "+ Helper.getCurrentTime();
 		String endDate=Helper.getTodayShortDate() +" "+ Helper.getCurrentTime();
 		
 		String query = "insert into ticket (id, userId, subjectId, topic, priority, startDate, endDate) values (?,?,?,?,?,?,?) ";
 
 		if(!openConnection()){
-			msg = "\u0645\u0634\u06a9\u0644\u06cc \u062f\u0631 \u067e\u0627\u06cc\u06af\u0627\u0647 "
-					+ "\u062f\u0627\u062f\u0647 \u0633\u0645\u062a \u0633\u0631\u0648\u0631 "
-					+ "\u0628\u0647 \u0648\u062c\u0648\u062f \u0622\u0645\u062f\u0647 "
-					+ "\u0627\u0633\u062a";
+			id = 0;
 		} else {
 			try {
 				PreparedStatement ps = connection.prepareStatement(query);
@@ -1928,11 +1926,9 @@ public class Database {
 				ps.executeUpdate();
 				ps.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
-				msg = e.getMessage();
+				System.out.println(e.getMessage());
 			} catch (Exception e){
-				e.printStackTrace();
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		}
 		closeConnection();
@@ -1961,11 +1957,10 @@ public class Database {
 		System.out.println(vec.size());
 		return vec;
 	}
-	public String 	setUserTicketMessage(int userId, int ticketId, String message) throws SQLException{
+	public String setUserTicketMessage(int userId, int ticketId, String message) throws SQLException{
 
 		String msg="ok";
 		String date=Helper.getTodayShortDate() +" " + Helper.getCurrentTime();
-		String resiveMessage="salammmmmmm";
 		String query = "insert into ticketmessage (id, userId, message, dateMessage, ticketId) values (?,?,?,?,?) ";
 		String query2="update ticket set endDate=? where id=?";
 		
