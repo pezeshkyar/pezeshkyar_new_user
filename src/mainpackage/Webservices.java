@@ -1786,13 +1786,9 @@ public class Webservices {
 
 	public String setUserTicketMessage(int ticketId, String username, String password, int officeId, String message) {
 		Database db = new Database();
-		String Str = "ok";
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
-		if (db.openConnection()) {
+		String Str="ok";
+		
+		if(db.openConnection()){
 			try {
 				if (db.checkUserPass(username, password, officeId)) {
 					int userId = db.getUserId(username, officeId);
