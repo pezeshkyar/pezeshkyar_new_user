@@ -12,7 +12,10 @@ public class Tester {
 //		ws.getUserInfoWithoutPic("test", "123", 1);
 //		ws.getDoctorPic("test", "123", 1);
 //		ws.addSecretaryToOffice2("test", "123", 1, "n1");
-		ws.getReservationByUser("ahodasht", "123", 1, 10, 0);
+//		ws.getReservationByUser("ahodasht", "123", 1, 10, 0);
+//		ws.setQuestion("test", "123", 1, "asdhjasgdhgdhgasgj", 1);
+//		ws.setReply("test", "123", 1, 1, "ashgdhasgdhgadhgjsa");
+		ws.getQuestion("test", "123", 1);
 	}
 
 }
