@@ -2108,4 +2108,14 @@ public class Database {
 		}
 		return vec;
 	}
+	
+	public void deleteFromQuestion(int questionId, int officeId) throws SQLException{
+		String query = "delete from question where id = ? and officeid = ? ";
+		
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, questionId);
+		ps.setInt(2, officeId);
+		
+		ps.executeUpdate();
+	}
 }
