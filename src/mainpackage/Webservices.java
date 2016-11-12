@@ -1690,13 +1690,15 @@ public class Webservices {
 				try {
 					vec = db.getAllPicIdDesc(officeId);
 				} catch (SQLException e) {
-
+					System.out.println(e.getMessage());
 				} finally {
 					db.closeConnection();
 				}
-				res = new PhotoDesc[vec.size()];
-				for (int i = 0; i < res.length; i++) {
-					res[i] = vec.elementAt(i);
+				if(vec != null){
+					res = new PhotoDesc[vec.size()];
+					for (int i = 0; i < res.length; i++) {
+						res[i] = vec.elementAt(i);
+					}
 				}
 			}
 		}
@@ -1961,11 +1963,7 @@ public class Webservices {
 		Database db = new Database();
 		Vector<Reply> vec;
 		Reply[] res = null;
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
+		
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password, officeId)) {
@@ -1984,4 +1982,24 @@ public class Webservices {
 		}
 		return res;
 	}
+	
+	public boolean deleteQuestion(String username, String password, int officeId, int questionId){
+		Database db = new Database();
+		boolean res = false;
+		
+		if(db.openConnection()){
+			try {
+				if(db.isHaveSecretaryPermission(username, password, officeId)){
+					db.deleteFromQuestion(questionId, officeId);
+					res = true;
+				}
+			} catch (SQLException e) {
+				res = false;
+			} finally {
+				db.closeConnection();
+			}
+		} 
+		return res;
+	}
+	
 }
