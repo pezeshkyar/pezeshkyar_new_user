@@ -70,7 +70,7 @@ public class Database {
 			if(Constants.CUSTOMER_NAME.length() > 0)
 				databaseName += ("_" + Constants.CUSTOMER_NAME);
 			
-			connection = DriverManager.getConnection("jdbc:mysql://185.129.168.135:3306/" + databaseName, "root", "dreadlord");
+			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/" + databaseName, "root", "dreadlord");
 
 		} catch (SQLException e) {
 			System.out.print("Error Opening connection: ");
