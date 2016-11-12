@@ -1739,11 +1739,7 @@ public class Webservices {
 		Database db = new Database();
 		Vector<Ticket> vec;
 		Ticket[] res = null;
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
+		
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
@@ -1767,11 +1763,7 @@ public class Webservices {
 			                 int subject, String topic, int priority) {
 		Database db = new Database();
 		int ticketId = 0;
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
+		
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
@@ -1792,11 +1784,7 @@ public class Webservices {
 		Database db = new Database();
 		Vector<TicketMessage> vec;
 		TicketMessage[] res = null;
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
+		
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
@@ -1843,12 +1831,6 @@ public class Webservices {
 		Vector<Ticket> vec;
 		Ticket[] res = null;
 
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
-
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
@@ -1874,11 +1856,6 @@ public class Webservices {
 		Vector<TicketSubject> vec;
 		TicketSubject[] res = null;
 
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
@@ -1902,12 +1879,6 @@ public class Webservices {
 		Database db = new Database();
 		Vector<Ticket> vec;
 		Ticket[] res = null;
-
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
 
 		if (db.openConnection()) {
 			try {
@@ -1936,7 +1907,6 @@ public class Webservices {
 		
 		if (db.openConnection()) {
 			try {
-
 				if (db.isHaveSecretaryPermission(username, password, officeId)) {
 					res = db.setQuestion(lable, replyType, officeId);
 				}
@@ -1949,20 +1919,17 @@ public class Webservices {
 		return res;
 	}
 
-	public String setReply(String username, String password, int officeId,
+	public boolean setReply(String username, String password, int officeId,
 			               int questionId, String reply) {
 		Database db = new Database();
-		String Str = "ok";
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
+		boolean res = false;
+		
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
 					int userId = db.getUserId(username);
-					Str = db.setReply(userId, questionId, reply);
+					db.setReply(userId, questionId, reply);
+					res = true;
 				}
 			} catch (SQLException e) {
 
@@ -1970,8 +1937,33 @@ public class Webservices {
 				db.closeConnection();
 			}
 		}
-		return Str;
+		return res;
 	}
+	
+	public boolean setReplyBatch(String username, String password, int officeId,
+			                     int[] questionId, String[] reply) {
+		Database db = new Database();
+		boolean res = false;
+		
+		if(questionId.length != reply.length) return false;
+		
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					int userId = db.getUserId(username);
+					for(int i = 0; i < reply.length; i++)
+						db.setReply(userId, questionId[i], reply[i]);
+					res = true;
+				}
+			} catch (SQLException e) {
+
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+	
 	public Question[] getQuestion(String username, String password,
 			                      int officeId) {
 		Database db = new Database();

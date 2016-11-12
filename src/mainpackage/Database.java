@@ -1913,27 +1913,17 @@ public class Database {
 		String query = "insert into ticket (id, userId, subjectId, topic,"
 				+ " priority, startDate, endDate) values (?,?,?,?,?,?,?) ";
 
-		if (!openConnection()) {
-			id = 0;
-		} else {
-			try {
-				PreparedStatement ps = connection.prepareStatement(query);
-				ps.setInt(1, id);
-				ps.setInt(2, userId);
-				ps.setInt(3, subjectId);
-				ps.setString(4, topic);
-				ps.setInt(5, priority);
-				ps.setString(6, startDate);
-				ps.setString(7, endDate);
-				ps.executeUpdate();
-				ps.close();
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		closeConnection();
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, id);
+		ps.setInt(2, userId);
+		ps.setInt(3, subjectId);
+		ps.setString(4, topic);
+		ps.setInt(5, priority);
+		ps.setString(6, startDate);
+		ps.setString(7, endDate);
+		ps.executeUpdate();
+		ps.close();
+
 		return id;
 	}
 
@@ -1971,35 +1961,24 @@ public class Database {
 				+ "dateMessage, ticketId) values (?,?,?,?,?) ";
 		String query2 = "update ticket set endDate=? where id=?";
 
-		if (!openConnection()) {
-			msg = "\u0645\u0634\u06a9\u0644\u06cc \u062f\u0631 \u067e\u0627\u06cc\u06af\u0627\u0647 "
-					+ "\u062f\u0627\u062f\u0647 \u0633\u0645\u062a \u0633\u0631\u0648\u0631 "
-					+ "\u0628\u0647 \u0648\u062c\u0648\u062f \u0622\u0645\u062f\u0647 " + "\u0627\u0633\u062a";
-		} else {
-			int id = getMaxId("ticketmessage") + 1;
-			try {
-				PreparedStatement ps = connection.prepareStatement(query);
-				ps.setInt(1, id);
-				ps.setInt(2, userId);
-				ps.setString(3, message);
-				ps.setString(4, date);
-				ps.setInt(5, ticketId);
-				ps.executeUpdate();
-				PreparedStatement ps2 = connection.prepareStatement(query2);
-				ps2.setString(1, date);
-				ps2.setInt(2, ticketId);
-				ps2.executeUpdate();
-				ps.close();
-				ps2.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				msg = e.getMessage();
-			} catch (Exception e) {
-				e.printStackTrace();
-				e.printStackTrace();
-			}
-		}
-		closeConnection();
+
+		int id = getMaxId("ticketmessage") + 1;
+
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, id);
+		ps.setInt(2, userId);
+		ps.setString(3, message);
+		ps.setString(4, date);
+		ps.setInt(5, ticketId);
+		ps.executeUpdate();
+		PreparedStatement ps2 = connection.prepareStatement(query2);
+		ps2.setString(1, date);
+		ps2.setInt(2, ticketId);
+		ps2.executeUpdate();
+		ps.close();
+		ps2.close();
+
+
 		return msg;
 	}
 
@@ -2049,52 +2028,29 @@ public class Database {
 		int id = getMaxId("question") + 1;
 		String query = "insert into question (id, label, replyType, officeId) values (?,?,?,?) ";
 
-		try {
-			PreparedStatement ps = connection.prepareStatement(query);
-			ps.setInt(1, id);
-			ps.setString(2, label);
-			ps.setInt(3, replyType);
-			ps.setInt(4, officeId);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException e) {
-			id = 0;
-		} catch (Exception e) {
-			id = 0;
-		}
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, id);
+		ps.setString(2, label);
+		ps.setInt(3, replyType);
+		ps.setInt(4, officeId);
+		ps.executeUpdate();
+		ps.close();
 
 		return id;
 	}
 
-	public String setReply(int userId, int questionId, String reply) throws SQLException {
+	public void setReply(int userId, int questionId, String reply) throws SQLException {
 
 		int id = getMaxId("reply") + 1;
-		String msg = "ok";
 		String query = "insert into reply (id, userId, questionId, reply) values (?,?,?,?) ";
 
-		if (!openConnection()) {
-			msg = "\u0645\u0634\u06a9\u0644\u06cc \u062f\u0631 \u067e\u0627\u06cc\u06af\u0627\u0647 "
-					+ "\u062f\u0627\u062f\u0647 \u0633\u0645\u062a \u0633\u0631\u0648\u0631 "
-					+ "\u0628\u0647 \u0648\u062c\u0648\u062f \u0622\u0645\u062f\u0647 " + "\u0627\u0633\u062a";
-		} else {
-			try {
-				PreparedStatement ps = connection.prepareStatement(query);
-				ps.setInt(1, id);
-				ps.setInt(2, userId);
-				ps.setInt(3, questionId);
-				ps.setString(4, reply);
-				ps.executeUpdate();
-				ps.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				msg = e.getMessage();
-			} catch (Exception e) {
-				e.printStackTrace();
-				msg = e.getMessage();
-			}
-		}
-		closeConnection();
-		return msg;
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, id);
+		ps.setInt(2, userId);
+		ps.setInt(3, questionId);
+		ps.setString(4, reply);
+		ps.executeUpdate();
+		ps.close();
 	}
 	
 	public Vector<Question> getQuestion(int officeId) throws SQLException {
