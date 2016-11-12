@@ -65,7 +65,7 @@ public class Database {
 				databaseName = "pirayeshyar";
 				break;
 			case Version.PEZESHKYAR:
-				databaseName = "pezeshkyar_all_in_one";
+				databaseName = "pezeshkyar_new_user";
 				break;
 			default:
 				databaseName = "unknown";
@@ -2099,7 +2099,8 @@ public class Database {
 	
 	public Vector<Question> getQuestion(int officeId) throws SQLException {
 		Vector<Question> vec = new Vector<Question>();
-		String query = "select id, label, replyType, officeId from question where officeId = ? ";
+		String query = "select id, label, replyType, officeId from question "
+				+ "where officeId = ? order by replyType desc";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, officeId);
 		ResultSet rs = ps.executeQuery();

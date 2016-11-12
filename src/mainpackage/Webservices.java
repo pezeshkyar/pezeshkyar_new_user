@@ -318,7 +318,6 @@ public class Webservices {
 			return false;
 		if (cal1.after(cal2))
 			return false;
-
 		if (!db.openConnection())
 			return false;
 		firstId = db.getMaxTurnId() + 1;
@@ -351,6 +350,7 @@ public class Webservices {
 		try {
 			if (vec.size() > 0) {
 				db.addTurnBatch(vec);
+
 				res = true;
 			} else {
 				res = false;

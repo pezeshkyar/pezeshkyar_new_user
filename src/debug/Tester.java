@@ -15,7 +15,7 @@ public class Tester {
 //		ws.getReservationByUser("ahodasht", "123", 1, 10, 0);
 //		ws.setQuestion("test", "123", 1, "asdhjasgdhgdhgasgj", 1);
 //		ws.setReply("test", "123", 1, 1, "ashgdhasgdhgadhgjsa");
-		ws.getQuestion("test", "123", 1);
+		ws.login2("user3", "123456", 1);
 	}
 
 }
