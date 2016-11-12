@@ -1977,11 +1977,7 @@ public class Webservices {
 		Database db = new Database();
 		Vector<Question> vec;
 		Question[] res = null;
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
+		
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
@@ -1999,6 +1995,7 @@ public class Webservices {
 		}
 		return res;
 	}
+	
 	public Reply[] getReply(String username, String password, int officeId) {
 		Database db = new Database();
 		Vector<Reply> vec;
@@ -2020,6 +2017,67 @@ public class Webservices {
 				}
 			} catch (SQLException e) {
 				System.err.println(e.getMessage());
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+	
+	public void addOfficeForUser(String username, String password, int officeId){
+		Database db = new Database();
+		
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password)){
+					int userid = db.getUserId(username);
+					db.addOfficeForUser(userid, officeId);
+				}
+			} catch (SQLException e) {
+				
+			} finally {
+				db.closeConnection();
+			}
+		}
+	}
+	
+	public void deleteOfficeForUser(String username, String password,
+			                        int officeId){
+		Database db = new Database();
+		
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password)){
+					int userid = db.getUserId(username);
+					db.deleteOfficeForUser(userid, officeId);
+				}
+			} catch (SQLException e) {
+				
+			} finally {
+				db.closeConnection();
+			}
+		}
+	}
+	
+	public Office[] getOfficeForUser(String username, String password,
+                                 int officeId){
+		Database db = new Database();
+		Vector<Office> vec = null;
+		Office[] res = null;
+		
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password)){
+					int userid = db.getUserId(username);
+					vec = db.getOfficeInfoForUser(userid);
+					if(vec != null){
+						res = new Office[vec.size()];
+						for(int i = 0; i < res.length; i++)
+							res[i] = vec.elementAt(i);
+					}
+				}
+			} catch (SQLException e) {
+				
 			} finally {
 				db.closeConnection();
 			}

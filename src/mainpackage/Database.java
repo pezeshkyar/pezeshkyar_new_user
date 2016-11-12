@@ -969,42 +969,7 @@ public class Database {
 		return city;
 	}
 
-	public Office getOfficeInfo(int id) throws SQLException {
-		Office office = new Office();
-		office.id = id;
-		String query = "select user.username, office.spec, office.subspec, "
-				+ "office.address, office.phoneno, office.cityid, "
-				+ "office.latitude, office.longitude, office.timequantum, "
-				+ "office.biography, user.name, user.lastname "
-				+ "from office join doctoroffice on office.id = doctoroffice.officeid "
-				+ " join user on doctoroffice.doctorid = user.id " 
-				+ " where office.id = ? ";
-		PreparedStatement ps = connection.prepareStatement(query);
-		ps.setInt(1, id);
-		ResultSet rs = ps.executeQuery();
-		if (rs.next()) {
-			office.doctorUsername = rs.getString(1);
-			office.specId = rs.getInt(2);
-			office.subspecId = rs.getInt(3);
-			office.address = rs.getString(4);
-			office.tellNo = rs.getString(5);
-			office.cityId = rs.getInt(6);
-			office.latitude = rs.getDouble(7);
-			office.longitude = rs.getDouble(8);
-			office.timeQuantum = rs.getInt(9);
-			office.biograophy = rs.getString(10);
-			office.doctorName = rs.getString(11);
-			office.doctorLastName = rs.getString(12);
-		}
-		office.spec = getSpec(office.specId);
-		office.subSpec = getSubSpec(office.subspecId);
-		CityProvince cp = getProvinceOfCity(office.cityId);
-		office.city = cp.city;
-		office.province = cp.province;
-		office.provinceId = cp.provinceId;
-
-		return office;
-	}
+	
 
 	public CityProvince getProvinceOfCity(int cityId) throws SQLException {
 		CityProvince cp = new CityProvince();
@@ -2174,4 +2139,99 @@ public class Database {
 		}
 		return vec;
 	}
+	
+	public void addOfficeForUser(int userid, int officeId) throws SQLException{
+		String query = "insert into useroffice(userid, officeid) "
+				+ " values (?, ?)";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userid);
+		ps.setInt(2, officeId);
+		ps.executeUpdate();
+	}
+	
+	public void deleteOfficeForUser(int userid, 
+			                        int officeId) throws SQLException{
+		String query = "delete from useroffice "
+				+ "where userid = ? and officeid = ? ";
+		
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userid);
+		ps.setInt(2, officeId);
+		ps.executeUpdate();
+	}
+	
+	
+	public Office getOfficeInfo(int id) throws SQLException {
+		Vector<Office> vec;
+		
+		String query = getOfficeInfoHelperQuery() 
+				+ " where office.id = ? ";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, id);
+		
+		vec = getOfficeInfoHelperRun(ps);
+		
+		return (vec.size() > 0) ? vec.elementAt(0) : null;
+	}
+	
+	private String getOfficeInfoHelperQuery(){
+		String query = "select user.username, office.spec, office.subspec, "
+				+ "office.address, office.phoneno, office.cityid, "
+				+ "office.latitude, office.longitude, office.timequantum, "
+				+ "office.biography, user.name, user.lastname, office.id "
+				+ "from office join doctoroffice on office.id = doctoroffice.officeid "
+				+ " join user on doctoroffice.doctorid = user.id " ;
+		
+		return query;
+	}
+	
+	private Vector<Office> getOfficeInfoHelperRun(PreparedStatement ps) throws SQLException{
+		Vector<Office> vec = new Vector<Office>();
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			Office office = new Office();
+			office.doctorUsername = rs.getString(1);
+			office.specId = rs.getInt(2);
+			office.subspecId = rs.getInt(3);
+			office.address = rs.getString(4);
+			office.tellNo = rs.getString(5);
+			office.cityId = rs.getInt(6);
+			office.latitude = rs.getDouble(7);
+			office.longitude = rs.getDouble(8);
+			office.timeQuantum = rs.getInt(9);
+			office.biograophy = rs.getString(10);
+			office.doctorName = rs.getString(11);
+			office.doctorLastName = rs.getString(12);
+			office.id = rs.getInt(13);
+			office.spec = getSpec(office.specId);
+			office.subSpec = getSubSpec(office.subspecId);
+			CityProvince cp = getProvinceOfCity(office.cityId);
+			office.city = cp.city;
+			office.province = cp.province;
+			office.provinceId = cp.provinceId;
+			vec.add(office);
+		}
+		
+		return vec;
+	}
+	
+	public Vector<Office> getOfficeInfoForUser(int userId) throws SQLException {
+		Vector<Office> vec;
+		
+		String query = getOfficeInfoHelperQuery() 
+				+ " join useroffice on useroffice.officeid = office.id "
+				+ " join doctoroffice on doctoroffice.officeid = office.id "
+				+ " join secretary on secretary.officeid = office.id "
+				+ " where useroffice.userid = ? or doctoroffice.doctorid = ? "
+				+ " or secretary.secretaryid = ? ";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ps.setInt(2, userId);
+		ps.setInt(3, userId);
+		
+		vec = getOfficeInfoHelperRun(ps);
+		
+		return vec;
+	}
+	
 }
