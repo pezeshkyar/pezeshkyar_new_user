@@ -1,6 +1,5 @@
 package mainpackage;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,7 +9,6 @@ import constant.Constants;
 import persindatepicker.PersianCalendar;
 import primitives.Info_Reservation;
 import primitives.Office;
-import primitives.Role;
 import primitives.Rturn;
 import primitives.Turn;
 import primitives.User;
