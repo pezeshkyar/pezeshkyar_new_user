@@ -1891,18 +1891,14 @@ public class Webservices {
 		return res;
 	}
 
-	public Boolean setQuestion(String username, String password, int officeId, String lable, int replyType) {
+	public int setQuestion(String username, String password, int officeId, String lable, int replyType) {
 		Database db = new Database();
-		Boolean bool = true;
-		try {
-			db.openConnection();
-		} catch (Throwable t) {
-			System.out.println(t.getMessage());
-		}
+		int res = 0;
+		
 		if (db.openConnection()) {
 			try {
-				if (db.checkUserPass(username, password, officeId)) {
-					bool = db.setQuestion(lable, replyType, officeId);
+				if (db.isHaveSecretaryPermission(username, password, officeId)) {
+					res = db.setQuestion(lable, replyType, officeId);
 				}
 			} catch (SQLException e) {
 
@@ -1910,7 +1906,7 @@ public class Webservices {
 				db.closeConnection();
 			}
 		}
-		return bool;
+		return res;
 	}
 
 	public String setReply(String username, String password, int officeId, int questionId, String reply) {

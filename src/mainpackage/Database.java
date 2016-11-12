@@ -2020,31 +2020,26 @@ public class Database {
 		return vec;
 	}
 
-	public Boolean setQuestion(String label, int replyType, int officeId) throws SQLException {
+	public int setQuestion(String label, int replyType, int officeId) throws SQLException {
 
 		int id = getMaxId("question") + 1;
-		Boolean bool = true;
 		String query = "insert into question (id, label, replyType, officeId) values (?,?,?,?) ";
 
-		if (!openConnection()) {
-			bool = false;
-		} else {
-			try {
-				PreparedStatement ps = connection.prepareStatement(query);
-				ps.setInt(1, id);
-				ps.setString(2, label);
-				ps.setInt(3, replyType);
-				ps.setInt(4, officeId);
-				ps.executeUpdate();
-				ps.close();
-			} catch (SQLException e) {
-				bool = false;
-			} catch (Exception e) {
-				bool = false;
-			}
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setInt(1, id);
+			ps.setString(2, label);
+			ps.setInt(3, replyType);
+			ps.setInt(4, officeId);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			id = 0;
+		} catch (Exception e) {
+			id = 0;
 		}
-		closeConnection();
-		return bool;
+
+		return id;
 	}
 
 	public String setReply(int userId, int questionId, String reply) throws SQLException {
