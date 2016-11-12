@@ -224,8 +224,8 @@ public class Helper {
 			User canceler = db.getUserInfo(cancelerId);
 //			User patient = db.getUserInfo(info.patientId);
 			Office office = db.getOfficeInfo(info.officeId);
-			int doctorId = db.getUserId(office.doctorUsername, info.officeId);
-			int getterId = db.getUserId(info.username, info.officeId);
+			int doctorId = db.getUserId(office.doctorUsername);
+			int getterId = db.getUserId(info.username);
 			String subject = "\u0644\u063a\u0648 \u0646\u0648\u0628\u062a"; //laghve nobat
 			String msg = "\u0646\u0648\u0628\u062a \u0634\u0645\u0627 \u062f\u0631 " + getOfficeType() + " "; // nobate shoma dar matabe
 			msg += office.doctorName + " " + office.doctorLastName + "( ";
@@ -258,7 +258,7 @@ public class Helper {
 		try{
 			User reserver = db.getUserInfo(reserverId);
 			Office office = db.getOfficeInfo(info.officeId);
-			int doctorId = db.getUserId(office.doctorUsername, info.officeId);
+			int doctorId = db.getUserId(office.doctorUsername);
 			
 			String subject = "\u062f\u0631\u06cc\u0627\u0641\u062a \u0646\u0648\u0628\u062a"; //daryafte nobat
 			String msg = "\u0628\u0631\u0627\u06cc \u0634\u0645\u0627 \u062f\u0631 " + getOfficeType() + " "; // baraye shoma dar matabe
@@ -284,15 +284,5 @@ public class Helper {
 			
 		}
 		
-	}
-
-	public boolean isHaveSecretaryPermission(Database db, String username, String password, int officeId) throws SQLException{
-		if(db.checkUserPass(username, password, officeId)){
-			int role = db.getPermissionOnOffice(officeId, username);
-			if(role == Role.doctor || role == Role.secretary){
-				return true;
-			}
-		}
-		return false;
 	}
 }
