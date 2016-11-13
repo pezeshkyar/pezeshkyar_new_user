@@ -2195,4 +2195,44 @@ public class Database {
 		
 		return vec;
 	}
+	
+	public Vector<Ticket> getAllTickets(int offset, 
+			                            int count) throws SQLException{
+		Vector<Ticket> vec = new Vector<Ticket>();
+		String query = "Select id, userId, subjectId, topic, priority, "
+				+ "startDate, endDate from ticket order by endDate LIMIT ?, ?";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, offset);
+		ps.setInt(2, count);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			Ticket t = new Ticket();
+			t.id = rs.getInt(1);
+			t.userId = rs.getInt(2);
+			t.subjectId = rs.getInt(3);
+			t.topic = rs.getString(4);
+			t.priority = rs.getInt(5);
+			t.startDate = rs.getString(6);
+			t.endDate = rs.getString(7);
+			
+			vec.addElement(t);
+		}
+		return vec;
+	}
+	
+	public boolean isHaveSupportPermission(String username, String password) {
+		try {
+			if (checkUserPass(username, password)) {
+				int userId = getUserId(username);
+				String query = "select * from usersupport where userid = ?";
+				PreparedStatement ps = connection.prepareStatement(query);
+				ps.setInt(1, userId);
+				ResultSet rs = ps.executeQuery();
+				if(rs.next()) return true;
+			}
+		} catch (SQLException e) {
+
+		}
+		return false;
+	}
 }

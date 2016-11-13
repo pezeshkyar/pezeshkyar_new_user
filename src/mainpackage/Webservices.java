@@ -160,9 +160,10 @@ public class Webservices {
 		int id;
 		if (db.openConnection()) {
 			try {
-				if (db.checkMasterPassword(username, password)) {
-					id = db.InsertInOffice(spec, subspec, address, tellNo, cityid, latitude, longitude, timeQuantum,
-							biography);
+				if (db.checkMasterPassword(username, password) 
+						|| db.isHaveSupportPermission(username, password)) {
+					id = db.InsertInOffice(spec, subspec, address, tellNo, cityid,
+							latitude, longitude, timeQuantum, biography);
 					return id;
 				}
 			} catch (SQLException e) {
@@ -1242,6 +1243,8 @@ public class Webservices {
 				}
 			} catch (SQLException e) {
 				res = false;
+			} finally {
+				db.closeConnection();
 			}
 		}
 		return res;
@@ -1788,7 +1791,6 @@ public class Webservices {
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
-					// int ticketId = db.getUserId(username);
 					vec = db.getUserTicketMessage(ticketId);
 					res = new TicketMessage[vec.size()];
 
@@ -2091,4 +2093,50 @@ public class Webservices {
 		}
 		return res;
 	}
+	
+	public Ticket[] getAllTicketsByDate(String username, String password,
+			                            int offset, int count){
+		Ticket[] res = null;
+		Vector<Ticket> vec;
+		Database db = new Database();
+		if(db.openConnection()){
+			try {
+				if(db.isHaveSupportPermission(username, password)){
+					vec = db.getAllTickets(offset, count);
+					if(vec != null){
+						res = new Ticket[vec.size()];
+						for(int i = 0; i < res.length; i++){
+							res[i] = vec.elementAt(i);
+						}
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+	
+	public String setSupportTicketMessage(int ticketId, String username,
+			                              String password, String message) {
+		Database db = new Database();
+		String Str="ok";
+
+		if(db.openConnection()){
+			try {
+				if (db.isHaveSupportPermission(username, password)) {
+					int userId = db.getUserId(username);
+					Str = db.setUserTicketMessage(userId, ticketId, message);
+				}
+			} catch (SQLException e) {
+
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return Str;
+	}
+	
 }
