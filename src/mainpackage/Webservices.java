@@ -1966,6 +1966,30 @@ public class Webservices {
 		return res;
 	}
 	
+	public boolean setReplyBatchForUser(String username, String password, int officeId,
+			                            String patientUserName, int[] questionId, String[] reply) {
+		Database db = new Database();
+		boolean res = false;
+
+		if(questionId.length != reply.length) return false;
+
+		if (db.openConnection()) {
+			try {
+				if (db.isHaveSecretaryPermission(username, password, officeId)){
+					int userId = db.getUserId(patientUserName);
+					for(int i = 0; i < reply.length; i++)
+						db.setReply(userId, questionId[i], reply[i]);
+					res = true;
+				}
+			} catch (SQLException e) {
+
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+	
 	public Question[] getQuestion(String username, String password,
 			                      int officeId) {
 		Database db = new Database();
