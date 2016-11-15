@@ -655,16 +655,14 @@ public class Database {
 	private int getMaxId(String tableName) {
 		int id = 0;
 		String query = "select max(id) from " + tableName;
-		if (openConnection()) {
-			try {
-				Statement stmt = connection.createStatement();
-				ResultSet rs = stmt.executeQuery(query);
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
 
-				if (rs.next())
-					id = rs.getInt(1);
-			} catch (SQLException e) {
-				id = 0;
-			}
+			if (rs.next())
+				id = rs.getInt(1);
+		} catch (SQLException e) {
+			id = 0;
 		}
 		return id;
 	}
