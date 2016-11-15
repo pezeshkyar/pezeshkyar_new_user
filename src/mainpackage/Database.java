@@ -2112,7 +2112,6 @@ public class Database {
 			temp.subject = rs.getString(2);
 			vec.add(temp);
 		}
-		System.out.println(vec.size());
 		return vec;
 	}
 
