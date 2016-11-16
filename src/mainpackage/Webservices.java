@@ -1765,7 +1765,30 @@ public class Webservices {
 		}
 		return res;
 	}
+	
+	public Ticket[] getUserTicketSupporter(	String username, String password,
+									int officeId) {
+		Database db = new Database();
+		Vector<Ticket> vec;
+		Ticket[] res = null;
 
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					vec = db.getUserTicketSupporter();
+					res = new Ticket[vec.size()];
+					for (int i = 0; i < res.length; i++) {
+						res[i] = vec.elementAt(i);
+					}
+				}
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
 	public int setUserTicket(	String username, String password, int officeId,
 								int subject, String topic, int priority) {
 		Database db = new Database();

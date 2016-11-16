@@ -2013,7 +2013,31 @@ public class Database {
 		}
 		return vec;
 	}
+	public Vector<Ticket> getUserTicketSupporter() throws SQLException {
+		Vector<Ticket> vec = new Vector<Ticket>();
+		String query = "select ticket.id, userId, ticket.subjectId, topic,"
+				+ " priority, startDate, endDate, ticketsubject.subject "
+				+ " from ticket join ticketsubject "
+				+ " on ticket.subjectId = ticketsubject.id"
+				+ " order by endDate desc ";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
 
+		while (rs.next()) {
+			Ticket temp = new Ticket();
+			temp.id = rs.getInt(1);
+			temp.userId = rs.getInt(2);
+			temp.subjectId = rs.getInt(3);
+			temp.topic = rs.getString(4);
+			temp.priority = rs.getInt(5);
+			temp.startDate = rs.getString(6);
+			temp.endDate = rs.getString(7);
+			temp.subject = rs.getString(8);
+
+			vec.add(temp);
+		}
+		return vec;
+	}
 	public int setUserTicket(	int userId, int subjectId, String topic,
 								int priority)
 			throws SQLException {
