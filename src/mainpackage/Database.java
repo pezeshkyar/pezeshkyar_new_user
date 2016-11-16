@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 import java.util.Vector;
 
 import constant.Constants;
@@ -45,6 +46,7 @@ public class Database {
 	Connection connection;
 	private static final String GUEST_USERNAME = "guest";
 	private static final String GUEST_PASSWORD = "8512046384";
+	private static final int firstOfficeId = 1984;
 
 	public boolean openConnection() {
 		try {
@@ -254,7 +256,7 @@ public class Database {
 								double longitude, int timeQuantum,
 								String bioghraphy)
 			throws SQLException {
-		int id = getMaxOfficdId() + 1;
+		int id = getNextOfficeId();
 		String query = "insert into office(id, spec, subspec, "
 				+ " address, phoneno, cityid, latitude, longitude,"
 				+ " timequantum, biography) "
@@ -313,8 +315,13 @@ public class Database {
 		ps.close();
 	}
 
-	private int getMaxOfficdId() {
-		return getMaxId("office");
+	public int getNextOfficeId() {
+		int max =  getMaxId("office");
+		if(max < firstOfficeId) max = firstOfficeId;
+		
+		Random rand = new Random();
+		int  inc = rand.nextInt(10) + 1;
+		return max + inc;
 	}
 
 	public void updateOffice(	int officeid, int spec, int subspec,
@@ -2136,7 +2143,6 @@ public class Database {
 			temp.subject = rs.getString(2);
 			vec.add(temp);
 		}
-		System.out.println(vec.size());
 		return vec;
 	}
 

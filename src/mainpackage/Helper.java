@@ -48,7 +48,8 @@ public class Helper {
 			res = "\u067e\u0632\u0634\u06a9";
 			break;
 		default:
-			res = "\u0645\u0633\u0626\u0648\u0644 \u0645\u0631\u0628\u0648\u0637\u0647";
+			res = "\u0645\u0633\u0626\u0648\u0644 "
+					+ "\u0645\u0631\u0628\u0648\u0637\u0647";
 			break;
 		}
 		return res;
@@ -59,10 +60,12 @@ public class Helper {
 		String res;
 		switch (Constants.CURRENT_VERSION) {
 		case Version.ARAYESHYAR:
-			res = "\u062f\u0633\u062a\u06cc\u0627\u0631 \u0622\u0631\u0627\u06cc\u0634\u06af\u0631";
+			res = "\u062f\u0633\u062a\u06cc\u0627\u0631 "
+					+ "\u0622\u0631\u0627\u06cc\u0634\u06af\u0631";
 			break;
 		case Version.PIRAYESHYAR:
-			res = "\u062f\u0633\u062a\u06cc\u0627\u0631 \u067e\u06cc\u0631\u0627\u06cc\u0634\u06af\u0631";
+			res = "\u062f\u0633\u062a\u06cc\u0627\u0631 "
+					+ "\u067e\u06cc\u0631\u0627\u06cc\u0634\u06af\u0631";
 			break;
 		case Version.PEZESHKYAR:
 			res = "\u0645\u0646\u0634\u06cc \u0645\u0637\u0628";
@@ -274,9 +277,8 @@ public class Helper {
 			Office office = db.getOfficeInfo(info.officeId);
 			int doctorId = db.getUserId(office.doctorUsername);
 
-			String subject =
-					"\u062f\u0631\u06cc\u0627\u0641\u062a \u0646\u0648\u0628\u062a"; // daryafte
-																						// nobat
+			String subject = "\u062f\u0631\u06cc\u0627\u0641\u062a "// daryafte
+					+ "\u0646\u0648\u0628\u062a"; // nobat
 			String msg =
 					"\u0628\u0631\u0627\u06cc \u0634\u0645\u0627 \u062f\u0631 "
 							+ getOfficeType() + " "; // baraye shoma dar matabe
@@ -296,10 +298,8 @@ public class Helper {
 				msg += " " + getAssistantTitle() + " "; // monshie matab
 				msg += "( " + reserver.name + " " + reserver.lastname + " )";
 			}
-			msg += " \u06cc\u06a9 \u0646\u0648\u0628\u062a \u0631\u0632\u0631\u0648 \u0634\u062f "; // yek
-																									// nobat
-																									// reserve
-																									// shod
+			msg += " \u06cc\u06a9 \u0646\u0648\u0628\u062a "// yek nobat
+					+ "\u0631\u0632\u0631\u0648 \u0634\u062f "; // reserve shod
 
 			db.sendMessage(info.officeId, reserverId, info.patientId,
 					subject, msg, getTodayShortDate(), getCurrentTime());
@@ -350,12 +350,12 @@ public class Helper {
 		String str = getMessageNotPermittedTask(
 				"\u06af\u0631\u0648\u0647 "/* gorooh */,
 				"\u067e\u0627\u06a9 \u06a9\u0631\u062f\u0646 "/*
-															   * paak kardan
-															   */);
+																 * paak kardan
+																 */);
 		return str;
 	}
-	
-	public static String getMessageNotPermittedChangeTask(){
+
+	public static String getMessageNotPermittedChangeTask() {
 		String str = getMessageNotPermittedTask(
 				"\u0646\u062f\u0627\u0631\u06cc\u062f "/* amaliat */,
 				"\u062a\u063a\u06cc\u06cc\u0631 \u0646\u0627\u0645 "/*
@@ -364,13 +364,13 @@ public class Helper {
 																	 */);
 		return str;
 	}
-	
+
 	public static String getMessageNotPermittedDeleteTask() {
 		String str = getMessageNotPermittedTask(
 				"\u0646\u062f\u0627\u0631\u06cc\u062f "/* amaliat */,
 				"\u067e\u0627\u06a9 \u06a9\u0631\u062f\u0646 "/*
-															   * paak kardan
-															   */);
+																 * paak kardan
+																 */);
 		return str;
 	}
 
