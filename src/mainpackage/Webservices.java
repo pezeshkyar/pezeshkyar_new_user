@@ -211,7 +211,8 @@ public class Webservices {
 		int doctorId = db.getUserId(doctor);
 		try {
 			if (db.openConnection()) {
-				if (db.checkMasterPassword(username, password)) {
+				if (db.checkMasterPassword(username, password)
+						|| db.isHaveSupportPermission(username, password)) {
 					db.InsertInDoctorOffice(officeId, doctorId);
 					ret = true;
 				}
@@ -1590,7 +1591,7 @@ public class Webservices {
 				db.closeConnection();
 			}
 		} else {
-			res =Helper.getMessageUnknownError();
+			res = Helper.getMessageUnknownError();
 		}
 		return res;
 	}
@@ -1765,16 +1766,16 @@ public class Webservices {
 		}
 		return res;
 	}
-	
+
 	public Ticket[] getUserTicketSupporter(	String username, String password,
-									int officeId) {
+											int officeId) {
 		Database db = new Database();
 		Vector<Ticket> vec;
 		Ticket[] res = null;
 
 		if (db.openConnection()) {
 			try {
-				if (db.checkUserPass(username, password)) {
+				if (db.isHaveSupportPermission(username, password)) {
 					vec = db.getUserTicketSupporter();
 					res = new Ticket[vec.size()];
 					for (int i = 0; i < res.length; i++) {
@@ -1789,6 +1790,7 @@ public class Webservices {
 		}
 		return res;
 	}
+
 	public int setUserTicket(	String username, String password, int officeId,
 								int subject, String topic, int priority) {
 		Database db = new Database();
