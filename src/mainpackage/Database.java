@@ -169,7 +169,7 @@ public class Database {
 		return res;
 	}
 
-	public boolean isUsernameAvailable2(String username) {
+	public boolean isUsernameAvailable(String username) {
 		String query = "select * from user where username = ? ";
 		boolean res;
 

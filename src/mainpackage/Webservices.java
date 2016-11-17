@@ -117,12 +117,12 @@ public class Webservices {
 
 	}
 
-	// Add officeId to input parameters
+	//office id in the input parameters is not necessary from now
 	public boolean isUserNameAvailable(String username, int officeId) {
 		Database db = new Database();
 		boolean res;
 		if (db.openConnection()) {
-			res = db.isUsernameAvailable2(username);
+			res = db.isUsernameAvailable(username);
 			db.closeConnection();
 		} else
 			res = false;
@@ -137,7 +137,7 @@ public class Webservices {
 		Database db = new Database();
 		if (!db.openConnection())
 			return Helper.getMessageUnknownError();
-		if (!db.isUsernameAvailable2(username)) {
+		if (!db.isUsernameAvailable(username)) {
 			db.closeConnection();
 			return Helper.getMessageUserNameNotAvailabe();
 		}
@@ -153,6 +153,25 @@ public class Webservices {
 			res = Helper.getMessageUnknownError();
 		}
 		db.closeConnection();
+		return res;
+	}
+	
+	public String login(String username, String password) {
+		Database db = new Database();
+		String res = Helper.getMessageUnknownError();
+		
+		if(db.openConnection()){
+			try {
+				if(db.checkUserPass(username, password))
+					res = OK_MESSAGE;
+				else
+					res = Helper.getMessageIncorrectUserPass();
+			} catch (SQLException e) {
+				
+			} finally {
+				db.closeConnection();
+			}
+		} 
 		return res;
 	}
 
@@ -179,7 +198,7 @@ public class Webservices {
 								double longitude, int timeQuantum,
 								String biography) {
 		Database db = new Database();
-		int id;
+		int id = 0;
 		if (db.openConnection()) {
 			try {
 				if (db.checkMasterPassword(username, password)
@@ -187,7 +206,6 @@ public class Webservices {
 					id = db.InsertInOffice(spec, subspec, address, tellNo,
 							cityid, latitude, longitude, timeQuantum,
 							biography);
-					return id;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -195,7 +213,30 @@ public class Webservices {
 				db.closeConnection();
 			}
 		}
-		return -1;
+		return id;
+	}
+	
+	public int registerOffice2(	String username, String password, int cityid,
+								int spec, int subspec, String address,
+								String tellNo, int timeQuantum,
+								String biography) {
+		Database db = new Database();
+		int id = 0;
+		if (db.openConnection()) {
+			try {
+				if (db.checkMasterPassword(username, password)
+						|| db.isHaveSupportPermission(username, password)) {
+					id = db.InsertInOffice(spec, subspec, address, tellNo,
+							cityid, 0.0, 0.0, timeQuantum,
+							biography);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return id;
 	}
 
 	public boolean updateOfficeInfo(String username, String password,
@@ -2234,7 +2275,7 @@ public class Webservices {
 		String res = "";
 		Database db = new Database();
 		if (db.openConnection()) {
-			if (db.isUsernameAvailable2(username)) {
+			if (db.isUsernameAvailable(username)) {
 				byte[] picbyte = null;
 				if (pic != null && pic.length() > 0) {
 					picbyte = Helper.getBytes(pic);
