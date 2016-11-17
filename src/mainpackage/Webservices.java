@@ -2272,7 +2272,7 @@ public class Webservices {
 									String mobileno, String username,
 									String password, int cityid, String pic,
 									String email) {
-		String res = "";
+		String res = "OK";
 		Database db = new Database();
 		if (db.openConnection()) {
 			if (db.isUsernameAvailable(username)) {
