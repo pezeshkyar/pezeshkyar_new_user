@@ -33,6 +33,8 @@ import primitives.User;
 import primitives.UserTurn;
 
 public class Webservices {
+	public static final String OK_MESSAGE = "OK";
+
 	public String[] getProvinceName() {
 		String[] res = null;
 		Database db = new Database();
@@ -118,25 +120,40 @@ public class Webservices {
 	// Add officeId to input parameters
 	public boolean isUserNameAvailable(String username, int officeId) {
 		Database db = new Database();
-		return db.isUsernameAvailable(username);
+		boolean res;
+		if (db.openConnection()) {
+			res = db.isUsernameAvailable2(username);
+			db.closeConnection();
+		} else
+			res = false;
+		return res;
 	}
 
 	// input params: remove role, add officeId, add email
 	public String register(	String name, String lastname, String mobileno,
 							String username, String password, int cityid,
 							String pic, String email, int officeId) {
+		String res = OK_MESSAGE;
 		Database db = new Database();
-		if (!db.isUsernameAvailable(username)) {
-			return "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
-					+ "\u0627\u0646\u062a\u062e\u0627\u0628\u06cc "
-					+ "\u0645\u062c\u0627\u0632 \u0646\u06cc\u0633\u062a";
+		if (!db.openConnection())
+			return Helper.getMessageUnknownError();
+		if (!db.isUsernameAvailable2(username)) {
+			db.closeConnection();
+			return Helper.getMessageUserNameNotAvailabe();
 		}
+
 		byte[] picbyte = null;
 		if (pic != null && pic.length() > 0) {
 			picbyte = Helper.getBytes(pic);
 		}
-		return db.register(name, lastname, mobileno, username, password,
-				cityid, picbyte, email);
+		try {
+			db.register(name, lastname, mobileno, username, password, cityid,
+					picbyte, email);
+		} catch (SQLException e) {
+			res = Helper.getMessageUnknownError();
+		}
+		db.closeConnection();
+		return res;
 	}
 
 	public int login2(String username, String password, int officeId) {
@@ -152,6 +169,7 @@ public class Webservices {
 		} catch (Exception ex) {
 			role = 0;
 		}
+		db.closeConnection();
 		return role;
 	}
 
@@ -773,7 +791,7 @@ public class Webservices {
 									int officeId, String name,
 									String lastname, String mobileno,
 									int cityid) {
-		String res = "OK";
+		String res = OK_MESSAGE;
 		Database db = new Database();
 		if (!db.openConnection()) {
 			res = "\u062e\u0637\u0627\u06cc "
@@ -803,7 +821,7 @@ public class Webservices {
 			updateUserInfo3(String username, String password, int officeId,
 							String name, String lastname, String mobileno,
 							int cityid, String newPassword, String email) {
-		String res = "OK";
+		String res = OK_MESSAGE;
 		Database db = new Database();
 		if (!db.openConnection()) {
 			res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a "
@@ -1484,7 +1502,7 @@ public class Webservices {
 				if (db.isHaveSecretaryPermission(username, password,
 						officeId)) {
 					id = db.addTaskGroup(taskGroupName, officeId);
-					res = "OK";
+					res = OK_MESSAGE;
 				}
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
@@ -1507,7 +1525,7 @@ public class Webservices {
 						officeId)) {
 					if (!db.isAnyoneReserveTaskGroup(taskGroupId)) {
 						db.updateTaskGroup(taskGroupId, taskGroupName);
-						res = "OK";
+						res = OK_MESSAGE;
 					} else {
 						res = Helper.getMessageNotPermittedChangeTaskGroup();
 					}
@@ -1535,7 +1553,7 @@ public class Webservices {
 						officeId)) {
 					if (!db.isAnyoneReserveTaskGroup(taskGroupId)) {
 						db.deleteTaskGroup(taskGroupId);
-						res = "OK";
+						res = OK_MESSAGE;
 					} else {
 						res = Helper.getMessageNotPermittedDeleteTaskGroup();
 					}
@@ -1581,7 +1599,7 @@ public class Webservices {
 				if (db.isHaveSecretaryPermission(username, password,
 						officeId)) {
 					db.updateTaskPrice(taskId, price);
-					res = "OK";
+					res = OK_MESSAGE;
 				} else {
 					res = Helper.getMessageNotPermittedAcces();
 				}
@@ -1607,7 +1625,7 @@ public class Webservices {
 						officeId)) {
 					if (!db.isAnyoneReserveTask(taskId)) {
 						db.updateTaskName(taskId, taskName);
-						res = "OK";
+						res = OK_MESSAGE;
 					} else {
 						res = Helper.getMessageNotPermittedChangeTask();
 					}
@@ -1635,7 +1653,7 @@ public class Webservices {
 						officeId)) {
 					if (!db.isAnyoneReserveTask(taskId)) {
 						db.deleteTask(taskId);
-						res = "OK";
+						res = OK_MESSAGE;
 					} else {
 						res = Helper.getMessageNotPermittedDeleteTask();
 					}
@@ -1842,7 +1860,7 @@ public class Webservices {
 										String password, int officeId,
 										String message) {
 		Database db = new Database();
-		String Str = "ok";
+		String Str = OK_MESSAGE;
 
 		if (db.openConnection()) {
 			try {
@@ -2190,7 +2208,7 @@ public class Webservices {
 											String password,
 											String message) {
 		Database db = new Database();
-		String Str = "ok";
+		String Str = OK_MESSAGE;
 
 		if (db.openConnection()) {
 			try {
@@ -2205,6 +2223,45 @@ public class Webservices {
 			}
 		}
 		return Str;
+	}
+
+	public String registerAddDoctor(String usernameSupport,
+									String passwordSupport, int officeId,
+									String name, String lastname,
+									String mobileno, String username,
+									String password, int cityid, String pic,
+									String email) {
+		String res = "";
+		Database db = new Database();
+		if (db.openConnection()) {
+			if (db.isUsernameAvailable2(username)) {
+				byte[] picbyte = null;
+				if (pic != null && pic.length() > 0) {
+					picbyte = Helper.getBytes(pic);
+				}
+
+				if (db.isHaveSupportPermission(usernameSupport,
+						passwordSupport)) {
+					try {
+						int userId = db.register(name, lastname, mobileno,
+								username, password, cityid, picbyte, email);
+						db.InsertInDoctorOffice(officeId, userId);
+					} catch (SQLException e) {
+						res = Helper.getMessageUnknownError();
+					} finally {
+						db.closeConnection();
+					}
+				} else {
+					res = Helper.getMessageNotPermittedAcces();
+				}
+			} else {
+				res = Helper.getMessageUserNameNotAvailabe();
+			}
+		} else {
+			res = Helper.getMessageUnknownError();
+		}
+
+		return res;
 	}
 
 }

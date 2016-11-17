@@ -169,11 +169,10 @@ public class Database {
 		return res;
 	}
 
-	public boolean isUsernameAvailable(String username) {
+	public boolean isUsernameAvailable2(String username) {
 		String query = "select * from user where username = ? ";
 		boolean res;
-		if (!openConnection())
-			return false;
+
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
 			ps.setString(1, username);
@@ -185,54 +184,38 @@ public class Database {
 		} catch (SQLException e) {
 			res = false;
 		}
-		closeConnection();
 		return res;
 	}
 
-	public String register(	String name, String lastname, String mobileno,
-							String username, String password, int cityid,
-							byte[] pic, String email) {
-		String msg = "OK";
-		int userId = getMaxId("user") + 1;
-		String query =
-				"insert into user(username, password, name, lastname, mobileno, "
-						+ " cityid, photo, id, email) values(?,?,?,?,?,?,?,?,?)";
-		if (!openConnection()) {
-			msg = "\u0645\u0634\u06a9\u0644\u06cc \u062f\u0631 \u067e\u0627\u06cc\u06af\u0627\u0647 "
-					+ "\u062f\u0627\u062f\u0647 \u0633\u0645\u062a \u0633\u0631\u0648\u0631 "
-					+ "\u0628\u0647 \u0648\u062c\u0648\u062f \u0622\u0645\u062f\u0647 "
-					+ "\u0627\u0633\u062a";
-		} else {
+	public int register(String name, String lastname, String mobileno,
+						String username, String password, int cityid,
+						byte[] pic, String email)
+			throws SQLException {
 
-			try {
-				PreparedStatement ps = connection.prepareStatement(query);
-				ps.setString(1, username);
-				ps.setString(2, password);
-				ps.setString(3, name);
-				ps.setString(4, lastname);
-				ps.setString(5, mobileno);
-				ps.setInt(6, cityid);
-				if (pic == null || pic.length == 0) {
-					ps.setNull(7, java.sql.Types.BLOB);
-				} else {
-					ByteArrayInputStream temp =
-							new ByteArrayInputStream(pic);
-					ps.setBinaryStream(7, temp, pic.length);
-				}
-				ps.setInt(8, userId);
-				ps.setString(9, email);
-				ps.execute();
-				ps.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				msg = e.getMessage();
-			} catch (Exception e) {
-				e.printStackTrace();
-				msg = e.getMessage();
-			}
+		int userId = getMaxId("user") + 1;
+		String query = "insert into user(username, password, name, "
+				+ "lastname, mobileno, cityid, photo, id, email) "
+				+ "values(?,?,?,?,?,?,?,?,?)";
+
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setString(1, username);
+		ps.setString(2, password);
+		ps.setString(3, name);
+		ps.setString(4, lastname);
+		ps.setString(5, mobileno);
+		ps.setInt(6, cityid);
+		if (pic == null || pic.length == 0) {
+			ps.setNull(7, java.sql.Types.BLOB);
+		} else {
+			ByteArrayInputStream temp = new ByteArrayInputStream(pic);
+			ps.setBinaryStream(7, temp, pic.length);
 		}
-		closeConnection();
-		return msg;
+		ps.setInt(8, userId);
+		ps.setString(9, email);
+		ps.execute();
+		ps.close();
+
+		return userId;
 	}
 
 	public int getUserId(String username) {
@@ -316,11 +299,12 @@ public class Database {
 	}
 
 	public int getNextOfficeId() {
-		int max =  getMaxId("office");
-		if(max < firstOfficeId) max = firstOfficeId;
-		
+		int max = getMaxId("office");
+		if (max < firstOfficeId)
+			max = firstOfficeId;
+
 		Random rand = new Random();
-		int  inc = rand.nextInt(10) + 1;
+		int inc = rand.nextInt(10) + 1;
 		return max + inc;
 	}
 
@@ -2020,6 +2004,7 @@ public class Database {
 		}
 		return vec;
 	}
+
 	public Vector<Ticket> getUserTicketSupporter() throws SQLException {
 		Vector<Ticket> vec = new Vector<Ticket>();
 		String query = "select ticket.id, userId, ticket.subjectId, topic,"
@@ -2045,6 +2030,7 @@ public class Database {
 		}
 		return vec;
 	}
+
 	public int setUserTicket(	int userId, int subjectId, String topic,
 								int priority)
 			throws SQLException {
