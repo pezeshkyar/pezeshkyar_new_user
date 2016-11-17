@@ -400,4 +400,11 @@ public class Helper {
 				+ "\u0627\u0646\u062a\u062e\u0627\u0628\u06cc "
 				+ "\u0645\u062c\u0627\u0632 \u0646\u06cc\u0633\u062a";
 	}
+	
+	public static String getMessageIncorrectUserPass(){
+		//name karbari ya gozarvazheh sahih nist
+		return "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
+				+ "\u06cc\u0627 \u06af\u0630\u0631\u0648\u0627\u0698\u0647 "
+				+ "\u0627\u0634\u062a\u0628\u0627\u0647 \u0627\u0633\u062a";
+	}
 }

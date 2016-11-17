@@ -765,11 +765,7 @@ public class Webservices {
 			return user;
 		try {
 			if (!db.checkUserPass(username, password)) {
-				user.name = "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628"
-						+ "\u0631\u06cc \u06cc\u0627 \u0631\u0645\u0632 "
-						+ "\u0639\u0628\u0648\u0631 "
-						+ "\u0627\u0634\u062a\u0628\u0627\u0647 "
-						+ "\u0627\u0633\u062a";
+				user.name = Helper.getMessageIncorrectUserPass();
 				user.lastname = "Username or Password is incorrect";
 			} else {
 				int userId = db.getUserId(username);
@@ -794,24 +790,22 @@ public class Webservices {
 		String res = OK_MESSAGE;
 		Database db = new Database();
 		if (!db.openConnection()) {
-			res = "\u062e\u0637\u0627\u06cc "
-					+ "\u0633\u0645\u062a \u0633\u0631\u0648\u0631";
-		}
-		try {
-			if (!db.checkUserPass(username, password)) {
-				res = "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
-						+ "\u06cc\u0627 \u0631\u0645\u0632 \u0639\u0628\u0648\u0631 "
-						+ "\u0627\u0634\u062a\u0628\u0627\u0647 \u0627\u0633\u062a";
+			res = Helper.getMessageUnknownError();
+		} else {
+			try {
+				if (!db.checkUserPass(username, password)) {
+					res = Helper.getMessageIncorrectUserPass();
+				} else {
+					int userId = db.getUserId(username);
+					if (!db.updateUserInfo(userId, name, lastname, mobileno,
+							cityid)) {
+						res = Helper.getMessageUnknownError();
+					}
+				}
+			} catch (SQLException e) {
+				res = Helper.getMessageUnknownError();
 			}
-			int userId = db.getUserId(username);
-			if (!db.updateUserInfo(userId, name, lastname, mobileno,
-					cityid)) {
-				res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a "
-						+ "\u0633\u0631\u0648\u0631";
-			}
-		} catch (SQLException e) {
-			res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a "
-					+ "\u0633\u0631\u0648\u0631";
+			db.closeConnection();
 		}
 		return res;
 	}
@@ -821,28 +815,26 @@ public class Webservices {
 			updateUserInfo3(String username, String password, int officeId,
 							String name, String lastname, String mobileno,
 							int cityid, String newPassword, String email) {
-		String res = OK_MESSAGE;
+		String res = Helper.getMessageUnknownError();
 		Database db = new Database();
-		if (!db.openConnection()) {
-			res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a "
-					+ "\u0633\u0631\u0648\u0631";
-		}
-		try {
-			if (!db.checkUserPass(username, password)) {
-				res = "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
-						+ "\u06cc\u0627 \u0631\u0645\u0632 \u0639\u0628\u0648\u0631 "
-						+ "\u0627\u0634\u062a\u0628\u0627\u0647 \u0627\u0633\u062a";
+
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, newPassword)) {
+					int userId = db.getUserId(username);
+					if (db.updateUserInfo(userId, name, lastname, mobileno,
+							cityid, newPassword, email)) {
+						res = OK_MESSAGE;
+					}
+				} else {
+					res = Helper.getMessageIncorrectUserPass();
+				}
+
+			} catch (SQLException e) {
+
+			} finally {
+				db.closeConnection();
 			}
-			int userId = db.getUserId(username);
-			if (!db.updateUserInfo(userId, name, lastname, mobileno, cityid,
-					newPassword, email)) {
-				res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a "
-						+ "\u0633\u0631\u0648\u0631";
-			}
-		} catch (SQLException e) {
-			res = "\u062e\u0637\u0627\u06cc \u0633\u0645\u062a "
-					+ "\u0633\u0631\u0648\u0631";
-			;
 		}
 		return res;
 	}
@@ -857,31 +849,39 @@ public class Webservices {
 		try {
 			if (!db.checkUserPass(username, password)) {
 				result = false;
+			} else {
+				byte[] imageAsBytes = Helper.getBytes(pic);
+				int userId = db.getUserId(username);
+				result = db.updateUserPic(userId, imageAsBytes);
+				result = true;
 			}
-			byte[] imageAsBytes = Helper.getBytes(pic);
-			int userId = db.getUserId(username);
-			result = db.updateUserPic(userId, imageAsBytes);
-			result = true;
 		} catch (SQLException e) {
-
 			result = false;
+		} finally {
+			db.closeConnection();
 		}
 		return result;
 	}
 
 	public boolean updateUserPassword(	String username, String password,
 										int officeId, String newPassword) {
+		boolean res;
 		Database db = new Database();
 		if (!db.openConnection())
 			return false;
 		try {
 			if (!db.checkUserPass(username, password))
-				return false;
-			int userId = db.getUserId(username);
-			return db.updateUserPassword(userId, newPassword);
+				res = false;
+			else {
+				int userId = db.getUserId(username);
+				res = db.updateUserPassword(userId, newPassword);
+			}
 		} catch (SQLException e) {
-			return false;
+			res = false;
+		} finally {
+			db.closeConnection();
 		}
+		return res;
 	}
 
 	public int[] getDoctorOffice(String doctorUsername) {
