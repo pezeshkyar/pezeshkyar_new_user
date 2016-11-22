@@ -2363,4 +2363,15 @@ public class Webservices {
 		return res;
 	}
 
+	public boolean loginSupporter(String username, String password) {
+		Database db = new Database();
+		boolean res = false;
+		if (db.openConnection()) {
+			res = db.isHaveSupportPermission(username, password);
+			db.closeConnection();
+
+		}
+		return res;
+	}
+
 }
