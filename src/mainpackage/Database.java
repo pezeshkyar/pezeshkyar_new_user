@@ -515,7 +515,8 @@ public class Database {
 								String fromDate, String toDate) {
 		String query = "select id, date, starthour, startminute, capacity,"
 				+ " reserved, officeid, duration from turn "
-				+ " where officeid = ? and date between ? and ? order by date";
+				+ " where officeid = ? and date between ? and ? "
+				+ "order by date, starthour, startminute";
 		Vector<Turn> vec = new Vector<Turn>();
 
 		try {
@@ -2408,9 +2409,11 @@ public class Database {
 	public boolean isOfficeIdAvailable(int officeId) throws SQLException{
 		String query = "select * from office where id = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, officeId);
 		ResultSet rs = ps.executeQuery();
 		if(rs.next())
 			return true;
 		else return false;
 	}
+	
 }

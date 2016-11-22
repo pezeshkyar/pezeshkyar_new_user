@@ -411,6 +411,105 @@ public class Webservices {
 		return true;
 	}
 
+	public String addTurnByDate2(	String username, String password,
+									int officeId, String fromDate,
+									String toDate, int hour, int min,
+									int duration, int capacity,
+									String dayOfWeek) {
+		PersianCalendar cal1 = Helper.getCalendarFromShortDate(fromDate);
+		PersianCalendar cal2 = Helper.getCalendarFromShortDate(toDate);
+		Vector<Integer> days = new Vector<Integer>();
+		Vector<Turn> vec = new Vector<Turn>();
+		Database db = new Database();
+		int firstId = 0;
+		String msg;
+		if (capacity <= 0 || duration <= 0 || hour < 0 || min < 0) {
+			msg = Helper.getMessageInvalidParam();
+			// parametrhaye zaman va zarfiat ra barresi konid
+			msg += "\u067e\u0627\u0631\u0627\u0645\u062a\u0631\u0647\u0627\u06cc "
+					+ "\u0632\u0645\u0627\u0646 \u0648 \u0638\u0631\u0641\u06cc\u062a "
+					+ "\u0631\u0627 \u0628\u0631\u0631\u0633\u06cc "
+					+ "\u06a9\u0646\u06cc\u062f";
+			return msg;
+		}
+		if (cal1 == null || cal2 == null) {
+			msg = Helper.getMessageInvalidParam();
+			// tarikh shoro va payan ra barresi konid
+			msg += "\u062a\u0627\u0631\u06cc\u062e \u0634\u0631\u0648\u0639 "
+					+ "\u0648 \u067e\u0627\u06cc\u0627\u0646 \u0631\u0627 "
+					+ "\u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u062f";
+			return msg;
+		}
+		if (Helper.isBeforeToday(fromDate)) {
+			msg = Helper.getMessageInvalidParam();
+			// tarikh shoro nemitavanad ghabl az emrooz bashad
+			msg += "\u062a\u0627\u0631\u06cc\u062e \u0634\u0631\u0648\u0639 "
+					+ "\u0646\u0645\u06cc \u062a\u0648\u0627\u0646\u062f "
+					+ "\u0642\u0628\u0644 \u0627\u0632 "
+					+ "\u0627\u0645\u0631\u0648\u0632 \u0628\u0627\u0634\u062f";
+			return msg;
+		}
+		if (cal1.after(cal2)) {
+			msg = Helper.getMessageInvalidParam();
+			// tarikh shoro va payan ra barresi konid
+			msg += "\u062a\u0627\u0631\u06cc\u062e \u0634\u0631\u0648\u0639 "
+					+ "\u0648 \u067e\u0627\u06cc\u0627\u0646 \u0631\u0627 "
+					+ "\u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u062f";
+			return msg;
+		}
+		if (!db.openConnection()) {
+			return Helper.getMessageUnknownError();
+		}
+		firstId = db.getMaxTurnId() + 1;
+
+		char[] temp = dayOfWeek.toCharArray();
+		for (char ch : temp) {
+			days.addElement(ch - '0');
+		}
+		while (cal2.after(cal1) || cal2.equals(cal1)) {
+			int todayDayOfWeek = cal1.getPersianWeekDay();
+			if (days.contains(todayDayOfWeek)) {
+				cal1.getPersianLongDate();
+				Turn turn = new Turn();
+				turn.capacity = capacity;
+				turn.date = cal1.getPersianShortDate();
+				turn.duration = duration;
+				turn.hour = hour;
+				turn.min = min;
+				turn.id = firstId++;
+				turn.isReserved = false;
+				turn.longDate = cal1.getPersianLongDate();
+				turn.officeId = officeId;
+				turn.reserved = 0;
+				vec.addElement(turn);
+			}
+			cal1.add(PersianCalendar.DAY_OF_YEAR, 1);
+		}
+
+		try {
+			if (vec.size() > 0) {
+				db.addTurnBatch(vec);
+
+				msg = OK_MESSAGE;
+				;
+			} else {
+				//be dalile na-hamkhani rooz va tarikh, hich nobati ezefe nashod
+				msg = "\u0628\u0647 \u062f\u0644\u06cc\u0644 "
+						+ "\u0646\u0627\u0647\u0645\u062e\u0648\u0627\u0646\u06cc "
+						+ "\u0631\u0648\u0632 "
+						+ "\u0648 \u062a\u0627\u0631\u06cc\u062e\u060c "
+						+ "\u0647\u06cc\u0686 \u0646\u0648\u0628\u062a "
+						+ "\u062c\u062f\u06cc\u062f\u06cc "
+						+ "\u0627\u0636\u0627\u0641\u0647 \u0646\u0634\u062f\u002e";
+			}
+		} catch (SQLException e) {
+			msg = Helper.getMessageUnknownError();
+		} finally {
+			db.closeConnection();
+		}
+		return msg;
+	}
+
 	public boolean addTurnByDate(	String username, String password,
 									int officeId, String fromDate,
 									String toDate, int hour, int min,
@@ -2213,7 +2312,12 @@ public class Webservices {
 					msg = Helper.getMessageIncorrectUserPass();
 				}
 			} catch (SQLException e) {
-				msg = Helper.getMessageUnknownError();
+				if (e.getErrorCode() == 1062) {
+					// Ignore Duplicate Error
+					msg = OK_MESSAGE;
+				} else {
+					msg = Helper.getMessageUnknownError();
+				}
 			} finally {
 				db.closeConnection();
 			}

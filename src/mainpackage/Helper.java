@@ -386,7 +386,7 @@ public class Helper {
 
 	public static String getMessageUnknownError() {
 		String res;
-		//khataye gheire montazere da samte server pish amade ast
+		// khataye gheire montazere da samte server pish amade ast
 		res = "\u062e\u0637\u0627\u06cc \u063a\u06cc\u0631 "
 				+ "\u0645\u0646\u062a\u0638\u0631\u0647 "
 				+ "\u062f\u0631 \u0633\u0645\u062a "
@@ -394,25 +394,32 @@ public class Helper {
 				+ "\u0622\u0645\u062f\u0647 \u0627\u0633\u062a";
 		return res;
 	}
-	
-	public static String getMessageUserNameNotAvailabe(){
-		//name karbarie Entekhabi Mojaz Nist
+
+	public static String getMessageUserNameNotAvailabe() {
+		// name karbarie Entekhabi Mojaz Nist
 		return "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
 				+ "\u0627\u0646\u062a\u062e\u0627\u0628\u06cc "
 				+ "\u0645\u062c\u0627\u0632 \u0646\u06cc\u0633\u062a";
 	}
-	
-	public static String getMessageIncorrectUserPass(){
-		//name karbari ya gozarvazheh sahih nist
+
+	public static String getMessageIncorrectUserPass() {
+		// name karbari ya gozarvazheh sahih nist
 		return "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
 				+ "\u06cc\u0627 \u06af\u0630\u0631\u0648\u0627\u0698\u0647 "
 				+ "\u0627\u0634\u062a\u0628\u0627\u0647 \u0627\u0633\u062a";
 	}
-	
-	public static String getMessageIncorrectOfficeId(){
-		//code matabe vared shode nadorost ast
+
+	public static String getMessageIncorrectOfficeId() {
+		// code matabe vared shode nadorost ast
 		return "\u06a9\u062f \u0645\u0637\u0628 \u0648\u0627\u0631\u062f "
 				+ "\u0634\u062f\u0647 \u0646\u0627 \u062f\u0631\u0633\u062a "
 				+ "\u0627\u0633\u062a\u002e";
+	}
+
+	public static String getMessageInvalidParam() {
+		// khta dar parametrhaye voroodi
+		return "\u062e\u0637\u0627 \u062f\u0631 "
+				+ "\u067e\u0627\u0631\u0627\u0645\u062a\u0631\u0647\u0627\u06cc"
+				+ " \u0648\u0631\u0648\u062f\u06cc\u002e";
 	}
 }
