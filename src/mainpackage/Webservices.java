@@ -117,7 +117,18 @@ public class Webservices {
 
 	}
 
-	//office id in the input parameters is not necessary from now
+	public boolean isUserNameAvailable2(String username) {
+		Database db = new Database();
+		boolean res;
+		if (db.openConnection()) {
+			res = db.isUsernameAvailable(username);
+			db.closeConnection();
+		} else
+			res = false;
+		return res;
+	}
+
+	// office id in the input parameters is not necessary from now
 	public boolean isUserNameAvailable(String username, int officeId) {
 		Database db = new Database();
 		boolean res;
@@ -126,6 +137,32 @@ public class Webservices {
 			db.closeConnection();
 		} else
 			res = false;
+		return res;
+	}
+
+	public String register2(String name, String lastname, String mobileno,
+							String username, String password, int cityid,
+							String pic, String email) {
+		String res = OK_MESSAGE;
+		Database db = new Database();
+		if (!db.openConnection())
+			return Helper.getMessageUnknownError();
+		if (!db.isUsernameAvailable(username)) {
+			db.closeConnection();
+			return Helper.getMessageUserNameNotAvailabe();
+		}
+
+		byte[] picbyte = null;
+		if (pic != null && pic.length() > 0) {
+			picbyte = Helper.getBytes(pic);
+		}
+		try {
+			db.register(name, lastname, mobileno, username, password, cityid,
+					picbyte, email);
+		} catch (SQLException e) {
+			res = Helper.getMessageUnknownError();
+		}
+		db.closeConnection();
 		return res;
 	}
 
@@ -155,23 +192,23 @@ public class Webservices {
 		db.closeConnection();
 		return res;
 	}
-	
+
 	public String login(String username, String password) {
 		Database db = new Database();
 		String res = Helper.getMessageUnknownError();
-		
-		if(db.openConnection()){
+
+		if (db.openConnection()) {
 			try {
-				if(db.checkUserPass(username, password))
+				if (db.checkUserPass(username, password))
 					res = OK_MESSAGE;
 				else
 					res = Helper.getMessageIncorrectUserPass();
 			} catch (SQLException e) {
-				
+
 			} finally {
 				db.closeConnection();
 			}
-		} 
+		}
 		return res;
 	}
 
@@ -215,7 +252,7 @@ public class Webservices {
 		}
 		return id;
 	}
-	
+
 	public int registerOffice2(	String username, String password, int cityid,
 								int spec, int subspec, String address,
 								String tellNo, int timeQuantum,
@@ -227,8 +264,7 @@ public class Webservices {
 				if (db.checkMasterPassword(username, password)
 						|| db.isHaveSupportPermission(username, password)) {
 					id = db.InsertInOffice(spec, subspec, address, tellNo,
-							cityid, 0.0, 0.0, timeQuantum,
-							biography);
+							cityid, 0.0, 0.0, timeQuantum, biography);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -2158,40 +2194,62 @@ public class Webservices {
 		return res;
 	}
 
-	public void addOfficeForUser(	String username, String password,
+	public String addOfficeForUser(	String username, String password,
 									int officeId) {
 		Database db = new Database();
+		String msg;
 
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
 					int userid = db.getUserId(username);
-					db.addOfficeForUser(userid, officeId);
+					if (db.isOfficeIdAvailable(officeId)) {
+						db.addOfficeForUser(userid, officeId);
+						msg = OK_MESSAGE;
+					} else {
+						msg = Helper.getMessageIncorrectOfficeId();
+					}
+				} else {
+					msg = Helper.getMessageIncorrectUserPass();
 				}
 			} catch (SQLException e) {
-
+				msg = Helper.getMessageUnknownError();
 			} finally {
 				db.closeConnection();
 			}
+		} else {
+			msg = Helper.getMessageUnknownError();
 		}
+		return msg;
 	}
 
-	public void deleteOfficeForUser(String username, String password,
-									int officeId) {
+	public String deleteOfficeForUser(	String username, String password,
+										int officeId) {
 		Database db = new Database();
+		String msg;
 
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
-					int userid = db.getUserId(username);
-					db.deleteOfficeForUser(userid, officeId);
+					if (db.isOfficeIdAvailable(officeId)) {
+						int userid = db.getUserId(username);
+						db.deleteOfficeForUser(userid, officeId);
+						msg = OK_MESSAGE;
+					} else {
+						msg = Helper.getMessageIncorrectOfficeId();
+					}
+				} else {
+					msg = Helper.getMessageIncorrectUserPass();
 				}
 			} catch (SQLException e) {
-
+				msg = Helper.getMessageUnknownError();
 			} finally {
 				db.closeConnection();
 			}
+		} else {
+			msg = Helper.getMessageUnknownError();
 		}
+		return msg;
 	}
 
 	public Office[] getOfficeForUser(	String username, String password,

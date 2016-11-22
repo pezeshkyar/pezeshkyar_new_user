@@ -2404,4 +2404,13 @@ public class Database {
 		}
 		return false;
 	}
+	
+	public boolean isOfficeIdAvailable(int officeId) throws SQLException{
+		String query = "select * from office where id = ?";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		if(rs.next())
+			return true;
+		else return false;
+	}
 }

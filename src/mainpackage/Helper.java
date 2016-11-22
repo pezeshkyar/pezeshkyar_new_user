@@ -386,6 +386,7 @@ public class Helper {
 
 	public static String getMessageUnknownError() {
 		String res;
+		//khataye gheire montazere da samte server pish amade ast
 		res = "\u062e\u0637\u0627\u06cc \u063a\u06cc\u0631 "
 				+ "\u0645\u0646\u062a\u0638\u0631\u0647 "
 				+ "\u062f\u0631 \u0633\u0645\u062a "
@@ -406,5 +407,12 @@ public class Helper {
 		return "\u0646\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631\u06cc "
 				+ "\u06cc\u0627 \u06af\u0630\u0631\u0648\u0627\u0698\u0647 "
 				+ "\u0627\u0634\u062a\u0628\u0627\u0647 \u0627\u0633\u062a";
+	}
+	
+	public static String getMessageIncorrectOfficeId(){
+		//code matabe vared shode nadorost ast
+		return "\u06a9\u062f \u0645\u0637\u0628 \u0648\u0627\u0631\u062f "
+				+ "\u0634\u062f\u0647 \u0646\u0627 \u062f\u0631\u0633\u062a "
+				+ "\u0627\u0633\u062a\u002e";
 	}
 }
