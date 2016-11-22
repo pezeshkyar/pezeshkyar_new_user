@@ -2304,5 +2304,24 @@ public class Webservices {
 
 		return res;
 	}
+	public boolean loginSupporter(String username, String password){
+		Database db=new Database();
+		boolean res=false;
+		if(db.openConnection()){
+			try{
+				if(db.checkUserPass(username, password)){
+					int userId=db.getUserId(username);
+					res=db.loginSupporter(userId);
+				}
+			}
+			catch(SQLException e){
+				res=false;
+			}
+			finally{
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
 
 }

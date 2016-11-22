@@ -77,7 +77,7 @@ public class Database {
 				databaseName += ("_" + Constants.CUSTOMER_NAME);
 
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://127.0.0.1:3306/" + databaseName, "root",
+					"jdbc:mysql://185.129.168.135:3306/" + databaseName, "root",
 					"dreadlord");
 
 		} catch (SQLException e) {
@@ -2401,6 +2401,18 @@ public class Database {
 			}
 		} catch (SQLException e) {
 
+		}
+		return false;
+	}
+
+	public boolean loginSupporter(int userId) throws SQLException {
+		String query = "Select * from usersupport where userid=?";
+
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			return true;
 		}
 		return false;
 	}
