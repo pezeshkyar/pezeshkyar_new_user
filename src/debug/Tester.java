@@ -22,6 +22,9 @@ public class Tester {
 //		ws.setReplyBatchForUser("hadi", "123", 1, "ziari", q, r);
 //		ws.setReply("ziari", "123", 1, 1, "yyyy");
 //		ws.getOfficeForUser("ali", "123");
+//		ws.getOfficeForUser("doctor", "123456");
+		ws.getRoleInAll("doctor", "123456");
+		ws.getOfficeForDoctorOrSecretary("doctor", "123456");
 	}
 
 }

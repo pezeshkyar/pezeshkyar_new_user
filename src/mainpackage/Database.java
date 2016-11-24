@@ -2344,25 +2344,23 @@ public class Database {
 		return vec;
 	}
 
-	public Vector<Office> getOfficeInfoForUser(int userId)
-			throws SQLException {
-		Vector<Office> vec;
-
-		String query = getOfficeInfoHelperQuery()
-				+ " join useroffice on useroffice.officeid = office.id "
-				+ " join doctoroffice on doctoroffice.officeid = office.id "
-				+ " join secretary on secretary.officeid = office.id "
-				+ " where useroffice.userid = ? or doctoroffice.doctorid = ? "
-				+ " or secretary.secretaryid = ? ";
-		PreparedStatement ps = connection.prepareStatement(query);
-		ps.setInt(1, userId);
-		ps.setInt(2, userId);
-		ps.setInt(3, userId);
-
-		vec = getOfficeInfoHelperRun(ps);
-
-		return vec;
-	}
+//	public Vector<Office> getOfficeInfoForUser(int userId)
+//			throws SQLException {
+//		Vector<Office> vec;
+//
+//		String query = getOfficeInfoHelperQuery()
+//				+ " join useroffice on useroffice.officeid = office.id "
+//				+ " where useroffice.userid = ? or doctoroffice.doctorid = ? "
+//				+ " or secretary.secretaryid = ? ";
+//		PreparedStatement ps = connection.prepareStatement(query);
+//		ps.setInt(1, userId);
+//		ps.setInt(2, userId);
+//		ps.setInt(3, userId);
+//
+//		vec = getOfficeInfoHelperRun(ps);
+//
+//		return vec;
+//	}
 
 	public Vector<Ticket> getAllTickets(int offset, int count)
 			throws SQLException {
@@ -2416,4 +2414,62 @@ public class Database {
 		else return false;
 	}
 	
+	public Vector<Integer> getOfficeIdForUser(int userId) throws SQLException{
+		Vector<Integer> vec = new Vector<Integer>();
+		String query = "select officeid from useroffice where userid = ?";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			vec.addElement(rs.getInt(1));
+		}
+		return vec;
+	}
+	
+	public Vector<Integer> getOfficeIdForDoctorOrSecretary(int userId) throws SQLException{
+		Vector<Integer> vec = new Vector<Integer>();
+		String query = "select officeid from doctoroffice where doctorid = ? "
+				+ " union select officeid from secretary where secretaryid = ? ";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ps.setInt(2, userId);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			vec.addElement(rs.getInt(1));
+		}
+		return vec;
+	}
+
+	public int getRoleInAll(String username, String password) throws SQLException{
+		int role;
+		if(checkUserPass(username, password)){
+			int userId = getUserId(username);
+			role = Role.patient;
+			if(isDoctorInAll(userId)){
+				role = Role.doctor;
+			} else if(isSecretaryInAll(userId)) {
+				role = Role.secretary;
+			}
+		} else {
+			role = Role.none;
+		}
+		return role;
+	}
+	
+	private boolean isSecretaryInAll(int userId) throws SQLException{
+		String sQuery = "select * from secretary where secretaryid = ? ";
+		PreparedStatement ps = connection.prepareStatement(sQuery);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+		return (rs.next());
+	}
+	
+	private boolean isDoctorInAll(int userId) throws SQLException{
+		String dQuery = "select * from doctoroffice where doctorid = ? ";
+		PreparedStatement ps = connection.prepareStatement(dQuery);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+		return (rs.next());
+	}
+
 }

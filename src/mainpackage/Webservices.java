@@ -13,6 +13,7 @@ import primitives.Info_Reservation2;
 import primitives.Info_User;
 import primitives.Info_patientFile;
 import primitives.Office;
+import primitives.Office2;
 import primitives.PhotoDesc;
 import primitives.Province;
 import primitives.Question;
@@ -493,7 +494,8 @@ public class Webservices {
 				msg = OK_MESSAGE;
 				;
 			} else {
-				//be dalile na-hamkhani rooz va tarikh, hich nobati ezefe nashod
+				// be dalile na-hamkhani rooz va tarikh, hich nobati ezefe
+				// nashod
 				msg = "\u0628\u0647 \u062f\u0644\u06cc\u0644 "
 						+ "\u0646\u0627\u0647\u0645\u062e\u0648\u0627\u0646\u06cc "
 						+ "\u0631\u0648\u0632 "
@@ -2301,6 +2303,15 @@ public class Webservices {
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
+					if (db.isHaveDoctorPermission(username, password,
+							officeId)) {
+						return "\u0634\u0645\u0627 \u067e\u0632\u0634\u06a9 "
+								+ "\u0627\u06cc\u0646 \u0645\u0637\u0628 "
+								+ "\u0647\u0633\u062a\u06cc\u062f \u0648 "
+								+ "\u0646\u0645\u06cc \u062a\u0648\u0627"
+								+ "\u0646\u06cc\u062f \u0628\u06cc\u0645\u0627"
+								+ "\u0631 \u0622\u0646 \u0628\u0627\u0634\u06cc\u062f";
+					}
 					int userid = db.getUserId(username);
 					if (db.isOfficeIdAvailable(officeId)) {
 						db.addOfficeForUser(userid, officeId);
@@ -2356,25 +2367,61 @@ public class Webservices {
 		return msg;
 	}
 
-	public Office[] getOfficeForUser(	String username, String password,
-										int officeId) {
+	public Office[] getOfficeForUser(String username, String password) {
 		Database db = new Database();
-		Vector<Office> vec = null;
+		Vector<Integer> vec = new Vector<Integer>();
 		Office[] res = null;
 
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
 					int userid = db.getUserId(username);
-					vec = db.getOfficeInfoForUser(userid);
+					vec = db.getOfficeIdForUser(userid);
 					if (vec != null) {
 						res = new Office[vec.size()];
 						for (int i = 0; i < res.length; i++)
-							res[i] = vec.elementAt(i);
+							res[i] = db.getOfficeInfo(vec.elementAt(i));
 					}
 				}
 			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
 
+	public Office2[] getOfficeForDoctorOrSecretary(	String username,
+													String password) {
+		Database db = new Database();
+		Vector<Integer> vec1 = new Vector<Integer>();
+		Vector<Integer> vec2 = new Vector<Integer>();
+		Office2[] res = null;
+
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					int userid = db.getUserId(username);
+					vec1 = db.getOfficeIdForDoctorOrSecretary(userid);
+					vec2 = db.getOfficeIdForUser(userid);
+					
+						res = new Office2[vec1.size() + vec2.size()];
+						for (int i = 0; i < vec1.size(); i++){
+							Office temp = db.getOfficeInfo(vec1.elementAt(i));
+							res[i] = new Office2(temp);
+							res[i].isMyOffice = true;
+						}
+						int n = vec1.size();
+						for (int j = 0; j < vec2.size(); j++){
+							Office temp = db.getOfficeInfo(vec2.elementAt(j));
+							res[n + j] = new Office2(temp);
+							res[n + j].isMyOffice = false;
+						}
+					
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
 			} finally {
 				db.closeConnection();
 			}
@@ -2478,4 +2525,19 @@ public class Webservices {
 		return res;
 	}
 
+	public int getRoleInAll(String username, String password) {
+		Database db = new Database();
+		int role;
+		try {
+			if (db.openConnection()) {
+				role = db.getRoleInAll(username, password);
+
+			} else {
+				role = Role.none;
+			}
+		} catch (SQLException e) {
+			role = Role.none;
+		}
+		return role;
+	}
 }
