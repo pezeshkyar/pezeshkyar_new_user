@@ -24,7 +24,8 @@ public class Tester {
 //		ws.getOfficeForUser("ali", "123");
 //		ws.getOfficeForUser("doctor", "123456");
 		ws.getRoleInAll("doctor", "123456");
-		ws.getOfficeForDoctorOrSecretary("doctor", "123456");
+		ws.getOfficeForUser("ahmad", "123");
+		
 	}
 
 }
