@@ -17,15 +17,22 @@ public class Tester {
 //		ws.setReply("test", "123", 1, 1, "ashgdhasgdhgadhgjsa");
 //		ws.login2("user3", "123456", 1);
 //		ws.register("ali", "abdi", "0911", "ali", "123", 111, "NULL", "NULL", 1);
-//		int[] q = new int[]{1,2};
-//		String[] r = new String[] {"0", "salam"}; 
-//		ws.setReplyBatchForUser("hadi", "123", 1, "ziari", q, r);
+//		int[] q = new int[]{1,2,3,6,11,4,5,10};
+//		String[] r = new String[] {"12","12","12","12","12","1","1","0"}; 
+//		ws.setReplyBatchForUser("test1", "40bd001563085fc35165329ea1ff5c5ecbdbbeef", 1, "hos", q, r);
 //		ws.setReply("ziari", "123", 1, 1, "yyyy");
 //		ws.getOfficeForUser("ali", "123");
 //		ws.getOfficeForUser("doctor", "123456");
-		ws.getRoleInAll("doctor", "123456");
-		ws.getOfficeForUser("ahmad", "123");
-		
+//		ws.getRoleInAll("doctor", "123456");
+//		ws.getOfficeForUser("ahmad", "123");
+//		ws.getAllUnreadMessages("hadi1", "7c4a8d09ca3762af61e59520943dc26494f8941b");
+//		ws.getAllOfficeForCity("hadi1", "7c4a8d09ca3762af61e59520943dc26494f8941b", 43, 1, 10);
+//		ws.getOfficeByFilter("hadi1", "7c4a8d09ca3762af61e59520943dc26494f8941b", -1, 204, -1, -1, "", "", 5, 1);
+//		ws.updateUserInfo3("hadi", "7c4a8d09ca3762af61e59520943dc26494f8941b", "سید هادی", "سعیدی", "09118646086", 43, "123456", "hadi");
+//		ws.getReservationByUser2("hadi", "7c4a8d09ca3762af61e59520943dc26494f8941b", 10, 1);
+//		ws.getRoleInOffice("hadi", "7c4a8d09ca3762af61e59520943dc26494f8941b", 2548);
+//		ws.getProvince();
+		ws.getOfficeForDoctorOrSecretary("vida", "7c4a8d09ca3762af61e59520943dc26494f8941b");
 	}
 
 }

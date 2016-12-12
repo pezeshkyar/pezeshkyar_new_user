@@ -16,6 +16,7 @@ import primitives.City;
 import primitives.CityProvince;
 import primitives.DoctorInfo;
 import primitives.Info_Message;
+import primitives.Info_Message1;
 import primitives.Info_Patient;
 import primitives.Info_Reservation;
 import primitives.Info_Reservation2;
@@ -77,8 +78,8 @@ public class Database {
 				databaseName += ("_" + Constants.CUSTOMER_NAME);
 
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://185.129.168.135:3306/" + databaseName, "root",
-					"dreadlord");
+					"jdbc:mysql://185.129.168.135:3306/" + databaseName,
+					"root", "dreadlord");
 
 		} catch (SQLException e) {
 			System.out.print("Error Opening connection: ");
@@ -101,7 +102,8 @@ public class Database {
 
 	public Vector<Province> getAllProvinceNames() {
 		Vector<Province> res = new Vector<Province>();
-		String query = "select id, name from province";
+		String query = "select id, name from province "
+				+ "order by name asc";
 		ResultSet rs;
 		if (!openConnection())
 			return null;
@@ -2344,23 +2346,23 @@ public class Database {
 		return vec;
 	}
 
-//	public Vector<Office> getOfficeInfoForUser(int userId)
-//			throws SQLException {
-//		Vector<Office> vec;
-//
-//		String query = getOfficeInfoHelperQuery()
-//				+ " join useroffice on useroffice.officeid = office.id "
-//				+ " where useroffice.userid = ? or doctoroffice.doctorid = ? "
-//				+ " or secretary.secretaryid = ? ";
-//		PreparedStatement ps = connection.prepareStatement(query);
-//		ps.setInt(1, userId);
-//		ps.setInt(2, userId);
-//		ps.setInt(3, userId);
-//
-//		vec = getOfficeInfoHelperRun(ps);
-//
-//		return vec;
-//	}
+	// public Vector<Office> getOfficeInfoForUser(int userId)
+	// throws SQLException {
+	// Vector<Office> vec;
+	//
+	// String query = getOfficeInfoHelperQuery()
+	// + " join useroffice on useroffice.officeid = office.id "
+	// + " where useroffice.userid = ? or doctoroffice.doctorid = ? "
+	// + " or secretary.secretaryid = ? ";
+	// PreparedStatement ps = connection.prepareStatement(query);
+	// ps.setInt(1, userId);
+	// ps.setInt(2, userId);
+	// ps.setInt(3, userId);
+	//
+	// vec = getOfficeInfoHelperRun(ps);
+	//
+	// return vec;
+	// }
 
 	public Vector<Ticket> getAllTickets(int offset, int count)
 			throws SQLException {
@@ -2403,51 +2405,56 @@ public class Database {
 		}
 		return false;
 	}
-	
-	public boolean isOfficeIdAvailable(int officeId) throws SQLException{
+
+	public boolean isOfficeIdAvailable(int officeId) throws SQLException {
 		String query = "select * from office where id = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, officeId);
 		ResultSet rs = ps.executeQuery();
-		if(rs.next())
+		if (rs.next())
 			return true;
-		else return false;
+		else
+			return false;
 	}
-	
-	public Vector<Integer> getOfficeIdForUser(int userId) throws SQLException{
+
+	public Vector<Integer> getOfficeIdForUser(int userId)
+			throws SQLException {
 		Vector<Integer> vec = new Vector<Integer>();
 		String query = "select officeid from useroffice where userid = ?";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, userId);
 		ResultSet rs = ps.executeQuery();
-		while(rs.next()){
-			vec.addElement(rs.getInt(1));
-		}
-		return vec;
-	}
-	
-	public Vector<Integer> getOfficeIdForDoctorOrSecretary(int userId) throws SQLException{
-		Vector<Integer> vec = new Vector<Integer>();
-		String query = "select officeid from doctoroffice where doctorid = ? "
-				+ " union select officeid from secretary where secretaryid = ? ";
-		PreparedStatement ps = connection.prepareStatement(query);
-		ps.setInt(1, userId);
-		ps.setInt(2, userId);
-		ResultSet rs = ps.executeQuery();
-		while(rs.next()){
+		while (rs.next()) {
 			vec.addElement(rs.getInt(1));
 		}
 		return vec;
 	}
 
-	public int getRoleInAll(String username, String password) throws SQLException{
+	public Vector<Integer> getOfficeIdForDoctorOrSecretary(int userId)
+			throws SQLException {
+		Vector<Integer> vec = new Vector<Integer>();
+		String query =
+				"select officeid from doctoroffice where doctorid = ? "
+						+ " union select officeid from secretary where secretaryid = ? ";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ps.setInt(2, userId);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			vec.addElement(rs.getInt(1));
+		}
+		return vec;
+	}
+
+	public int getRoleInAll(String username, String password)
+			throws SQLException {
 		int role;
-		if(checkUserPass(username, password)){
+		if (checkUserPass(username, password)) {
 			int userId = getUserId(username);
 			role = Role.patient;
-			if(isDoctorInAll(userId)){
+			if (isDoctorInAll(userId)) {
 				role = Role.doctor;
-			} else if(isSecretaryInAll(userId)) {
+			} else if (isSecretaryInAll(userId)) {
 				role = Role.secretary;
 			}
 		} else {
@@ -2455,16 +2462,16 @@ public class Database {
 		}
 		return role;
 	}
-	
-	private boolean isSecretaryInAll(int userId) throws SQLException{
+
+	private boolean isSecretaryInAll(int userId) throws SQLException {
 		String sQuery = "select * from secretary where secretaryid = ? ";
 		PreparedStatement ps = connection.prepareStatement(sQuery);
 		ps.setInt(1, userId);
 		ResultSet rs = ps.executeQuery();
 		return (rs.next());
 	}
-	
-	private boolean isDoctorInAll(int userId) throws SQLException{
+
+	private boolean isDoctorInAll(int userId) throws SQLException {
 		String dQuery = "select * from doctoroffice where doctorid = ? ";
 		PreparedStatement ps = connection.prepareStatement(dQuery);
 		ps.setInt(1, userId);
@@ -2472,4 +2479,189 @@ public class Database {
 		return (rs.next());
 	}
 
+	public Vector<Info_Message1> getAllUnreadMessages(int userId)
+			throws SQLException {
+		Vector<Info_Message1> vec = new Vector<Info_Message1>();
+		String query =
+				"select M.id, M.officeid, M.subject, M.message, M.date, M.time,"
+						+ " U1.username, U1.name, U1.lastname"
+						+ " from message as M join user as U2 on M.receiverid = U2.id "
+						+ "join user as U1 on M.senderid = U1.id "
+						+ "where U2.id = ? and M.isread = 0 "
+						+ "order by M.date desc, M.time desc";
+
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			Info_Message1 info = new Info_Message1();
+			info.id = rs.getInt(1);
+			info.officeId = rs.getInt(2);
+			info.subject = rs.getString(3);
+			info.message = rs.getString(4);
+			info.date = rs.getString(5);
+			info.time = rs.getString(6);
+			info.senderUsername = rs.getString(7);
+			info.senderFirstName = rs.getString(8);
+			info.senderLastName = rs.getString(9);
+
+			vec.addElement(info);
+		}
+
+		return vec;
+	}
+
+	public void setMessageRead2(int userId, int messageId)
+			throws SQLException {
+		String query = "update message set isread = 1 "
+				+ "where id = ? and receiverid = ?";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, messageId);
+		ps.setInt(2, userId);
+
+		ps.executeUpdate();
+	}
+
+	public Vector<Integer> getAllOfficeIdForCity(int cityId, int userId)
+			throws SQLException {
+		Vector<Integer> vec = new Vector<Integer>();
+		String query =
+				"SELECT office.id FROM office where office.id not in "
+						+ "(SELECT useroffice.officeid FROM useroffice "
+						+ "where useroffice.userid=? union "
+						+ "select doctoroffice.officeid from doctoroffice "
+						+ "where doctoroffice.doctorid=?) "
+						+ "and office.cityid=?";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ps.setInt(2, userId);
+		ps.setInt(3, cityId);
+
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			vec.addElement(rs.getInt(1));
+		}
+		return vec;
+	}
+
+	public Vector<Integer>
+			getOfficeByFilter(int userId, int provinceId, int cityId, int specId,
+								int subspecId, String firstName,
+								String lastName)
+					throws SQLException {
+		Vector<Integer> vec = new Vector<Integer>();
+		String query = "select office.id from "
+				+ "office join doctoroffice on office.id = doctoroffice.officeid "
+				+ "join user on doctoroffice.doctorid = user.id "
+				+ "join city on office.cityid = city.id "
+				+ "join province on city.provinceid = province.id "
+				+ "where ((province.id = ? or office.cityid = ? or office.spec = ? or office.subspec = ? ";
+		if (!firstName.isEmpty()) {
+			query += "or user.name like '%" + firstName + "%' ";
+		}
+		if (!lastName.isEmpty()) {
+			query += "or user.lastname like '%" + lastName + "%' ";
+		}
+		query+=")and (office.id not in (SELECT useroffice.officeid "
+				+ "FROM useroffice where useroffice.userid=?)))";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, provinceId);
+		ps.setInt(2, cityId);
+		ps.setInt(3, specId);
+		ps.setInt(4, subspecId);
+		ps.setInt(5, userId);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			vec.addElement(rs.getInt(1));
+		}
+		return vec;
+	}
+	public int getRoleInOffice(String username, String password, int officeId)
+			throws SQLException {
+		int role=Role.patient;
+		if (checkUserPass(username, password)) {
+			int userId = getUserId(username);
+			if (isPationtInOffice(userId, officeId)){
+			role = Role.patient;}
+			if (isDoctorInOffice(userId, officeId)) {
+				role = Role.doctor;
+			} else if (isSecretaryInOffice(userId, officeId)) {
+				role = Role.secretary;
+			}
+		} else {
+			role = Role.none;
+		}
+		return role;
+	}
+	private boolean isPationtInOffice(int userId, int officeId) throws SQLException {
+		String dQuery = "select * from useroffice where userid = ? and officeid = ? ";
+		PreparedStatement ps = connection.prepareStatement(dQuery);
+		ps.setInt(1, userId);
+		ps.setInt(2, officeId);
+		ResultSet rs = ps.executeQuery();
+		return (rs.next());
+	}
+	private boolean isDoctorInOffice(int userId, int officeId) throws SQLException {
+		String dQuery = "select * from doctoroffice where doctorid = ? and officeid = ? ";
+		PreparedStatement ps = connection.prepareStatement(dQuery);
+		ps.setInt(1, userId);
+		ps.setInt(2, officeId);
+		ResultSet rs = ps.executeQuery();
+		return (rs.next());
+	}
+	private boolean isSecretaryInOffice(int userId, int officeId) throws SQLException {
+		String sQuery = "select * from secretary where secretaryid = ? and officeid = ?";
+		PreparedStatement ps = connection.prepareStatement(sQuery);
+		ps.setInt(1, userId);
+		ps.setInt(2, officeId);
+		ResultSet rs = ps.executeQuery();
+		return (rs.next());
+	}
+	public Vector<Integer> getUserOfficeId(String username)
+			throws SQLException {
+		int userId = getUserId(username);
+		String query="select officeid from useroffice where userid = ? ";
+		
+		Vector<Integer> vec = new Vector<Integer>();
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			vec.add(rs.getInt(1));
+		}
+		return vec;
+	}
+	public Vector<Info_Message1> getAllMessages(int userId)
+			throws SQLException {
+		Vector<Info_Message1> vec = new Vector<Info_Message1>();
+		String query =
+				"select M.id, M.officeid, M.subject, M.message, M.date, M.time,"
+						+ " U1.username, U1.name, U1.lastname"
+						+ " from message as M join user as U2 on M.receiverid = U2.id "
+						+ "join user as U1 on M.senderid = U1.id "
+						+ "where U2.id = ? "
+						+ "order by M.date desc, M.time desc";
+
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			Info_Message1 info = new Info_Message1();
+			info.id = rs.getInt(1);
+			info.officeId = rs.getInt(2);
+			info.subject = rs.getString(3);
+			info.message = rs.getString(4);
+			info.date = rs.getString(5);
+			info.time = rs.getString(6);
+			info.senderUsername = rs.getString(7);
+			info.senderFirstName = rs.getString(8);
+			info.senderLastName = rs.getString(9);
+
+			vec.addElement(info);
+		}
+
+		return vec;
+	}
 }
