@@ -2785,4 +2785,23 @@ public class Webservices {
 		}
 		return res;
 	}
+	public boolean removeMessage2(	String username, String password,
+									int messageId) {
+		boolean res = false;
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					int userid = db.getUserId(username);
+					db.removeMessage1(userid, messageId);
+					res = true;
+				}
+			} catch (SQLException e) {
+				res = false;
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
 }
