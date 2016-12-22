@@ -37,6 +37,8 @@ import primitives.UserTurn;
 public class Webservices {
 	public static final String OK_MESSAGE = "OK";
 
+	///////////////////////// public services
+
 	public Province[] getProvince() {
 		Database db = new Database();
 		Vector<Province> vec = db.getAllProvinceNames();
@@ -56,6 +58,76 @@ public class Webservices {
 			res[i] = vec.elementAt(i);
 		}
 
+		return res;
+	}
+
+	public City[] getCity() {
+		Database db = new Database();
+		Vector<City> vec = db.getAllCityNames();
+		City[] res = new City[vec.size()];
+		for (int i = 0; i < vec.size(); i++) {
+			res[i] = vec.elementAt(i);
+		}
+
+		return res;
+	}
+
+	public Spec[] getSpec() {
+		Database db = new Database();
+		Vector<Spec> vec = db.getAllSpec();
+		Spec[] res = new Spec[vec.size()];
+		for (int i = 0; i < vec.size(); i++) {
+			res[i] = vec.elementAt(i);
+		}
+
+		return res;
+	}
+
+	public Subspec[] getSubSpec(int specId) {
+		Database db = new Database();
+		Vector<Subspec> vec = db.getSubspec(specId);
+		Subspec[] res = new Subspec[vec.size()];
+		for (int i = 0; i < vec.size(); i++) {
+			res[i] = vec.elementAt(i);
+		}
+
+		return res;
+
+	}
+
+	public Info_User[] searchUser(	String username, String name,
+									String lastName, String mobileNo,
+									int officeId) {
+		Info_User[] result = null;
+		Vector<Info_User> vec;
+		Database db = new Database();
+
+		if (db.openConnection()) {
+			try {
+				vec = db.searchUserWithoutPic(username, name, lastName,
+						mobileNo, officeId);
+				result = new Info_User[vec.size()];
+				for (int i = 0; i < vec.size(); i++) {
+					result[i] = vec.elementAt(i);
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		return result;
+	}
+
+	/////////////////////////////// user management services
+
+	public boolean isUserNameAvailable(String username) {
+		Database db = new Database();
+		boolean res;
+		if (db.openConnection()) {
+			res = db.isUsernameAvailable(username);
+			db.closeConnection();
+		} else
+			res = false;
 		return res;
 	}
 
@@ -82,34 +154,6 @@ public class Webservices {
 			res = Helper.getMessageUnknownError();
 		}
 		db.closeConnection();
-		return res;
-	}
-
-	public String updateUserInfo3(	String username, String password,
-									String name, String lastname,
-									String mobileno, int cityid,
-									String newPassword, String email) {
-		String res = Helper.getMessageUnknownError();
-		Database db = new Database();
-
-		if (db.openConnection()) {
-			try {
-				if (db.checkUserPass(username, password)) {
-					int userId = db.getUserId(username);
-					if (db.updateUserInfo(userId, name, lastname, mobileno,
-							cityid, newPassword, email)) {
-						res = OK_MESSAGE;
-					}
-				} else {
-					res = Helper.getMessageIncorrectUserPass();
-				}
-
-			} catch (SQLException e) {
-
-			} finally {
-				db.closeConnection();
-			}
-		}
 		return res;
 	}
 
@@ -165,6 +209,126 @@ public class Webservices {
 		return role;
 	}
 
+	// Remove Office id
+	public String updateUserInfo(	String username, String password,
+									String name, String lastname,
+									String mobileno, int cityid) {
+		String res = OK_MESSAGE;
+		Database db = new Database();
+		if (!db.openConnection()) {
+			res = Helper.getMessageUnknownError();
+		} else {
+			try {
+				if (!db.checkUserPass(username, password)) {
+					res = Helper.getMessageIncorrectUserPass();
+				} else {
+					int userId = db.getUserId(username);
+					if (!db.updateUserInfo(userId, name, lastname, mobileno,
+							cityid)) {
+						res = Helper.getMessageUnknownError();
+					}
+				}
+			} catch (SQLException e) {
+				res = Helper.getMessageUnknownError();
+			}
+			db.closeConnection();
+		}
+		return res;
+	}
+
+	public String updateUserInfo3(	String username, String password,
+									String name, String lastname,
+									String mobileno, int cityid,
+									String newPassword, String email) {
+		String res = Helper.getMessageUnknownError();
+		Database db = new Database();
+
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					int userId = db.getUserId(username);
+					if (db.updateUserInfo(userId, name, lastname, mobileno,
+							cityid, newPassword, email)) {
+						res = OK_MESSAGE;
+					}
+				} else {
+					res = Helper.getMessageIncorrectUserPass();
+				}
+
+			} catch (SQLException e) {
+
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+
+	public boolean updateUserPic2(	String username, String password,
+									String pic) {
+		boolean result = false;
+		Database db = new Database();
+		if (!db.openConnection()) {
+			return false;
+		}
+		try {
+			if (!db.checkUserPass(username, password)) {
+				result = false;
+			} else {
+				byte[] imageAsBytes = Helper.getBytes(pic);
+				int userId = db.getUserId(username);
+				result = db.updateUserPic(userId, imageAsBytes);
+				result = true;
+			}
+		} catch (SQLException e) {
+			result = false;
+		} finally {
+			db.closeConnection();
+		}
+		return result;
+	}
+
+	public boolean updateUserPassword(	String username, String password,
+										String newPassword) {
+		boolean res;
+		Database db = new Database();
+		if (!db.openConnection())
+			return false;
+		try {
+			if (!db.checkUserPass(username, password))
+				res = false;
+			else {
+				int userId = db.getUserId(username);
+				res = db.updateUserPassword(userId, newPassword);
+			}
+		} catch (SQLException e) {
+			res = false;
+		} finally {
+			db.closeConnection();
+		}
+		return res;
+	}
+	
+	public String getUserPic(String username, String password) {
+		Database db = new Database();
+		byte[] res = null;
+		if (!db.openConnection())
+			return null;
+		try {
+			if (!db.checkUserPass(username, password))
+				res = null;
+			int userId = db.getUserId(username);
+			res = db.getUserPic(userId);
+		} catch (SQLException e) {
+			res = null;
+		} finally {
+			db.closeConnection();
+		}
+		String ret = Helper.getString(res);
+		return ret;
+	}
+	
+ 
 	public User getUserInfo(String username, String password, int officeId) {
 		return getUserInfoHelper(username, password, officeId, true);
 	}
@@ -202,89 +366,8 @@ public class Webservices {
 	//////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////
 
-	public String[] getProvinceName() {
-		String[] res = null;
-		Database db = new Database();
-		Vector<Province> vec = db.getAllProvinceNames();
-		res = new String[vec.size()];
-		for (int i = 0; i < vec.size(); i++) {
-			res[i] = vec.elementAt(i).name;
-		}
-		return res;
-	}
-
-	public String[] getCityName() {
-		String[] res = null;
-		Database db = new Database();
-		Vector<City> vec = db.getAllCityNames();
-		res = new String[vec.size()];
-		for (int i = 0; i < vec.size(); i++) {
-			res[i] = vec.elementAt(i).name;
-		}
-		return res;
-	}
-
-	public City[] getCity() {
-		Database db = new Database();
-		Vector<City> vec = db.getAllCityNames();
-		City[] res = new City[vec.size()];
-		for (int i = 0; i < vec.size(); i++) {
-			res[i] = vec.elementAt(i);
-		}
-
-		return res;
-	}
-
 	public String helloWorld() {
 		return "Hello World!";
-	}
-
-	// used
-	public Spec[] getSpec() {
-		Database db = new Database();
-		Vector<Spec> vec = db.getAllSpec();
-		Spec[] res = new Spec[vec.size()];
-		for (int i = 0; i < vec.size(); i++) {
-			res[i] = vec.elementAt(i);
-		}
-
-		return res;
-	}
-
-	// used
-	public Subspec[] getSubSpec(int specId) {
-		Database db = new Database();
-		Vector<Subspec> vec = db.getSubspec(specId);
-		Subspec[] res = new Subspec[vec.size()];
-		for (int i = 0; i < vec.size(); i++) {
-			res[i] = vec.elementAt(i);
-		}
-
-		return res;
-
-	}
-
-	public boolean isUserNameAvailable2(String username) {
-		Database db = new Database();
-		boolean res;
-		if (db.openConnection()) {
-			res = db.isUsernameAvailable(username);
-			db.closeConnection();
-		} else
-			res = false;
-		return res;
-	}
-
-	// office id in the input parameters is not necessary from now
-	public boolean isUserNameAvailable(String username, int officeId) {
-		Database db = new Database();
-		boolean res;
-		if (db.openConnection()) {
-			res = db.isUsernameAvailable(username);
-			db.closeConnection();
-		} else
-			res = false;
-		return res;
 	}
 
 	public String register2(String name, String lastname, String mobileno,
@@ -1053,99 +1136,10 @@ public class Webservices {
 		return res;
 	}
 
-	// add Office id
-	public String updateUserInfo(	String username, String password,
-									int officeId, String name,
-									String lastname, String mobileno,
-									int cityid) {
-		String res = OK_MESSAGE;
-		Database db = new Database();
-		if (!db.openConnection()) {
-			res = Helper.getMessageUnknownError();
-		} else {
-			try {
-				if (!db.checkUserPass(username, password)) {
-					res = Helper.getMessageIncorrectUserPass();
-				} else {
-					int userId = db.getUserId(username);
-					if (!db.updateUserInfo(userId, name, lastname, mobileno,
-							cityid)) {
-						res = Helper.getMessageUnknownError();
-					}
-				}
-			} catch (SQLException e) {
-				res = Helper.getMessageUnknownError();
-			}
-			db.closeConnection();
-		}
-		return res;
-	}
+
 
 	// used
-	public boolean updateUserPic2(	String username, String password,
-									String pic) {
-		boolean result = false;
-		Database db = new Database();
-		if (!db.openConnection()) {
-			return false;
-		}
-		try {
-			if (!db.checkUserPass(username, password)) {
-				result = false;
-			} else {
-				byte[] imageAsBytes = Helper.getBytes(pic);
-				int userId = db.getUserId(username);
-				result = db.updateUserPic(userId, imageAsBytes);
-				result = true;
-			}
-		} catch (SQLException e) {
-			result = false;
-		} finally {
-			db.closeConnection();
-		}
-		return result;
-	}
-
-	public boolean updateUserPassword(	String username, String password,
-										String newPassword) {
-		boolean res;
-		Database db = new Database();
-		if (!db.openConnection())
-			return false;
-		try {
-			if (!db.checkUserPass(username, password))
-				res = false;
-			else {
-				int userId = db.getUserId(username);
-				res = db.updateUserPassword(userId, newPassword);
-			}
-		} catch (SQLException e) {
-			res = false;
-		} finally {
-			db.closeConnection();
-		}
-		return res;
-	}
-
-	// used
-	public String getUserPic(String username, String password) {
-		Database db = new Database();
-		byte[] res = null;
-		if (!db.openConnection())
-			return null;
-		try {
-			if (!db.checkUserPass(username, password))
-				res = null;
-			int userId = db.getUserId(username);
-			res = db.getUserPic(userId);
-		} catch (SQLException e) {
-			res = null;
-		} finally {
-			db.closeConnection();
-		}
-		String ret = Helper.getString(res);
-		return ret;
-	}
+	
 
 	public int[] getDoctorOffice(String doctorUsername) {
 		Database db = new Database();
@@ -1236,30 +1230,6 @@ public class Webservices {
 		} finally {
 			db.closeConnection();
 		}
-		return result;
-	}
-
-	// used
-	public Info_User[] searchUser(	String username, String name,
-									String lastName, String mobileNo,
-									int officeId) {
-		Info_User[] result = null;
-		Vector<Info_User> vec;
-		Database db = new Database();
-
-		if (db.openConnection()) {
-			try {
-				vec = db.searchUserWithoutPic(username, name, lastName,
-						mobileNo, officeId);
-				result = new Info_User[vec.size()];
-				for (int i = 0; i < vec.size(); i++) {
-					result[i] = vec.elementAt(i);
-				}
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-
 		return result;
 	}
 
