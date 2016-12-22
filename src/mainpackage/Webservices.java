@@ -308,7 +308,7 @@ public class Webservices {
 		}
 		return res;
 	}
-	
+
 	public String getUserPic(String username, String password) {
 		Database db = new Database();
 		byte[] res = null;
@@ -327,8 +327,7 @@ public class Webservices {
 		String ret = Helper.getString(res);
 		return ret;
 	}
-	
- 
+
 	public User getUserInfo(String username, String password, int officeId) {
 		return getUserInfoHelper(username, password, officeId, true);
 	}
@@ -363,38 +362,7 @@ public class Webservices {
 		return user;
 	}
 
-	//////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////
-
-	public String helloWorld() {
-		return "Hello World!";
-	}
-
-	public String register2(String name, String lastname, String mobileno,
-							String username, String password, int cityid,
-							String pic, String email) {
-		String res = OK_MESSAGE;
-		Database db = new Database();
-		if (!db.openConnection())
-			return Helper.getMessageUnknownError();
-		if (!db.isUsernameAvailable(username)) {
-			db.closeConnection();
-			return Helper.getMessageUserNameNotAvailabe();
-		}
-
-		byte[] picbyte = null;
-		if (pic != null && pic.length() > 0) {
-			picbyte = Helper.getBytes(pic);
-		}
-		try {
-			db.register(name, lastname, mobileno, username, password, cityid,
-					picbyte, email);
-		} catch (SQLException e) {
-			res = Helper.getMessageUnknownError();
-		}
-		db.closeConnection();
-		return res;
-	}
+	/////////////////////////////////////// Office Management Services
 
 	public int registerOffice(	String username, String password, int cityid,
 								int spec, int subspec, String address,
@@ -420,29 +388,6 @@ public class Webservices {
 		return id;
 	}
 
-	public int registerOffice2(	String username, String password, int cityid,
-								int spec, int subspec, String address,
-								String tellNo, int timeQuantum,
-								String biography) {
-		Database db = new Database();
-		int id = 0;
-		if (db.openConnection()) {
-			try {
-				if (db.checkMasterPassword(username, password)
-						|| db.isHaveSupportPermission(username, password)) {
-					id = db.InsertInOffice(spec, subspec, address, tellNo,
-							cityid, 0.0, 0.0, timeQuantum, biography);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				db.closeConnection();
-			}
-		}
-		return id;
-	}
-
-	// used
 	public boolean updateOfficeInfo(String username, String password,
 									int officeId, int cityId, int spec,
 									int subspec, String address,
@@ -467,329 +412,63 @@ public class Webservices {
 		return ret;
 	}
 
-	public boolean addDoctorToOffice(	String username, String password,
-										int officeId, String doctor) {
-		boolean ret = false;
+	public int[] getDoctorOffice(String doctorUsername) {
 		Database db = new Database();
-		int doctorId = db.getUserId(doctor);
-		try {
-			if (db.openConnection()) {
-				if (db.checkMasterPassword(username, password)
-						|| db.isHaveSupportPermission(username, password)) {
-					db.InsertInDoctorOffice(officeId, doctorId);
-					ret = true;
-				}
-			}
-		} catch (SQLException e) {
-			ret = false;
-		}
-		return ret;
-	}
 
-	public boolean addSecretaryToOffice(String username, String password,
-										int officeId, String secretary) {
-		boolean ret = false;
-		Database db = new Database();
-		int secretaryId = db.getUserId(secretary);
-		try {
-			if (db.openConnection()) {
-				if (db.isHaveSecretaryPermission(username, password,
-						officeId)) {
-					db.InsertInSecretary(officeId, secretaryId);
-					ret = true;
-				}
-			}
-		} catch (SQLException e) {
-			ret = false;
-		} finally {
-			db.closeConnection();
-		}
-		return ret;
-	}
-
-	// used
-	public User addSecretaryToOffice2(	String username, String password,
-										int officeId, String secretary) {
-		User ret = User.getErrorUser();
-		Database db = new Database();
-		try {
-			if (db.openConnection()) {
-				int secretaryId = db.getUserId(secretary);
-				if (db.isHaveSecretaryPermission(username, password,
-						officeId)) {
-					ret = db.InsertInSecretary2(officeId, secretaryId);
-					ret.role = Role.secretary;
-				}
-			}
-		} catch (Exception e) {
-		} finally {
-			db.closeConnection();
-		}
-		return ret;
-	}
-
-	// used
-	public boolean
-			removeSecretaryFromOffice(	String username, String password,
-										int officeId, String secretary) {
-		boolean ret = false;
-		Database db = new Database();
-		try {
-			if (db.openConnection()) {
-				if (db.isHaveDoctorPermission(username, password,
-						officeId)) {
-					db.removeFromSecretary(officeId, secretary);
-					ret = true;
-				}
-			}
-		} catch (SQLException e) {
-			ret = false;
-		} finally {
-			db.closeConnection();
-		}
-		return ret;
-	}
-
-	public boolean addTurn(	String username, String password, int officeId,
-							String date, int startHour, int startMin,
-							int duration, int capacity) {
-		Database db = new Database();
-		if (capacity <= 0 || duration <= 0 || startHour <= 0
-				|| startMin <= 0)
-			return false;
-		try {
-			if (!db.openConnection())
-				return false;
-			if (!db.isHaveSecretaryPermission(username, password, officeId))
-				return false;
-			if (Helper.isBeforeToday(date))
-				return false;
-
-			Turn t = new Turn();
-			t.officeId = officeId;
-			t.capacity = capacity;
-			t.date = date;
-			t.duration = duration;
-			t.hour = startHour;
-			t.min = startMin;
-			t.reserved = 0;
-
-			addTurnWithoutId(db, t);
-		} catch (SQLException e) {
-			return false;
-		}
-		return true;
-	}
-
-	// used
-	public String addTurnByDate2(	String username, String password,
-									int officeId, String fromDate,
-									String toDate, int hour, int min,
-									int duration, int capacity,
-									String dayOfWeek) {
-		PersianCalendar cal1 = Helper.getCalendarFromShortDate(fromDate);
-		PersianCalendar cal2 = Helper.getCalendarFromShortDate(toDate);
-		Vector<Integer> days = new Vector<Integer>();
-		Vector<Turn> vec = new Vector<Turn>();
-		Database db = new Database();
-		int firstId = 0;
-		String msg;
-		if (capacity <= 0 || duration <= 0 || hour < 0 || min < 0) {
-			msg = Helper.getMessageInvalidParam();
-			// parametrhaye zaman va zarfiat ra barresi konid
-			msg += "\u067e\u0627\u0631\u0627\u0645\u062a\u0631\u0647\u0627\u06cc "
-					+ "\u0632\u0645\u0627\u0646 \u0648 \u0638\u0631\u0641\u06cc\u062a "
-					+ "\u0631\u0627 \u0628\u0631\u0631\u0633\u06cc "
-					+ "\u06a9\u0646\u06cc\u062f";
-			return msg;
-		}
-		if (cal1 == null || cal2 == null) {
-			msg = Helper.getMessageInvalidParam();
-			// tarikh shoro va payan ra barresi konid
-			msg += "\u062a\u0627\u0631\u06cc\u062e \u0634\u0631\u0648\u0639 "
-					+ "\u0648 \u067e\u0627\u06cc\u0627\u0646 \u0631\u0627 "
-					+ "\u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u062f";
-			return msg;
-		}
-		if (Helper.isBeforeToday(fromDate)) {
-			msg = Helper.getMessageInvalidParam();
-			// tarikh shoro nemitavanad ghabl az emrooz bashad
-			msg += "\u062a\u0627\u0631\u06cc\u062e \u0634\u0631\u0648\u0639 "
-					+ "\u0646\u0645\u06cc \u062a\u0648\u0627\u0646\u062f "
-					+ "\u0642\u0628\u0644 \u0627\u0632 "
-					+ "\u0627\u0645\u0631\u0648\u0632 \u0628\u0627\u0634\u062f";
-			return msg;
-		}
-		if (cal1.after(cal2)) {
-			msg = Helper.getMessageInvalidParam();
-			// tarikh shoro va payan ra barresi konid
-			msg += "\u062a\u0627\u0631\u06cc\u062e \u0634\u0631\u0648\u0639 "
-					+ "\u0648 \u067e\u0627\u06cc\u0627\u0646 \u0631\u0627 "
-					+ "\u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u062f";
-			return msg;
-		}
-		if (!db.openConnection()) {
-			return Helper.getMessageUnknownError();
-		}
-		firstId = db.getMaxTurnId() + 1;
-
-		char[] temp = dayOfWeek.toCharArray();
-		for (char ch : temp) {
-			days.addElement(ch - '0');
-		}
-		while (cal2.after(cal1) || cal2.equals(cal1)) {
-			int todayDayOfWeek = cal1.getPersianWeekDay();
-			if (days.contains(todayDayOfWeek)) {
-				cal1.getPersianLongDate();
-				Turn turn = new Turn();
-				turn.capacity = capacity;
-				turn.date = cal1.getPersianShortDate();
-				turn.duration = duration;
-				turn.hour = hour;
-				turn.min = min;
-				turn.id = firstId++;
-				turn.isReserved = false;
-				turn.longDate = cal1.getPersianLongDate();
-				turn.officeId = officeId;
-				turn.reserved = 0;
-				vec.addElement(turn);
-			}
-			cal1.add(PersianCalendar.DAY_OF_YEAR, 1);
-		}
-
-		try {
-			if (vec.size() > 0) {
-				db.addTurnBatch(vec);
-
-				msg = OK_MESSAGE;
-				;
-			} else {
-				// be dalile na-hamkhani rooz va tarikh, hich nobati ezefe
-				// nashod
-				msg = "\u0628\u0647 \u062f\u0644\u06cc\u0644 "
-						+ "\u0646\u0627\u0647\u0645\u062e\u0648\u0627\u0646\u06cc "
-						+ "\u0631\u0648\u0632 "
-						+ "\u0648 \u062a\u0627\u0631\u06cc\u062e\u060c "
-						+ "\u0647\u06cc\u0686 \u0646\u0648\u0628\u062a "
-						+ "\u062c\u062f\u06cc\u062f\u06cc "
-						+ "\u0627\u0636\u0627\u0641\u0647 \u0646\u0634\u062f\u002e";
-			}
-		} catch (SQLException e) {
-			msg = Helper.getMessageUnknownError();
-		} finally {
-			db.closeConnection();
-		}
-		return msg;
-	}
-
-	// used
-	public boolean addTurnByDate(	String username, String password,
-									int officeId, String fromDate,
-									String toDate, int hour, int min,
-									int duration, int capacity,
-									String dayOfWeek) {
-		PersianCalendar cal1 = Helper.getCalendarFromShortDate(fromDate);
-		PersianCalendar cal2 = Helper.getCalendarFromShortDate(toDate);
-		Vector<Integer> days = new Vector<Integer>();
-		Vector<Turn> vec = new Vector<Turn>();
-		Database db = new Database();
-		int firstId = 0;
-		if (capacity <= 0 || duration <= 0 || hour < 0 || min < 0)
-			return false;
-		if (cal1 == null || cal2 == null)
-			return false;
-		if (Helper.isBeforeToday(fromDate))
-			return false;
-		if (cal1.after(cal2))
-			return false;
 		if (!db.openConnection())
-			return false;
-		firstId = db.getMaxTurnId() + 1;
-
-		char[] temp = dayOfWeek.toCharArray();
-		for (char ch : temp) {
-			days.addElement(ch - '0');
-		}
-		while (cal2.after(cal1) || cal2.equals(cal1)) {
-			int todayDayOfWeek = cal1.getPersianWeekDay();
-			if (days.contains(todayDayOfWeek)) {
-				cal1.getPersianLongDate();
-				Turn turn = new Turn();
-				turn.capacity = capacity;
-				turn.date = cal1.getPersianShortDate();
-				turn.duration = duration;
-				turn.hour = hour;
-				turn.min = min;
-				turn.id = firstId++;
-				turn.isReserved = false;
-				turn.longDate = cal1.getPersianLongDate();
-				turn.officeId = officeId;
-				turn.reserved = 0;
-				vec.addElement(turn);
-			}
-			cal1.add(PersianCalendar.DAY_OF_YEAR, 1);
-		}
-
-		boolean res = true;
+			return null;
 		try {
-			if (vec.size() > 0) {
-				db.addTurnBatch(vec);
-
-				res = true;
-			} else {
-				res = false;
+			Vector<Integer> vec = db.getDoctorOffice(doctorUsername);
+			int[] res = new int[vec.size()];
+			for (int i = 0; i < vec.size(); i++) {
+				res[i] = vec.get(i);
 			}
+			return res;
 		} catch (SQLException e) {
-			res = false;
+			return null;
+		}
+	}
+
+	public String getDoctorPic(	String username, String password,
+								int officeId) {
+		Database db = new Database();
+		byte[] res = null;
+		if (!db.openConnection())
+			return null;
+		try {
+			if (!db.checkUserPass(username, password))
+				res = null;
+			res = db.getDrPic(officeId);
+		} catch (SQLException e) {
+			res = null;
 		} finally {
 			db.closeConnection();
 		}
-		return res;
+		String ret = Helper.getString(res);
+		return ret;
 	}
 
-	private void addTurnWithoutId(Database db, Turn t) throws SQLException {
-		t.id = db.getMaxTurnId() + 1;
-		db.addTurn(t);
-	}
-
-	// used
-	public Turn[] getAllTurn(	String username, String password, int officeId,
-								String fromDate, String toDate) {
+	public boolean updateOfficeLocation(String username, String password,
+										int officeId, String latitude,
+										String longitude) {
 		Database db = new Database();
-		Turn[] res = null;
-		if (Helper.checkDateBoundary(fromDate, toDate)) {
-			if (db.openConnection()) {
-				Vector<Turn> vec =
-						db.getTurn(username, officeId, fromDate, toDate);
-				res = new Turn[vec.size()];
-				for (int i = 0; i < vec.size(); i++) {
-					res[i] = vec.elementAt(i);
+		double lat, lng;
+		boolean ret = false;
+		if (db.openConnection()) {
+			try {
+				if (db.isHaveSecretaryPermission(username, password,
+						officeId)) {
+					lat = Double.parseDouble(latitude);
+					lng = Double.parseDouble(longitude);
+					db.updateOffice(officeId, lat, lng);
+					ret = true;
 				}
+			} catch (SQLException e) {
+			} finally {
 				db.closeConnection();
 			}
 		}
-
-		return res;
-	}
-
-	// used
-	public Turn[] getAllTurnFromToday(	String username, String password,
-										int officeId) {
-		Database db = new Database();
-		Turn[] res = null;
-		Date now = new Date();
-		String fromDate = Helper.getShortDate(now);
-		String toDate = Helper.getShortDateAfterSomeDay(now, 30);
-		if (db.openConnection()) {
-			Vector<Turn> vec =
-					db.getTurn(username, officeId, fromDate, toDate);
-			res = new Turn[vec.size()];
-			for (int i = 0; i < vec.size(); i++) {
-
-				res[i] = vec.elementAt(i);
-			}
-		}
-		return res;
+		return ret;
 	}
 
 	public boolean addBiography(String username, String password,
@@ -824,415 +503,6 @@ public class Webservices {
 		return str;
 	}
 
-	// used
-	public int reserveForMe(String username, String password, int turnId,
-							int firstReservationId, int taskId,
-							int numberOfTurns) {
-		Database db = new Database();
-		Reservation_new r = new Reservation_new();
-		try {
-			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
-					int userId = db.getUserId(username);
-					r.userId = userId;
-					r.firstReservationId = firstReservationId;
-					r.numberOfTurns = numberOfTurns;
-					r.patientId = userId;
-					r.payment = 0;
-					r.taskId = taskId;
-					r.turnId = turnId;
-					r.price = db.getTaskPrice(taskId);
-
-					r.id = 0;
-					if (db.checkCapacity(r)) {
-						r.id = db.getMaxReservationId() + 1;
-						db.decreseCapacity(r);
-						db.reserveTurn(r);
-					}
-				}
-			}
-		} catch (SQLException e) {
-			r.id = 0;
-			System.out.println(e.getMessage());
-		}
-		return r.id;
-	}
-
-	// used
-	public int reserveForUser(	String username, String password, int turnId,
-								int firstReservationId, int taskId,
-								int numberOfTurns, String patientUserName) {
-		Database db = new Database();
-		Reservation_new r = new Reservation_new();
-		try {
-			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
-
-					r.userId = db.getUserId(username);
-					r.firstReservationId = firstReservationId;
-					r.numberOfTurns = numberOfTurns;
-					r.patientId = db.getUserId(patientUserName);
-					r.payment = 0;
-					r.taskId = taskId;
-					r.turnId = turnId;
-					r.price = db.getTaskPrice(taskId);
-
-					r.id = 0;
-					if (db.checkCapacity(r)) {
-						r.id = db.getMaxReservationId() + 1;
-						db.decreseCapacity(r);
-						db.reserveTurn(r);
-
-						Info_Reservation info = db.getUserOfficeTurn(r.id);
-						Helper.sendReservationMessage(db, r.userId, info);
-					}
-				}
-			}
-		} catch (SQLException e) {
-			r.id = 0;
-			System.out.println(e.getMessage());
-		}
-		return r.id;
-	}
-
-	// used
-	public int reserveForGuest(	String username, String password, int turnId,
-								int firstReservationId, int taskId,
-								int numberOfTurns, String patientFirstName,
-								String patientLastName,
-								String patientPhoneNo, int patientCityId) {
-		Database db = new Database();
-		Reservation_new r = new Reservation_new();
-		try {
-			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
-					int guestId = db.insertGuest(patientFirstName,
-							patientLastName, patientPhoneNo, patientCityId);
-					r.userId = db.getUserId(username);
-					r.firstReservationId = firstReservationId;
-					r.numberOfTurns = numberOfTurns;
-					r.patientId = guestId;
-					r.payment = 0;
-					r.taskId = taskId;
-					r.turnId = turnId;
-					r.price = db.getTaskPrice(taskId);
-
-					r.id = 0;
-					if (db.checkCapacity(r)) {
-						r.id = db.getMaxReservationId() + 1;
-						db.decreseCapacity(r);
-						db.reserveTurn(r);
-					}
-				}
-			}
-		} catch (SQLException e) {
-			r.id = 0;
-			System.out.println(e.getMessage());
-		}
-		return r.id;
-	}
-
-	public int reserveForUser2(	String username, String password,
-								int officeId, int turnId,
-								int firstReservationId, int taskId,
-								int numberOfTurns, String patientUserName,
-								int price) {
-		Database db = new Database();
-		Reservation_new r = new Reservation_new();
-		try {
-			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
-					r.userId = db.getUserId(username);
-					r.firstReservationId = firstReservationId;
-					r.numberOfTurns = numberOfTurns;
-					r.patientId = db.getUserId(patientUserName);
-					r.payment = 0;
-					r.taskId = taskId;
-					r.turnId = turnId;
-					if (db.isHaveSecretaryPermission(username, password,
-							officeId)) {
-						r.price = price;
-					} else {
-						r.price = db.getTaskPrice(taskId);
-					}
-
-					r.id = 0;
-					if (db.checkCapacity(r)) {
-						r.id = db.getMaxReservationId() + 1;
-						db.decreseCapacity(r);
-						db.reserveTurn(r);
-
-						Info_Reservation info = db.getUserOfficeTurn(r.id);
-						Helper.sendReservationMessage(db, r.userId, info);
-					}
-				}
-			}
-		} catch (SQLException e) {
-			r.id = 0;
-			System.out.println(e.getMessage());
-		}
-		return r.id;
-	}
-
-	public int reserveForGuest2(String username, String password,
-								int officeId, int turnId,
-								int firstReservationId, int taskId,
-								int numberOfTurns, String patientFirstName,
-								String patientLastName,
-								String patientPhoneNo, int patientCityId,
-								int price) {
-		Database db = new Database();
-		Reservation_new r = new Reservation_new();
-		int guestId;
-		try {
-			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
-					guestId = db.insertGuest(patientFirstName,
-							patientLastName, patientPhoneNo, patientCityId);
-					r.userId = db.getUserId(username);
-					r.firstReservationId = firstReservationId;
-					r.numberOfTurns = numberOfTurns;
-					r.patientId = guestId;
-					r.payment = 0;
-					r.taskId = taskId;
-					r.turnId = turnId;
-					if (db.isHaveSecretaryPermission(username, password,
-							officeId)) {
-						r.price = price;
-					} else {
-						r.price = db.getTaskPrice(taskId);
-					}
-
-					r.id = 0;
-					if (db.checkCapacity(r)) {
-						r.id = db.getMaxReservationId() + 1;
-						db.decreseCapacity(r);
-						db.reserveTurn(r);
-					}
-				}
-			}
-		} catch (SQLException e) {
-			r.id = 0;
-			System.out.println(e.getMessage());
-		}
-		return r.id;
-	}
-
-	public Reservation2[]
-			getReservationByTurnId(	String username, String password,
-									int officeId, int turnId) {
-		Database db = new Database();
-		Vector<Reservation2> vec;
-		Reservation2[] res = null;
-		try {
-			if (!db.openConnection())
-				return null;
-			if (!db.checkUserPass(username, password))
-				return null;
-			int perm = db.getPermissionOnOffice(officeId, username);
-			if (perm == Role.doctor || perm == Role.secretary) {
-				vec = db.getReservationForAdmin(turnId);
-			} else {
-				vec = db.getReservationForUser(turnId, username);
-			}
-			res = new Reservation2[vec.size()];
-			for (int i = 0; i < vec.size(); i++) {
-				res[i] = vec.elementAt(i);
-			}
-		} catch (Exception e) {
-			return res;
-		}
-		return res;
-	}
-
-	// used
-	public Reservation4[]
-			getReservationByUser(	String username, String password,
-									int officeId, int count, int index) {
-		Database db = new Database();
-		Vector<Reservation4> vec = new Vector<Reservation4>();
-		Reservation4[] res = null;
-		try {
-			if (!db.openConnection())
-				return null;
-			if (!db.checkUserPass(username, password))
-				return null;
-
-			vec = db.getReservation(username, officeId);
-			int firstIndex = index * count;
-			if (firstIndex >= vec.size())
-				return null;
-			int size = Math.min(count, vec.size() - firstIndex);
-			res = new Reservation4[size];
-			for (int i = 0; i < res.length; i++) {
-				res[i] = vec.elementAt(i + firstIndex);
-			}
-		} catch (Exception e) {
-			return res;
-		}
-		return res;
-	}
-
-	public Reservation2[]
-			getReservationByDate(	String username, String password,
-									int officeId, String fromDate,
-									String toDate) {
-		Database db = new Database();
-		Vector<Reservation2> vec = new Vector<Reservation2>();
-		Reservation2[] res = null;
-		try {
-			if (!Helper.checkDateBoundary(fromDate, toDate))
-				return null;
-			if (!db.openConnection())
-				return null;
-			if (db.checkUserPass(username, password)) {
-				int perm = db.getPermissionOnOffice(officeId, username);
-				if (perm != Role.doctor && perm != Role.secretary) {
-					vec = db.getReservation(officeId, fromDate, toDate);
-					res = new Reservation2[vec.size()];
-					for (int i = 0; i < res.length; i++) {
-						res[i] = vec.elementAt(i);
-					}
-				}
-			}
-		} catch (Exception e) {
-
-		} finally {
-			db.closeConnection();
-		}
-		return res;
-	}
-
-	// used
-	public boolean cancelReservation(	String username, String password,
-										int reservationId) {
-		boolean res = false;
-		Database db = new Database();
-		Info_Reservation info;
-		try {
-			if (db.openConnection()) {
-				if (db.checkUserPass(username, password)) {
-					int userId = db.getUserId(username);
-					info = db.getUserOfficeTurn(reservationId);
-					if (info.username == null)
-						return false;
-
-					int role = db.getPermissionOnOffice(info.officeId,
-							username);
-					if (role == Role.secretary || role == Role.doctor
-							|| info.username.equals(username)
-							|| info.patientId == userId) {
-						Helper.sendCancelationMessage(db, userId, info);
-						db.removeFromReserve(reservationId);
-						db.increseCapacity(info.turnId, info.numberOfTurns);
-						res = true;
-					}
-				}
-			}
-		} catch (SQLException e) {
-			res = false;
-			System.out.println(e.getMessage());
-		}
-		return res;
-	}
-
-
-
-	// used
-	
-
-	public int[] getDoctorOffice(String doctorUsername) {
-		Database db = new Database();
-
-		if (!db.openConnection())
-			return null;
-		try {
-			Vector<Integer> vec = db.getDoctorOffice(doctorUsername);
-			int[] res = new int[vec.size()];
-			for (int i = 0; i < vec.size(); i++) {
-				res[i] = vec.get(i);
-			}
-			return res;
-		} catch (SQLException e) {
-			return null;
-		}
-	}
-
-	// used
-	public String getDoctorPic(	String username, String password,
-								int officeId) {
-		Database db = new Database();
-		byte[] res = null;
-		if (!db.openConnection())
-			return null;
-		try {
-			if (!db.checkUserPass(username, password))
-				res = null;
-			res = db.getDrPic(officeId);
-		} catch (SQLException e) {
-			res = null;
-		} finally {
-			db.closeConnection();
-		}
-		String ret = Helper.getString(res);
-		return ret;
-	}
-
-	// used
-	public boolean updateOfficeLocation(String username, String password,
-										int officeId, String latitude,
-										String longitude) {
-		Database db = new Database();
-		double lat, lng;
-		boolean ret = false;
-		if (db.openConnection()) {
-			try {
-				if (db.isHaveSecretaryPermission(username, password,
-						officeId)) {
-					lat = Double.parseDouble(latitude);
-					lng = Double.parseDouble(longitude);
-					db.updateOffice(officeId, lat, lng);
-					ret = true;
-				}
-			} catch (SQLException e) {
-			} finally {
-				db.closeConnection();
-			}
-		}
-		return ret;
-	}
-
-	public Info_Reservation2[] getReservation(	String username,
-												String password,
-												int officeId, int turnId) {
-		Database db = new Database();
-		Vector<Info_Reservation2> vec;
-
-		Info_Reservation2[] result = null;
-		if (!db.openConnection())
-			return null;
-		try {
-			if (db.checkUserPass(username, password)) {
-				int role = db.getPermissionOnOffice(officeId, username);
-				if (role == Role.doctor || role == Role.secretary) {
-					vec = db.getAllReservation(turnId, false, 0);
-				} else {
-					int userId = db.getUserId(username);
-					vec = db.getAllReservation(turnId, true, userId);
-				}
-				result = new Info_Reservation2[vec.size()];
-				for (int i = 0; i < vec.size(); i++) {
-					result[i] = vec.elementAt(i);
-				}
-			}
-		} catch (SQLException e) {
-
-		} finally {
-			db.closeConnection();
-		}
-		return result;
-	}
-
 	public Task[] getAllTasks(	String username, String password,
 								int officeId) {
 		Task[] res = null;
@@ -1256,378 +526,6 @@ public class Webservices {
 		return res;
 	}
 
-	public boolean sendMessage(	String username, String password,
-								int officeId, String receiver,
-								String subject, String message) {
-		boolean res = false;
-		Database db = new Database();
-		if (db.openConnection()) {
-			try {
-				if (db.checkUserPass(username, password)) {
-					int senderId = db.getUserId(username);
-					int receiverId = db.getUserId(receiver);
-					String dateStr = Helper.getTodayShortDate();
-					String timeStr = Helper.getCurrentTime();
-
-					db.sendMessage(officeId, senderId, receiverId, subject,
-							message, dateStr, timeStr);
-					res = true;
-				}
-			} catch (SQLException e) {
-				System.out.println("err = " + e.getMessage());
-				res = false;
-			}
-		} else {
-			res = false;
-		}
-		return res;
-	}
-
-	// used
-	public boolean sendMessageBatch(String username, String password,
-									int officeId, String[] receivers,
-									String[] phoneNo, String subject,
-									String message) {
-		boolean res = true;
-		Database db = new Database();
-		Vector<String> receiverVec;
-		Vector<String> phoneVec;
-		if (db.openConnection()) {
-			try {
-				if (db.checkUserPass(username, password)) {
-					receiverVec = Helper.removeDuplicates(receivers);
-					phoneVec = Helper.removeDuplicates(phoneNo);
-					int[] receiverIds = new int[receiverVec.size()];
-					for (int i = 0; i < receiverIds.length; i++) {
-						receiverIds[i] =
-								db.getUserId(receiverVec.elementAt(i));
-					}
-					int senderId = db.getUserId(username);
-					String dateStr = Helper.getTodayShortDate();
-					String timeStr = Helper.getCurrentTime();
-
-					db.sendMessageBatch(officeId, senderId, receiverIds,
-							subject, message, dateStr, timeStr);
-					Helper.sendSMS(officeId, senderId, phoneVec, subject,
-							message, dateStr, timeStr);
-				}
-			} catch (SQLException e) {
-				res = false;
-			}
-		} else {
-			res = false;
-		}
-		return res;
-	}
-
-	// used
-	public Info_Message[] getUnreadMessages(String username, String password,
-											int officeId) {
-		return getMessages(username, password, officeId, true);
-	}
-
-	// used
-	public Info_Message[] getAllMessages(	String username, String password,
-											int officeId) {
-		return getMessages(username, password, officeId, false);
-	}
-
-	private Info_Message[] getMessages(	String username, String password,
-										int officeId, boolean onlyUnread) {
-		Info_Message[] res = null;
-		Vector<Info_Message> vec;
-		Database db = new Database();
-		if (db.openConnection()) {
-			try {
-				if (db.checkUserPass(username, password)) {
-					int userId = db.getUserId(username);
-					vec = db.getMessages(userId, officeId, onlyUnread);
-					res = new Info_Message[vec.size()];
-					for (int i = 0; i < res.length; i++) {
-						res[i] = vec.elementAt(i);
-					}
-				}
-			} catch (SQLException e) {
-
-			} finally {
-				db.closeConnection();
-			}
-		}
-		return res;
-	}
-
-	// used
-	public void setMessageRead(	String username, String password,
-								int officeId, int messageId) {
-		Database db = new Database();
-
-		if (db.openConnection()) {
-			int receiverId = db.getUserId(username);
-			try {
-				if (db.checkUserPass(username, password)) {
-					db.setMessageRead(officeId, receiverId, messageId);
-				}
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-
-			} finally {
-				db.closeConnection();
-			}
-		}
-	}
-
-	public void setAllMessageRead(	String username, String password,
-									int officeId) {
-		Database db = new Database();
-
-		if (db.openConnection()) {
-			int receiverId = db.getUserId(username);
-			try {
-				if (db.checkUserPass(username, password)) {
-					db.setAllMessageRead(officeId, receiverId);
-				}
-			} catch (SQLException e) {
-
-			} finally {
-				db.closeConnection();
-			}
-		}
-
-	}
-
-	// used
-	public boolean removeTurn(	String username, String password, int officeId,
-								int turnId) {
-		boolean res = false;
-		Database db = new Database();
-		if (db.openConnection()) {
-			try {
-				if (db.isHaveSecretaryPermission(username, password,
-						officeId)) {
-					db.removeFromTurn(officeId, turnId);
-					res = true;
-				}
-			} catch (SQLException e) {
-				res = false;
-			} finally {
-				db.closeConnection();
-			}
-		}
-		return res;
-	}
-
-	// used
-	public UserTurn[]
-			getPatientTurnInfoByDate(	String username, String password,
-										int officeId, String fromDate,
-										String toDate) {
-		Database db = new Database();
-		Vector<UserTurn> vec = new Vector<UserTurn>();
-		UserTurn[] res = null;
-		if (!Helper.checkDateBoundary(fromDate, toDate))
-			return res;
-		try {
-			if (!db.openConnection())
-				return null;
-			if (!db.isHaveSecretaryPermission(username, password, officeId))
-				return null;
-
-			vec = db.getUserTurn(officeId, fromDate, toDate);
-			res = new UserTurn[vec.size()];
-			for (int i = 0; i < vec.size(); i++) {
-				res[i] = vec.elementAt(i);
-			}
-		} catch (Exception e) {
-			return res;
-		} finally {
-			db.closeConnection();
-		}
-		return res;
-	}
-
-	// used
-	public boolean removeMessage(	String username, String password,
-									int officeId, int messageId) {
-		boolean res = false;
-		Database db = new Database();
-		if (db.openConnection()) {
-			try {
-				if (db.checkUserPass(username, password)) {
-					int userid = db.getUserId(username);
-					db.removeMessage(officeId, userid, messageId);
-					res = true;
-				}
-			} catch (SQLException e) {
-				res = false;
-			} finally {
-				db.closeConnection();
-			}
-		}
-		return res;
-	}
-
-	// used
-	public Info_Patient[] getTodayPatient(	String username, String password,
-											int officeId) {
-		Info_Patient[] res = null;
-		Vector<Info_Patient> vec = null;
-		Database db = new Database();
-		if (db.openConnection()) {
-			String today = Helper.getTodayShortDate();
-			try {
-				if (db.isHaveSecretaryPermission(username, password,
-						officeId)) {
-					vec = db.getOneDayPatient(officeId, today);
-					res = new Info_Patient[vec.size()];
-					for (int i = 0; i < res.length; i++) {
-						res[i] = vec.elementAt(i);
-					}
-				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			} finally {
-				db.closeConnection();
-			}
-		}
-		return res;
-	}
-
-	// used
-	public boolean reception(	String username, String password, int officeId,
-								int reservationId, int payment,
-								String description) {
-		boolean res = true;
-		Database db = new Database();
-		if (db.openConnection()) {
-			try {
-				if (db.isHaveSecretaryPermission(username, password,
-						officeId)) {
-					db.reception(reservationId, payment, description);
-				}
-			} catch (SQLException e) {
-				res = false;
-			} finally {
-				db.closeConnection();
-			}
-		}
-		return res;
-	}
-
-	// used
-	public Info_patientFile[]
-			getPatientFile(	String username, String password, int officeId,
-							String patientUsername) {
-		Database db = new Database();
-		Vector<Info_patientFile> vec = null;
-		Info_patientFile[] res = null;
-		if (db.openConnection()) {
-			// System.out.println();
-			boolean patientFlag = username.equals(patientUsername) && db
-					.isHavePatientPermission(username, password, officeId);
-			if (patientFlag || db.isHaveSecretaryPermission(username,
-					password, officeId)) {
-				try {
-					vec = db.getPatientAllTurn(patientUsername, officeId);
-					res = new Info_patientFile[vec.size()];
-					for (int i = 0; i < res.length; i++) {
-						res[i] = vec.elementAt(i);
-					}
-				} catch (SQLException e) {
-
-				} finally {
-					db.closeConnection();
-				}
-			}
-		}
-		return res;
-	}
-
-	// used
-	public PhotoDesc getGalleryPic(	String username, String password,
-									int officeId, int picId) {
-		PhotoDesc res = null;
-		Database db = new Database();
-		if (db.openConnection()) {
-			if (db.isHavePatientPermission(username, password, officeId)) {
-				try {
-					res = db.getGalleryPic(officeId, picId);
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					db.closeConnection();
-				}
-			}
-		}
-		return res;
-	}
-
-	// used
-	public int setGalleryPic(	String username, String password, int officeId,
-								String pic, String description) {
-		int picId = 0;
-		String dateTime =
-				Helper.getTodayShortDate() + " " + Helper.getCurrentTime();
-		Database db = new Database();
-
-		if (pic == null || pic.length() <= 0)
-			return 0;
-
-		if (db.openConnection()) {
-			picId = db.getMaxPicId() + 1;
-			if (db.isHaveSecretaryPermission(username, password, officeId)) {
-				try {
-					if (db.isGalleryPicsNumberLessThanMax(officeId)) {
-						db.insertIntoGallery(officeId, picId, pic,
-								description, dateTime);
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					db.closeConnection();
-				}
-			}
-		}
-		return picId;
-	}
-
-	// used
-	public void deleteFromGallery(	String username, String password,
-									int officeId, int picId) {
-		Database db = new Database();
-		if (db.openConnection()) {
-			if (db.isHaveSecretaryPermission(username, password, officeId)) {
-				try {
-					db.deleteFromGallery(officeId, picId);
-				} catch (SQLException e) {
-
-				} finally {
-					db.closeConnection();
-				}
-			}
-		}
-	}
-
-	// used
-	public void changeGalleryPicDescription(String username, String password,
-											int officeId, int picId,
-											String description) {
-		Database db = new Database();
-		if (db.openConnection()) {
-			if (db.isHaveSecretaryPermission(username, password, officeId)) {
-				try {
-					db.changeGalleryPicDescription(officeId, picId,
-							description);
-				} catch (SQLException e) {
-
-				} finally {
-					db.closeConnection();
-				}
-			}
-		}
-	}
-
-	// used
 	public TaskGroup[] getTaskGroups(	String username, String password,
 										int officeId) {
 		TaskGroup[] res = null;
@@ -1650,7 +548,6 @@ public class Webservices {
 		return res;
 	}
 
-	// used
 	public Task[] getTasks(	String username, String password, int officeId,
 							int taskGroupId) {
 		Task[] res = null;
@@ -1673,7 +570,6 @@ public class Webservices {
 		return res;
 	}
 
-	// used
 	public int addTaskGroup(String username, String password, int officeId,
 							String taskGroupName) {
 		Database db = new Database();
@@ -1819,7 +715,6 @@ public class Webservices {
 		return res;
 	}
 
-	// used
 	public String updateTaskName(	String username, String password,
 									int officeId, int taskId,
 									String taskName) {
@@ -1849,7 +744,6 @@ public class Webservices {
 		return res;
 	}
 
-	// used
 	public String deleteTask(	String username, String password, int officeId,
 								int taskId) {
 		String res;
@@ -1878,24 +772,71 @@ public class Webservices {
 		return res;
 	}
 
-	// used
-	public Office getOfficeInfo(String username, String password,
-								int officeId) {
-		Office office = new Office();
+	///////////////////////////////////// secretary management services
+
+	public boolean addSecretaryToOffice(String username, String password,
+										int officeId, String secretary) {
+		boolean ret = false;
 		Database db = new Database();
-		if (!db.openConnection()) {
-			return office;
-		}
+		int secretaryId = db.getUserId(secretary);
 		try {
-			office = db.getOfficeInfo(officeId);
+			if (db.openConnection()) {
+				if (db.isHaveSecretaryPermission(username, password,
+						officeId)) {
+					db.InsertInSecretary(officeId, secretaryId);
+					ret = true;
+				}
+			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return office;
+			ret = false;
+		} finally {
+			db.closeConnection();
 		}
-		return office;
+		return ret;
 	}
 
 	// used
+	public User addSecretaryToOffice2(	String username, String password,
+										int officeId, String secretary) {
+		User ret = User.getErrorUser();
+		Database db = new Database();
+		try {
+			if (db.openConnection()) {
+				int secretaryId = db.getUserId(secretary);
+				if (db.isHaveSecretaryPermission(username, password,
+						officeId)) {
+					ret = db.InsertInSecretary2(officeId, secretaryId);
+					ret.role = Role.secretary;
+				}
+			}
+		} catch (Exception e) {
+		} finally {
+			db.closeConnection();
+		}
+		return ret;
+	}
+
+	public boolean
+			removeSecretaryFromOffice(	String username, String password,
+										int officeId, String secretary) {
+		boolean ret = false;
+		Database db = new Database();
+		try {
+			if (db.openConnection()) {
+				if (db.isHaveDoctorPermission(username, password,
+						officeId)) {
+					db.removeFromSecretary(officeId, secretary);
+					ret = true;
+				}
+			}
+		} catch (SQLException e) {
+			ret = false;
+		} finally {
+			db.closeConnection();
+		}
+		return ret;
+	}
+
 	public Info_User[] getSecretaryInfo(String username, String password,
 										int officeId) {
 		Info_User[] result = null;
@@ -1919,7 +860,834 @@ public class Webservices {
 		return result;
 	}
 
-	// used
+	/////////////////////////////////////////// turn management services
+
+	public boolean addTurn(	String username, String password, int officeId,
+							String date, int startHour, int startMin,
+							int duration, int capacity) {
+		Database db = new Database();
+		if (capacity <= 0 || duration <= 0 || startHour <= 0
+				|| startMin <= 0)
+			return false;
+		try {
+			if (!db.openConnection())
+				return false;
+			if (!db.isHaveSecretaryPermission(username, password, officeId))
+				return false;
+			if (Helper.isBeforeToday(date))
+				return false;
+
+			Turn t = new Turn();
+			t.officeId = officeId;
+			t.capacity = capacity;
+			t.date = date;
+			t.duration = duration;
+			t.hour = startHour;
+			t.min = startMin;
+			t.reserved = 0;
+
+			addTurnWithoutId(db, t);
+		} catch (SQLException e) {
+			return false;
+		}
+		return true;
+	}
+
+	private void addTurnWithoutId(Database db, Turn t) throws SQLException {
+		t.id = db.getMaxTurnId() + 1;
+		db.addTurn(t);
+	}
+
+	public boolean addTurnByDate(	String username, String password,
+									int officeId, String fromDate,
+									String toDate, int hour, int min,
+									int duration, int capacity,
+									String dayOfWeek) {
+		PersianCalendar cal1 = Helper.getCalendarFromShortDate(fromDate);
+		PersianCalendar cal2 = Helper.getCalendarFromShortDate(toDate);
+		Vector<Integer> days = new Vector<Integer>();
+		Vector<Turn> vec = new Vector<Turn>();
+		Database db = new Database();
+		int firstId = 0;
+		if (capacity <= 0 || duration <= 0 || hour < 0 || min < 0)
+			return false;
+		if (cal1 == null || cal2 == null)
+			return false;
+		if (Helper.isBeforeToday(fromDate))
+			return false;
+		if (cal1.after(cal2))
+			return false;
+		if (!db.openConnection())
+			return false;
+		firstId = db.getMaxTurnId() + 1;
+
+		char[] temp = dayOfWeek.toCharArray();
+		for (char ch : temp) {
+			days.addElement(ch - '0');
+		}
+		while (cal2.after(cal1) || cal2.equals(cal1)) {
+			int todayDayOfWeek = cal1.getPersianWeekDay();
+			if (days.contains(todayDayOfWeek)) {
+				cal1.getPersianLongDate();
+				Turn turn = new Turn();
+				turn.capacity = capacity;
+				turn.date = cal1.getPersianShortDate();
+				turn.duration = duration;
+				turn.hour = hour;
+				turn.min = min;
+				turn.id = firstId++;
+				turn.isReserved = false;
+				turn.longDate = cal1.getPersianLongDate();
+				turn.officeId = officeId;
+				turn.reserved = 0;
+				vec.addElement(turn);
+			}
+			cal1.add(PersianCalendar.DAY_OF_YEAR, 1);
+		}
+
+		boolean res = true;
+		try {
+			if (vec.size() > 0) {
+				db.addTurnBatch(vec);
+
+				res = true;
+			} else {
+				res = false;
+			}
+		} catch (SQLException e) {
+			res = false;
+		} finally {
+			db.closeConnection();
+		}
+		return res;
+	}
+
+	public String addTurnByDate2(	String username, String password,
+									int officeId, String fromDate,
+									String toDate, int hour, int min,
+									int duration, int capacity,
+									String dayOfWeek) {
+		PersianCalendar cal1 = Helper.getCalendarFromShortDate(fromDate);
+		PersianCalendar cal2 = Helper.getCalendarFromShortDate(toDate);
+		Vector<Integer> days = new Vector<Integer>();
+		Vector<Turn> vec = new Vector<Turn>();
+		Database db = new Database();
+		int firstId = 0;
+		String msg;
+		if (capacity <= 0 || duration <= 0 || hour < 0 || min < 0) {
+			msg = Helper.getMessageInvalidParam();
+			// parametrhaye zaman va zarfiat ra barresi konid
+			msg += "\u067e\u0627\u0631\u0627\u0645\u062a\u0631\u0647\u0627\u06cc "
+					+ "\u0632\u0645\u0627\u0646 \u0648 \u0638\u0631\u0641\u06cc\u062a "
+					+ "\u0631\u0627 \u0628\u0631\u0631\u0633\u06cc "
+					+ "\u06a9\u0646\u06cc\u062f";
+			return msg;
+		}
+		if (cal1 == null || cal2 == null) {
+			msg = Helper.getMessageInvalidParam();
+			// tarikh shoro va payan ra barresi konid
+			msg += "\u062a\u0627\u0631\u06cc\u062e \u0634\u0631\u0648\u0639 "
+					+ "\u0648 \u067e\u0627\u06cc\u0627\u0646 \u0631\u0627 "
+					+ "\u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u062f";
+			return msg;
+		}
+		if (Helper.isBeforeToday(fromDate)) {
+			msg = Helper.getMessageInvalidParam();
+			// tarikh shoro nemitavanad ghabl az emrooz bashad
+			msg += "\u062a\u0627\u0631\u06cc\u062e \u0634\u0631\u0648\u0639 "
+					+ "\u0646\u0645\u06cc \u062a\u0648\u0627\u0646\u062f "
+					+ "\u0642\u0628\u0644 \u0627\u0632 "
+					+ "\u0627\u0645\u0631\u0648\u0632 \u0628\u0627\u0634\u062f";
+			return msg;
+		}
+		if (cal1.after(cal2)) {
+			msg = Helper.getMessageInvalidParam();
+			// tarikh shoro va payan ra barresi konid
+			msg += "\u062a\u0627\u0631\u06cc\u062e \u0634\u0631\u0648\u0639 "
+					+ "\u0648 \u067e\u0627\u06cc\u0627\u0646 \u0631\u0627 "
+					+ "\u0628\u0631\u0631\u0633\u06cc \u06a9\u0646\u06cc\u062f";
+			return msg;
+		}
+		if (!db.openConnection()) {
+			return Helper.getMessageUnknownError();
+		}
+		firstId = db.getMaxTurnId() + 1;
+
+		char[] temp = dayOfWeek.toCharArray();
+		for (char ch : temp) {
+			days.addElement(ch - '0');
+		}
+		while (cal2.after(cal1) || cal2.equals(cal1)) {
+			int todayDayOfWeek = cal1.getPersianWeekDay();
+			if (days.contains(todayDayOfWeek)) {
+				cal1.getPersianLongDate();
+				Turn turn = new Turn();
+				turn.capacity = capacity;
+				turn.date = cal1.getPersianShortDate();
+				turn.duration = duration;
+				turn.hour = hour;
+				turn.min = min;
+				turn.id = firstId++;
+				turn.isReserved = false;
+				turn.longDate = cal1.getPersianLongDate();
+				turn.officeId = officeId;
+				turn.reserved = 0;
+				vec.addElement(turn);
+			}
+			cal1.add(PersianCalendar.DAY_OF_YEAR, 1);
+		}
+
+		try {
+			if (vec.size() > 0) {
+				db.addTurnBatch(vec);
+
+				msg = OK_MESSAGE;
+			} else {
+				// be dalile na-hamkhani rooz va tarikh, hich nobati ezefe
+				// nashod
+				msg = "\u0628\u0647 \u062f\u0644\u06cc\u0644 "
+						+ "\u0646\u0627\u0647\u0645\u062e\u0648\u0627\u0646\u06cc "
+						+ "\u0631\u0648\u0632 "
+						+ "\u0648 \u062a\u0627\u0631\u06cc\u062e\u060c "
+						+ "\u0647\u06cc\u0686 \u0646\u0648\u0628\u062a "
+						+ "\u062c\u062f\u06cc\u062f\u06cc "
+						+ "\u0627\u0636\u0627\u0641\u0647 \u0646\u0634\u062f\u002e";
+			}
+		} catch (SQLException e) {
+			msg = Helper.getMessageUnknownError();
+		} finally {
+			db.closeConnection();
+		}
+		return msg;
+	}
+
+	public boolean removeTurn(	String username, String password, int officeId,
+								int turnId) {
+		boolean res = false;
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (db.isHaveSecretaryPermission(username, password,
+						officeId)) {
+					db.removeFromTurn(officeId, turnId);
+					res = true;
+				}
+			} catch (SQLException e) {
+				res = false;
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+
+	public Turn[] getAllTurn(	String username, String password, int officeId,
+								String fromDate, String toDate) {
+		Database db = new Database();
+		Turn[] res = null;
+		if (Helper.checkDateBoundary(fromDate, toDate)) {
+			if (db.openConnection()) {
+				Vector<Turn> vec =
+						db.getTurn(username, officeId, fromDate, toDate);
+				res = new Turn[vec.size()];
+				for (int i = 0; i < vec.size(); i++) {
+					res[i] = vec.elementAt(i);
+				}
+				db.closeConnection();
+			}
+		}
+
+		return res;
+	}
+
+	public Turn[] getAllTurnFromToday(	String username, String password,
+										int officeId) {
+		Database db = new Database();
+		Turn[] res = null;
+		Date now = new Date();
+		String fromDate = Helper.getShortDate(now);
+		String toDate = Helper.getShortDateAfterSomeDay(now, 30);
+		if (db.openConnection()) {
+			Vector<Turn> vec =
+					db.getTurn(username, officeId, fromDate, toDate);
+			res = new Turn[vec.size()];
+			for (int i = 0; i < vec.size(); i++) {
+
+				res[i] = vec.elementAt(i);
+			}
+		}
+		return res;
+	}
+
+	public int reserveForMe(String username, String password, int turnId,
+							int firstReservationId, int taskId,
+							int numberOfTurns) {
+		Database db = new Database();
+		Reservation_new r = new Reservation_new();
+		try {
+			if (db.openConnection()) {
+				if (db.checkUserPass(username, password)) {
+					int userId = db.getUserId(username);
+					r.userId = userId;
+					r.firstReservationId = firstReservationId;
+					r.numberOfTurns = numberOfTurns;
+					r.patientId = userId;
+					r.payment = 0;
+					r.taskId = taskId;
+					r.turnId = turnId;
+					r.price = db.getTaskPrice(taskId);
+
+					r.id = 0;
+					if (db.checkCapacity(r)) {
+						r.id = db.getMaxReservationId() + 1;
+						db.decreseCapacity(r);
+						db.reserveTurn(r);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			r.id = 0;
+			System.out.println(e.getMessage());
+		}
+		return r.id;
+	}
+
+	public int reserveForUser(	String username, String password, int turnId,
+								int firstReservationId, int taskId,
+								int numberOfTurns, String patientUserName) {
+		Database db = new Database();
+		Reservation_new r = new Reservation_new();
+		try {
+			if (db.openConnection()) {
+				if (db.checkUserPass(username, password)) {
+
+					r.userId = db.getUserId(username);
+					r.firstReservationId = firstReservationId;
+					r.numberOfTurns = numberOfTurns;
+					r.patientId = db.getUserId(patientUserName);
+					r.payment = 0;
+					r.taskId = taskId;
+					r.turnId = turnId;
+					r.price = db.getTaskPrice(taskId);
+
+					r.id = 0;
+					if (db.checkCapacity(r)) {
+						r.id = db.getMaxReservationId() + 1;
+						db.decreseCapacity(r);
+						db.reserveTurn(r);
+
+						Info_Reservation info = db.getUserOfficeTurn(r.id);
+						Helper.sendReservationMessage(db, r.userId, info);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			r.id = 0;
+			System.out.println(e.getMessage());
+		}
+		return r.id;
+	}
+
+	public int reserveForUser2(	String username, String password,
+								int officeId, int turnId,
+								int firstReservationId, int taskId,
+								int numberOfTurns, String patientUserName,
+								int price) {
+		Database db = new Database();
+		Reservation_new r = new Reservation_new();
+		try {
+			if (db.openConnection()) {
+				if (db.checkUserPass(username, password)) {
+					r.userId = db.getUserId(username);
+					r.firstReservationId = firstReservationId;
+					r.numberOfTurns = numberOfTurns;
+					r.patientId = db.getUserId(patientUserName);
+					r.payment = 0;
+					r.taskId = taskId;
+					r.turnId = turnId;
+					if (db.isHaveSecretaryPermission(username, password,
+							officeId)) {
+						r.price = price;
+					} else {
+						r.price = db.getTaskPrice(taskId);
+					}
+
+					r.id = 0;
+					if (db.checkCapacity(r)) {
+						r.id = db.getMaxReservationId() + 1;
+						db.decreseCapacity(r);
+						db.reserveTurn(r);
+
+						Info_Reservation info = db.getUserOfficeTurn(r.id);
+						Helper.sendReservationMessage(db, r.userId, info);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			r.id = 0;
+			System.out.println(e.getMessage());
+		}
+		return r.id;
+	}
+
+	public int reserveForGuest(	String username, String password, int turnId,
+								int firstReservationId, int taskId,
+								int numberOfTurns, String patientFirstName,
+								String patientLastName,
+								String patientPhoneNo, int patientCityId) {
+		Database db = new Database();
+		Reservation_new r = new Reservation_new();
+		try {
+			if (db.openConnection()) {
+				if (db.checkUserPass(username, password)) {
+					int guestId = db.insertGuest(patientFirstName,
+							patientLastName, patientPhoneNo, patientCityId);
+					r.userId = db.getUserId(username);
+					r.firstReservationId = firstReservationId;
+					r.numberOfTurns = numberOfTurns;
+					r.patientId = guestId;
+					r.payment = 0;
+					r.taskId = taskId;
+					r.turnId = turnId;
+					r.price = db.getTaskPrice(taskId);
+
+					r.id = 0;
+					if (db.checkCapacity(r)) {
+						r.id = db.getMaxReservationId() + 1;
+						db.decreseCapacity(r);
+						db.reserveTurn(r);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			r.id = 0;
+			System.out.println(e.getMessage());
+		}
+		return r.id;
+	}
+
+	public int reserveForGuest2(String username, String password,
+								int officeId, int turnId,
+								int firstReservationId, int taskId,
+								int numberOfTurns, String patientFirstName,
+								String patientLastName,
+								String patientPhoneNo, int patientCityId,
+								int price) {
+		Database db = new Database();
+		Reservation_new r = new Reservation_new();
+		int guestId;
+		try {
+			if (db.openConnection()) {
+				if (db.checkUserPass(username, password)) {
+					guestId = db.insertGuest(patientFirstName,
+							patientLastName, patientPhoneNo, patientCityId);
+					r.userId = db.getUserId(username);
+					r.firstReservationId = firstReservationId;
+					r.numberOfTurns = numberOfTurns;
+					r.patientId = guestId;
+					r.payment = 0;
+					r.taskId = taskId;
+					r.turnId = turnId;
+					if (db.isHaveSecretaryPermission(username, password,
+							officeId)) {
+						r.price = price;
+					} else {
+						r.price = db.getTaskPrice(taskId);
+					}
+
+					r.id = 0;
+					if (db.checkCapacity(r)) {
+						r.id = db.getMaxReservationId() + 1;
+						db.decreseCapacity(r);
+						db.reserveTurn(r);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			r.id = 0;
+			System.out.println(e.getMessage());
+		}
+		return r.id;
+	}
+
+	public boolean cancelReservation(	String username, String password,
+										int reservationId) {
+		boolean res = false;
+		Database db = new Database();
+		Info_Reservation info;
+		try {
+			if (db.openConnection()) {
+				if (db.checkUserPass(username, password)) {
+					int userId = db.getUserId(username);
+					info = db.getUserOfficeTurn(reservationId);
+					if (info.username == null)
+						return false;
+
+					int role = db.getPermissionOnOffice(info.officeId,
+							username);
+					if (role == Role.secretary || role == Role.doctor
+							|| info.username.equals(username)
+							|| info.patientId == userId) {
+						Helper.sendCancelationMessage(db, userId, info);
+						db.removeFromReserve(reservationId);
+						db.increseCapacity(info.turnId, info.numberOfTurns);
+						res = true;
+					}
+				}
+			}
+		} catch (SQLException e) {
+			res = false;
+			System.out.println(e.getMessage());
+		}
+		return res;
+	}
+
+	public Reservation2[]
+			getReservationByTurnId(	String username, String password,
+									int officeId, int turnId) {
+		Database db = new Database();
+		Vector<Reservation2> vec;
+		Reservation2[] res = null;
+		try {
+			if (!db.openConnection())
+				return null;
+			if (!db.checkUserPass(username, password))
+				return null;
+			int perm = db.getPermissionOnOffice(officeId, username);
+			if (perm == Role.doctor || perm == Role.secretary) {
+				vec = db.getReservationForAdmin(turnId);
+			} else {
+				vec = db.getReservationForUser(turnId, username);
+			}
+			res = new Reservation2[vec.size()];
+			for (int i = 0; i < vec.size(); i++) {
+				res[i] = vec.elementAt(i);
+			}
+		} catch (Exception e) {
+			return res;
+		}
+		return res;
+	}
+
+	public Reservation4[]
+			getReservationByUser(	String username, String password,
+									int officeId, int count, int index) {
+		Database db = new Database();
+		Vector<Reservation4> vec = new Vector<Reservation4>();
+		Reservation4[] res = null;
+		try {
+			if (!db.openConnection())
+				return null;
+			if (!db.checkUserPass(username, password))
+				return null;
+
+			vec = db.getReservation(username, officeId);
+			int firstIndex = index * count;
+			if (firstIndex >= vec.size())
+				return null;
+			int size = Math.min(count, vec.size() - firstIndex);
+			res = new Reservation4[size];
+			for (int i = 0; i < res.length; i++) {
+				res[i] = vec.elementAt(i + firstIndex);
+			}
+		} catch (Exception e) {
+			return res;
+		}
+		return res;
+	}
+
+	public Reservation2[]
+			getReservationByDate(	String username, String password,
+									int officeId, String fromDate,
+									String toDate) {
+		Database db = new Database();
+		Vector<Reservation2> vec = new Vector<Reservation2>();
+		Reservation2[] res = null;
+		try {
+			if (!Helper.checkDateBoundary(fromDate, toDate))
+				return null;
+			if (!db.openConnection())
+				return null;
+			if (db.checkUserPass(username, password)) {
+				int perm = db.getPermissionOnOffice(officeId, username);
+				if (perm != Role.doctor && perm != Role.secretary) {
+					vec = db.getReservation(officeId, fromDate, toDate);
+					res = new Reservation2[vec.size()];
+					for (int i = 0; i < res.length; i++) {
+						res[i] = vec.elementAt(i);
+					}
+				}
+			}
+		} catch (Exception e) {
+
+		} finally {
+			db.closeConnection();
+		}
+		return res;
+	}
+
+	public UserTurn[]
+			getPatientTurnInfoByDate(	String username, String password,
+										int officeId, String fromDate,
+										String toDate) {
+		Database db = new Database();
+		Vector<UserTurn> vec = new Vector<UserTurn>();
+		UserTurn[] res = null;
+		if (!Helper.checkDateBoundary(fromDate, toDate))
+			return res;
+		try {
+			if (!db.openConnection())
+				return null;
+			if (!db.isHaveSecretaryPermission(username, password, officeId))
+				return null;
+
+			vec = db.getUserTurn(officeId, fromDate, toDate);
+			res = new UserTurn[vec.size()];
+			for (int i = 0; i < vec.size(); i++) {
+				res[i] = vec.elementAt(i);
+			}
+		} catch (Exception e) {
+			return res;
+		} finally {
+			db.closeConnection();
+		}
+		return res;
+	}
+
+	//////////////////////////////////////////// Message Management Services
+
+	public boolean sendMessage(	String username, String password,
+								int officeId, String receiver,
+								String subject, String message) {
+		boolean res = false;
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					int senderId = db.getUserId(username);
+					int receiverId = db.getUserId(receiver);
+					String dateStr = Helper.getTodayShortDate();
+					String timeStr = Helper.getCurrentTime();
+
+					db.sendMessage(officeId, senderId, receiverId, subject,
+							message, dateStr, timeStr);
+					res = true;
+				}
+			} catch (SQLException e) {
+				System.out.println("err = " + e.getMessage());
+				res = false;
+			}
+		} else {
+			res = false;
+		}
+		return res;
+	}
+
+	public boolean sendMessageBatch(String username, String password,
+									int officeId, String[] receivers,
+									String[] phoneNo, String subject,
+									String message) {
+		boolean res = true;
+		Database db = new Database();
+		Vector<String> receiverVec;
+		Vector<String> phoneVec;
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					receiverVec = Helper.removeDuplicates(receivers);
+					phoneVec = Helper.removeDuplicates(phoneNo);
+					int[] receiverIds = new int[receiverVec.size()];
+					for (int i = 0; i < receiverIds.length; i++) {
+						receiverIds[i] =
+								db.getUserId(receiverVec.elementAt(i));
+					}
+					int senderId = db.getUserId(username);
+					String dateStr = Helper.getTodayShortDate();
+					String timeStr = Helper.getCurrentTime();
+
+					db.sendMessageBatch(officeId, senderId, receiverIds,
+							subject, message, dateStr, timeStr);
+					Helper.sendSMS(officeId, senderId, phoneVec, subject,
+							message, dateStr, timeStr);
+				}
+			} catch (SQLException e) {
+				res = false;
+			}
+		} else {
+			res = false;
+		}
+		return res;
+	}
+
+	public Info_Message[] getUnreadMessages(String username, String password,
+											int officeId) {
+		return getMessages(username, password, officeId, true);
+	}
+
+	public Info_Message[] getAllMessages(	String username, String password,
+											int officeId) {
+		return getMessages(username, password, officeId, false);
+	}
+
+	private Info_Message[] getMessages(	String username, String password,
+										int officeId, boolean onlyUnread) {
+		Info_Message[] res = null;
+		Vector<Info_Message> vec;
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					int userId = db.getUserId(username);
+					vec = db.getMessages(userId, officeId, onlyUnread);
+					res = new Info_Message[vec.size()];
+					for (int i = 0; i < res.length; i++) {
+						res[i] = vec.elementAt(i);
+					}
+				}
+			} catch (SQLException e) {
+
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+
+	public void setMessageRead(	String username, String password,
+								int officeId, int messageId) {
+		Database db = new Database();
+
+		if (db.openConnection()) {
+			int receiverId = db.getUserId(username);
+			try {
+				if (db.checkUserPass(username, password)) {
+					db.setMessageRead(officeId, receiverId, messageId);
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+
+			} finally {
+				db.closeConnection();
+			}
+		}
+	}
+
+	public void setAllMessageRead(	String username, String password,
+									int officeId) {
+		Database db = new Database();
+
+		if (db.openConnection()) {
+			int receiverId = db.getUserId(username);
+			try {
+				if (db.checkUserPass(username, password)) {
+					db.setAllMessageRead(officeId, receiverId);
+				}
+			} catch (SQLException e) {
+
+			} finally {
+				db.closeConnection();
+			}
+		}
+
+	}
+
+	public boolean removeMessage(	String username, String password,
+									int officeId, int messageId) {
+		boolean res = false;
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					int userid = db.getUserId(username);
+					db.removeMessage(officeId, userid, messageId);
+					res = true;
+				}
+			} catch (SQLException e) {
+				res = false;
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+
+	////////////////////////////////// patient reception and management
+
+	public Info_Patient[] getTodayPatient(	String username, String password,
+											int officeId) {
+		Info_Patient[] res = null;
+		Vector<Info_Patient> vec = null;
+		Database db = new Database();
+		if (db.openConnection()) {
+			String today = Helper.getTodayShortDate();
+			try {
+				if (db.isHaveSecretaryPermission(username, password,
+						officeId)) {
+					vec = db.getOneDayPatient(officeId, today);
+					res = new Info_Patient[vec.size()];
+					for (int i = 0; i < res.length; i++) {
+						res[i] = vec.elementAt(i);
+					}
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+
+	public boolean reception(	String username, String password, int officeId,
+								int reservationId, int payment,
+								String description) {
+		boolean res = true;
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (db.isHaveSecretaryPermission(username, password,
+						officeId)) {
+					db.reception(reservationId, payment, description);
+				}
+			} catch (SQLException e) {
+				res = false;
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+
+	public Info_patientFile[]
+			getPatientFile(	String username, String password, int officeId,
+							String patientUsername) {
+		Database db = new Database();
+		Vector<Info_patientFile> vec = null;
+		Info_patientFile[] res = null;
+		if (db.openConnection()) {
+			// System.out.println();
+			boolean patientFlag = username.equals(patientUsername) && db
+					.isHavePatientPermission(username, password, officeId);
+			if (patientFlag || db.isHaveSecretaryPermission(username,
+					password, officeId)) {
+				try {
+					vec = db.getPatientAllTurn(patientUsername, officeId);
+					res = new Info_patientFile[vec.size()];
+					for (int i = 0; i < res.length; i++) {
+						res[i] = vec.elementAt(i);
+					}
+				} catch (SQLException e) {
+
+				} finally {
+					db.closeConnection();
+				}
+			}
+		}
+		return res;
+	}
+
+	////////////////////////////////// Gallery Management Services
+
 	public int[] getAllGalleryPicId(String username, String password,
 									int officeId) {
 		int[] res = null;
@@ -1944,7 +1712,6 @@ public class Webservices {
 		return res;
 	}
 
-	// used
 	public PhotoDesc[] getAllGalleryPicId2(	String username, String password,
 											int officeId) {
 		PhotoDesc[] res = null;
@@ -1970,6 +1737,181 @@ public class Webservices {
 		}
 
 		return res;
+	}
+
+	public PhotoDesc getGalleryPic(	String username, String password,
+									int officeId, int picId) {
+		PhotoDesc res = null;
+		Database db = new Database();
+		if (db.openConnection()) {
+			if (db.isHavePatientPermission(username, password, officeId)) {
+				try {
+					res = db.getGalleryPic(officeId, picId);
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					db.closeConnection();
+				}
+			}
+		}
+		return res;
+	}
+
+	public int setGalleryPic(	String username, String password, int officeId,
+								String pic, String description) {
+		int picId = 0;
+		String dateTime =
+				Helper.getTodayShortDate() + " " + Helper.getCurrentTime();
+		Database db = new Database();
+
+		if (pic == null || pic.length() <= 0)
+			return 0;
+
+		if (db.openConnection()) {
+			picId = db.getMaxPicId() + 1;
+			if (db.isHaveSecretaryPermission(username, password, officeId)) {
+				try {
+					if (db.isGalleryPicsNumberLessThanMax(officeId)) {
+						db.insertIntoGallery(officeId, picId, pic,
+								description, dateTime);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					db.closeConnection();
+				}
+			}
+		}
+		return picId;
+	}
+
+	public void deleteFromGallery(	String username, String password,
+									int officeId, int picId) {
+		Database db = new Database();
+		if (db.openConnection()) {
+			if (db.isHaveSecretaryPermission(username, password, officeId)) {
+				try {
+					db.deleteFromGallery(officeId, picId);
+				} catch (SQLException e) {
+
+				} finally {
+					db.closeConnection();
+				}
+			}
+		}
+	}
+
+	public void changeGalleryPicDescription(String username, String password,
+											int officeId, int picId,
+											String description) {
+		Database db = new Database();
+		if (db.openConnection()) {
+			if (db.isHaveSecretaryPermission(username, password, officeId)) {
+				try {
+					db.changeGalleryPicDescription(officeId, picId,
+							description);
+				} catch (SQLException e) {
+
+				} finally {
+					db.closeConnection();
+				}
+			}
+		}
+	}
+
+	////////////////////////////////// test webservice
+	public String helloWorld() {
+		return "Hello World!";
+	}
+
+	////////////////////////////////// unknown services!!!
+	public String register2(String name, String lastname, String mobileno,
+							String username, String password, int cityid,
+							String pic, String email) {
+		String res = OK_MESSAGE;
+		Database db = new Database();
+		if (!db.openConnection())
+			return Helper.getMessageUnknownError();
+		if (!db.isUsernameAvailable(username)) {
+			db.closeConnection();
+			return Helper.getMessageUserNameNotAvailabe();
+		}
+
+		byte[] picbyte = null;
+		if (pic != null && pic.length() > 0) {
+			picbyte = Helper.getBytes(pic);
+		}
+		try {
+			db.register(name, lastname, mobileno, username, password, cityid,
+					picbyte, email);
+		} catch (SQLException e) {
+			res = Helper.getMessageUnknownError();
+		}
+		db.closeConnection();
+		return res;
+	}
+
+	public int registerOffice2(	String username, String password, int cityid,
+								int spec, int subspec, String address,
+								String tellNo, int timeQuantum,
+								String biography) {
+		Database db = new Database();
+		int id = 0;
+		if (db.openConnection()) {
+			try {
+				if (db.checkMasterPassword(username, password)
+						|| db.isHaveSupportPermission(username, password)) {
+					id = db.InsertInOffice(spec, subspec, address, tellNo,
+							cityid, 0.0, 0.0, timeQuantum, biography);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return id;
+	}
+
+	///////////////////////////////////////// Support Utility Services
+
+	public boolean addDoctorToOffice(	String username, String password,
+										int officeId, String doctor) {
+		boolean ret = false;
+		Database db = new Database();
+		int doctorId = db.getUserId(doctor);
+		try {
+			if (db.openConnection()) {
+				if (db.checkMasterPassword(username, password)
+						|| db.isHaveSupportPermission(username, password)) {
+					db.InsertInDoctorOffice(officeId, doctorId);
+					ret = true;
+				}
+			}
+		} catch (SQLException e) {
+			ret = false;
+		}
+		return ret;
+	}
+
+	////////////////////////////////////////////////////////////
+
+	// used
+	public Office getOfficeInfo(String username, String password,
+								int officeId) {
+		Office office = new Office();
+		Database db = new Database();
+		if (!db.openConnection()) {
+			return office;
+		}
+		try {
+			office = db.getOfficeInfo(officeId);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return office;
+		}
+		return office;
 	}
 
 	// used
@@ -2755,6 +2697,7 @@ public class Webservices {
 		}
 		return res;
 	}
+
 	public boolean removeMessage2(	String username, String password,
 									int messageId) {
 		boolean res = false;
