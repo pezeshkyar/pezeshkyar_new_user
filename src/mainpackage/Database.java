@@ -2664,4 +2664,14 @@ public class Database {
 
 		return vec;
 	}
+	public void removeMessage1(int userId, int messageId)
+			throws SQLException {
+		String query = "delete from message where id = ? "
+				+ "and receiverid = ? ";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, messageId);
+		ps.setInt(2, userId);
+		ps.executeUpdate();
+	}
+
 }
