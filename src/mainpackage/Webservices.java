@@ -2717,4 +2717,23 @@ public class Webservices {
 		}
 		return res;
 	}
+
+	public int setResNum(	String username, String password, int turnId,
+							int taskId) {
+		int res = -1;
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					int userId = db.getUserId(username);
+					res = db.setResNum(userId, turnId, taskId);
+				}
+			} catch (SQLException e) {
+				res = -1;
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
 }
