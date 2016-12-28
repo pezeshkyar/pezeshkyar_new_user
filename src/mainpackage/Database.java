@@ -23,6 +23,7 @@ import primitives.Info_Reservation2;
 import primitives.Info_User;
 import primitives.Info_patientFile;
 import primitives.Office;
+import primitives.Payment;
 import primitives.PhotoDesc;
 import primitives.Province;
 import primitives.Question;
@@ -48,6 +49,10 @@ public class Database {
 	private static final String GUEST_USERNAME = "guest";
 	private static final String GUEST_PASSWORD = "8512046384";
 	private static final int firstOfficeId = 1984;
+	private static final int mid = 10723614;
+	private static final String Url = "https://sep.shaparak.ir/Payment.aspx";
+	private static final String redirectUrl =
+			"http://pezeshkiar.com/redirectUrl.php";
 
 	public boolean openConnection() {
 		try {
@@ -2687,45 +2692,41 @@ public class Database {
 		ps.executeUpdate();
 	}
 
-	public int setResNum(int userId, int turnId, int taskId)
+	public Vector<Payment> setResNum(int userId, int reserveId)
 			throws SQLException {
-		int officeId = -1;
-		int res = -1;
+		Vector<Payment> vec = new Vector<Payment>();
+		int price = -1;
+		int resNum = -1;
 
-		String query1 =
-				"select doctoroffice.officeid from doctoroffice "
-						+ "join office on doctoroffice.officeid=office.id "
-						+ "join turn on doctoroffice.officeid=turn.officeid "
-						+ "where turn.id=?";
-		try {
-			PreparedStatement ps1 = connection.prepareStatement(query1);
-			ps1.setInt(1, turnId);
-			ResultSet rs1 = ps1.executeQuery();
-			if (rs1.next()) {
-				officeId = rs1.getInt(1);
-			}
-		} catch (SQLException e) {
-			officeId = -1;
-		}
 		Random random = new Random(System.currentTimeMillis());
-		int resNum = random.nextInt(1000000000);
+		resNum = random.nextInt(1000000000);
 		String date =
 				Helper.getTodayShortDate() + " " + Helper.getCurrentTime();
-		String query2 =
-				"insert into payment (resNum, refNum, userId, "
-				+ "turnId, taskId, officeId, date, status) "
-				+ "values (?,0,?,?,?,?,?,0) ";
-		if (resNum != -1 && officeId != -1) {
+		String query1 = "insert into payment (resNum, refNum, reserveId, "
+				+ "date, status) " + "values (?,0,?,?,0) ";
+		if (resNum != -1) {
+			PreparedStatement ps1 = connection.prepareStatement(query1);
+			ps1.setInt(1, resNum);
+			ps1.setInt(2, reserveId);
+			ps1.setString(3, date);
+			ps1.executeUpdate();
+			ps1.close();
+
+			String query2 = "select price from reserve where id = ? ";
 			PreparedStatement ps2 = connection.prepareStatement(query2);
-			ps2.setInt(1, resNum);
-			ps2.setInt(2, userId);
-			ps2.setInt(3, turnId);
-			ps2.setInt(4, taskId);
-			ps2.setInt(5, officeId);
-			ps2.setString(6, date);
-			ps2.executeUpdate();
-			ps2.close();
+			ps2.setInt(1, reserveId);
+			ResultSet rs = ps2.executeQuery();
+			while (rs.next()) {
+				price = rs.getInt(1);
+				Payment info = new Payment();
+				info.resNum = resNum;
+				info.mid = mid;
+				info.amount = price;
+				info.redirectUrl = redirectUrl;
+				info.url = Url;
+				vec.addElement(info);
+			}
 		}
-		return res;
+		return vec;
 	}
 }

@@ -15,6 +15,7 @@ import primitives.Info_User;
 import primitives.Info_patientFile;
 import primitives.Office;
 import primitives.Office2;
+import primitives.Payment;
 import primitives.PhotoDesc;
 import primitives.Province;
 import primitives.Question;
@@ -2718,18 +2719,24 @@ public class Webservices {
 		return res;
 	}
 
-	public int setResNum(	String username, String password, int turnId,
-							int taskId) {
-		int res = -1;
+	public Payment[] setResNum(	String username, String password,
+								int reserveId) {
+
+		Payment[] res = null;
+		Vector<Payment> vec;
 		Database db = new Database();
 		if (db.openConnection()) {
 			try {
 				if (db.checkUserPass(username, password)) {
 					int userId = db.getUserId(username);
-					res = db.setResNum(userId, turnId, taskId);
+					vec = db.setResNum(userId, reserveId);
+					res = new Payment[vec.size()];
+					for (int i = 0; i < res.length; i++) {
+						res[i] = vec.elementAt(i);
+					}
 				}
 			} catch (SQLException e) {
-				res = -1;
+
 			} finally {
 				db.closeConnection();
 			}
