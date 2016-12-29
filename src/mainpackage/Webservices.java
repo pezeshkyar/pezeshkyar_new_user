@@ -1122,7 +1122,8 @@ public class Webservices {
 
 	public int reserveForMe(String username, String password, int turnId,
 							int firstReservationId, int taskId,
-							int numberOfTurns) {
+							int numberOfTurns, int resNum) {
+		boolean bool = false;
 		Database db = new Database();
 		Reservation_new r = new Reservation_new();
 		try {
@@ -1139,15 +1140,20 @@ public class Webservices {
 					r.price = db.getTaskPrice(taskId);
 
 					r.id = 0;
-					if (db.getWallet(userId) >= r.price) {
-						if (db.checkCapacity(r)) {
-							r.id = db.getMaxReservationId() + 1;
-							db.decreseCapacity(r);
-							db.reserveTurn(r);
-							db.increseWallet(userId, r.price);
+					bool = db.checkRefNum(resNum);
+					if ((resNum == -1) || (bool == true)) {
+						if (db.getWallet(userId) >= r.price) {
+							if (db.checkCapacity(r)) {
+								r.id = db.getMaxReservationId() + 1;
+								db.decreseCapacity(r);
+								db.reserveTurn(r);
+								db.increseWallet(userId, r.price);
+							}
+						} else {
+							r.id = -1;
 						}
 					} else {
-						r.id = 0;
+						r.id = -2;
 					}
 				}
 			}
@@ -1278,7 +1284,8 @@ public class Webservices {
 										String patientFirstName,
 										String patientLastName,
 										String patientPhoneNo,
-										int patientCityId) {
+										int patientCityId, int resNum) {
+		boolean bool = false;
 		Database db = new Database();
 		Reservation_new r = new Reservation_new();
 		try {
@@ -1297,15 +1304,21 @@ public class Webservices {
 					r.price = db.getTaskPrice(taskId);
 
 					r.id = 0;
-					if (db.getWallet(userId) >= r.price) {
-						if (db.checkCapacity(r)) {
-							r.id = db.getMaxReservationId() + 1;
-							db.decreseCapacity(r);
-							db.reserveTurn(r);
-							db.increseWallet(userId, r.price);
+					bool = db.checkRefNum(resNum);
+					if ((resNum == -1) || (bool == true)) {
+
+						if (db.getWallet(userId) >= r.price) {
+							if (db.checkCapacity(r)) {
+								r.id = db.getMaxReservationId() + 1;
+								db.decreseCapacity(r);
+								db.reserveTurn(r);
+								db.increseWallet(userId, r.price);
+							}
+						} else {
+							r.id = -1;
 						}
 					} else {
-						r.id = 0;
+						r.id = -2;
 					}
 				}
 			}
@@ -2792,4 +2805,21 @@ public class Webservices {
 		}
 		return res;
 	}
+	 public void setWallet(int resNum, int amount){
+		 Database db = new Database();
+
+			if (db.openConnection()) {
+				try {
+					int userId = db.getUserIdFromPayment(resNum);
+					if (userId != -1){
+						db.setWallet(userId, amount);
+					}
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+
+				} finally {
+					db.closeConnection();
+				}
+			}
+	 }
 }

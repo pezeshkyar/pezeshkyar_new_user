@@ -49,10 +49,6 @@ public class Database {
 	private static final String GUEST_USERNAME = "guest";
 	private static final String GUEST_PASSWORD = "8512046384";
 	private static final int firstOfficeId = 1984;
-	private static final int mid = 10723614;
-	private static final String Url = "https://sep.shaparak.ir/Payment.aspx";
-	private static final String redirectUrl =
-			"http://pezeshkiar.com/redirectUrl.php";
 
 	public boolean openConnection() {
 		try {
@@ -577,10 +573,50 @@ public class Database {
 		return "";
 	}
 
+	public int getWallet(int userId) throws SQLException {
+		String query = "select wallet from user where id=?";
+
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+
+		ResultSet rs = ps.executeQuery();
+		if (rs.next())
+			return rs.getInt(1);
+		return 0;
+	}
+
+	public void increseWallet(int userId, int price) throws SQLException {
+		String query = "update user set wallet = wallet - ? where id = ?";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, price);
+		ps.setInt(2, userId);
+		ps.executeUpdate();
+	}
+
+	public boolean checkRefNum(int resNum) throws SQLException {
+
+		String refNum = "0";
+		String query = "select refNum from payment where resNum = ? ";
+
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, resNum);
+
+		ResultSet rs = ps.executeQuery();
+		if (rs.next()) {
+			refNum = rs.getString(1);
+		}
+		if (!refNum.equals("0")) {
+			return true;
+		}
+		return false;
+	}
+
 	public void reserveTurn(Reservation_new res) throws SQLException {
+		String date =
+				Helper.getTodayShortDate() + " " + Helper.getCurrentTime();
 		String query = "insert into reserve (id, userid, turnid, taskid, "
-				+ "numberofturns, patientid, firstturn, payment, price) "
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "numberofturns, patientid, firstturn, payment, price, date) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, res.id);
@@ -592,6 +628,7 @@ public class Database {
 		ps.setInt(7, res.firstReservationId);
 		ps.setInt(8, res.payment);
 		ps.setInt(9, res.price);
+		ps.setString(10, date);
 
 		ps.executeUpdate();
 	}
@@ -2692,41 +2729,64 @@ public class Database {
 		ps.executeUpdate();
 	}
 
-	public Vector<Payment> setResNum(int userId, int reserveId)
+	public Vector<Payment> setResNum(int userId, int amount)
 			throws SQLException {
 		Vector<Payment> vec = new Vector<Payment>();
-		int price = -1;
 		int resNum = -1;
 
 		Random random = new Random(System.currentTimeMillis());
 		resNum = random.nextInt(1000000000);
 		String date =
 				Helper.getTodayShortDate() + " " + Helper.getCurrentTime();
-		String query1 = "insert into payment (resNum, refNum, reserveId, "
-				+ "date, status) " + "values (?,0,?,?,0) ";
+		String query1 =
+				"insert into payment (resNum, refNum, userId, amount, "
+						+ "date, state, verify) "
+						+ "values (?,0,?,?,?,'NULL',0) ";
 		if (resNum != -1) {
 			PreparedStatement ps1 = connection.prepareStatement(query1);
 			ps1.setInt(1, resNum);
-			ps1.setInt(2, reserveId);
-			ps1.setString(3, date);
+			ps1.setInt(2, userId);
+			ps1.setInt(3, amount);
+			ps1.setString(4, date);
 			ps1.executeUpdate();
 			ps1.close();
 
-			String query2 = "select price from reserve where id = ? ";
+			String query2 = "select mid, redirectUrl, url from constants";
 			PreparedStatement ps2 = connection.prepareStatement(query2);
-			ps2.setInt(1, reserveId);
 			ResultSet rs = ps2.executeQuery();
 			while (rs.next()) {
-				price = rs.getInt(1);
 				Payment info = new Payment();
 				info.resNum = resNum;
-				info.mid = mid;
-				info.amount = price;
-				info.redirectUrl = redirectUrl;
-				info.url = Url;
+				info.mid = rs.getInt(1);
+				info.redirectUrl = rs.getString(2);
+				info.url = rs.getString(3);
 				vec.addElement(info);
 			}
 		}
 		return vec;
+	}
+
+	public int getUserIdFromPayment(int resNum) throws SQLException {
+		int userId = -1;
+		String query = "select userID from payment where resNum = ? ";
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setInt(1, resNum);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				userId = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			userId = -1;
+		}
+		return userId;
+	}
+
+	public void setWallet(int userId, int amount) throws SQLException {
+		String query = "update user set wallet = wallet + ? where id = ?";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, amount);
+		ps.setInt(2, userId);
+		ps.executeUpdate();
 	}
 }
