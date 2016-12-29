@@ -32,7 +32,10 @@ public class Tester {
 //		ws.getReservationByUser2("hadi", "7c4a8d09ca3762af61e59520943dc26494f8941b", 10, 1);
 //		ws.getRoleInOffice("hadi", "7c4a8d09ca3762af61e59520943dc26494f8941b", 2548);
 //		ws.getProvince();
-		ws.getOfficeForDoctorOrSecretary("vida", "7c4a8d09ca3762af61e59520943dc26494f8941b");
+//		ws.getOfficeForDoctorOrSecretary("vida", "7c4a8d09ca3762af61e59520943dc26494f8941b");
+//		ws.setResNum("hadi", "f7c3bc1d808e04732adf679965ccc34ca7ae3441", 50000);
+//		ws.reserveForMe("hadi", "f7c3bc1d808e04732adf679965ccc34ca7ae3441", 4, 0, 2, 1);
+		ws.reserveForGuestFromUser("hadi", "f7c3bc1d808e04732adf679965ccc34ca7ae3441", 4, 0, 2, 1, "test", "test", "09121", 12);
 	}
 
 }

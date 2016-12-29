@@ -1139,10 +1139,15 @@ public class Webservices {
 					r.price = db.getTaskPrice(taskId);
 
 					r.id = 0;
-					if (db.checkCapacity(r)) {
-						r.id = db.getMaxReservationId() + 1;
-						db.decreseCapacity(r);
-						db.reserveTurn(r);
+					if (db.getWallet(userId) >= r.price) {
+						if (db.checkCapacity(r)) {
+							r.id = db.getMaxReservationId() + 1;
+							db.decreseCapacity(r);
+							db.reserveTurn(r);
+							db.increseWallet(userId, r.price);
+						}
+					} else {
+						r.id = 0;
 					}
 				}
 			}
@@ -1257,6 +1262,50 @@ public class Webservices {
 						r.id = db.getMaxReservationId() + 1;
 						db.decreseCapacity(r);
 						db.reserveTurn(r);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			r.id = 0;
+			System.out.println(e.getMessage());
+		}
+		return r.id;
+	}
+
+	public int reserveForGuestFromUser(	String username, String password,
+										int turnId, int firstReservationId,
+										int taskId, int numberOfTurns,
+										String patientFirstName,
+										String patientLastName,
+										String patientPhoneNo,
+										int patientCityId) {
+		Database db = new Database();
+		Reservation_new r = new Reservation_new();
+		try {
+			if (db.openConnection()) {
+				if (db.checkUserPass(username, password)) {
+					int userId = db.getUserId(username);
+					int guestId = db.insertGuest(patientFirstName,
+							patientLastName, patientPhoneNo, patientCityId);
+					r.userId = db.getUserId(username);
+					r.firstReservationId = firstReservationId;
+					r.numberOfTurns = numberOfTurns;
+					r.patientId = guestId;
+					r.payment = 0;
+					r.taskId = taskId;
+					r.turnId = turnId;
+					r.price = db.getTaskPrice(taskId);
+
+					r.id = 0;
+					if (db.getWallet(userId) >= r.price) {
+						if (db.checkCapacity(r)) {
+							r.id = db.getMaxReservationId() + 1;
+							db.decreseCapacity(r);
+							db.reserveTurn(r);
+							db.increseWallet(userId, r.price);
+						}
+					} else {
+						r.id = 0;
 					}
 				}
 			}
@@ -2720,7 +2769,7 @@ public class Webservices {
 	}
 
 	public Payment[] setResNum(	String username, String password,
-								int reserveId) {
+								int amount) {
 
 		Payment[] res = null;
 		Vector<Payment> vec;
@@ -2729,7 +2778,7 @@ public class Webservices {
 			try {
 				if (db.checkUserPass(username, password)) {
 					int userId = db.getUserId(username);
-					vec = db.setResNum(userId, reserveId);
+					vec = db.setResNum(userId, amount);
 					res = new Payment[vec.size()];
 					for (int i = 0; i < res.length; i++) {
 						res[i] = vec.elementAt(i);
