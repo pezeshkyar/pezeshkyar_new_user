@@ -1,7 +1,14 @@
 package mainpackage;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Random;
 import java.util.Vector;
 
 import persindatepicker.PersianCalendar;
@@ -1373,9 +1380,9 @@ public class Webservices {
 		return r.id;
 	}
 
-	public boolean cancelReservation(	String username, String password,
-										int reservationId) {
-		boolean res = false;
+	public String cancelReservation(String username, String password,
+									int reservationId) {
+		String res = OK_MESSAGE;
 		Database db = new Database();
 		Info_Reservation info;
 		try {
@@ -1384,22 +1391,32 @@ public class Webservices {
 					int userId = db.getUserId(username);
 					info = db.getUserOfficeTurn(reservationId);
 					if (info.username == null)
-						return false;
+						return Helper.getMessageUserNameIsNull();
 
 					int role = db.getPermissionOnOffice(info.officeId,
 							username);
 					if (role == Role.secretary || role == Role.doctor
 							|| info.username.equals(username)
 							|| info.patientId == userId) {
-						Helper.sendCancelationMessage(db, userId, info);
-						db.removeFromReserve(reservationId);
-						db.increseCapacity(info.turnId, info.numberOfTurns);
-						res = true;
+						String nobatDate = db.getTurnDate(reservationId);
+						String str = Helper
+								.getShortDateAfterSomeDay(new Date(), 1);
+						int result = nobatDate.compareTo(str);
+						if (result == 1) {
+							Helper.sendCancelationMessage(db, userId, info);
+							db.setWallet2(userId, reservationId);
+							db.removeFromReserve(reservationId);
+							db.increseCapacity(info.turnId,
+									info.numberOfTurns);
+							res = OK_MESSAGE;
+						} else {
+							res = Helper.getMessageUserNameIsNull();
+						}
 					}
 				}
 			}
 		} catch (SQLException e) {
-			res = false;
+			res = Helper.getMessageUnknownError();
 			System.out.println(e.getMessage());
 		}
 		return res;
@@ -2805,21 +2822,69 @@ public class Webservices {
 		}
 		return res;
 	}
-	 public void setWallet(int resNum, int amount){
-		 Database db = new Database();
 
-			if (db.openConnection()) {
-				try {
-					int userId = db.getUserIdFromPayment(resNum);
-					if (userId != -1){
-						db.setWallet(userId, amount);
-					}
-				} catch (SQLException e) {
-					System.out.println(e.getMessage());
+	public void setWallet(int resNum, int amount) {
+		Database db = new Database();
 
-				} finally {
-					db.closeConnection();
+		if (db.openConnection()) {
+			try {
+				int userId = db.getUserIdFromPayment(resNum);
+				if (userId != -1) {
+					db.setWallet(userId, amount);
 				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+
+			} finally {
+				db.closeConnection();
 			}
-	 }
+		}
+	}
+
+	public int getWallet(String username, String password) {
+		Database db = new Database();
+		int res = -1;
+		if (db.openConnection()) {
+			try {
+				if (db.checkUserPass(username, password)) {
+					int userId = db.getUserId(username);
+					res = db.getWallet(userId);
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				return res;
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
+
+	public String forgetPassWord(String username) {
+		String res = OK_MESSAGE;
+		String password = "NO";
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (!db.isUsernameAvailable(username)) {
+					int userId = db.getUserId(username);
+					password = db.hashingPassWord(userId);
+					if (!password.equals("NO")) {
+						res = db.publishPassWord(password, userId);
+					}
+					else{
+						res=Helper.getMessageUnknownError();
+					}
+				}
+				else {
+					res=Helper.getMessageUserNameInvalid();
+				}
+			} catch (SQLException e) {
+				res = Helper.getMessageUnknownError();
+			} finally {
+				db.closeConnection();
+			}
+		}
+		return res;
+	}
 }

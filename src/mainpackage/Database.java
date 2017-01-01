@@ -1,6 +1,13 @@
 package mainpackage;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +22,7 @@ import constant.Constants;
 import primitives.City;
 import primitives.CityProvince;
 import primitives.DoctorInfo;
+import primitives.Hashing;
 import primitives.Info_Message;
 import primitives.Info_Message1;
 import primitives.Info_Patient;
@@ -1185,8 +1193,22 @@ public class Database {
 		return res;
 	}
 
+	public String getTurnDate(int reservationId) throws SQLException {
+
+		String query =
+				"select turn.date from turn join reserve on reserve.turnid = turn.id where reserve.id = ? ";
+		String res = null;
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, reservationId);
+		ResultSet rs = ps.executeQuery();
+		if (rs.next()) {
+			res = rs.getString(1);
+		}
+		return res;
+	}
+
 	public void removeFromReserve(int reservatinId) throws SQLException {
-		String query = "delete from reserve where id = ?";
+		String query = "delete from reserve where id = ? ";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, reservatinId);
 		ps.executeUpdate();
@@ -2789,4 +2811,102 @@ public class Database {
 		ps.setInt(2, userId);
 		ps.executeUpdate();
 	}
+
+	public void setWallet2(int userId, int reservationId)
+			throws SQLException {
+		String query1 =
+				"select task.price from task join reserve on task.id = reserve.taskid where reserve.id = ? ";
+		int price = 0;
+		PreparedStatement ps1 = connection.prepareStatement(query1);
+		ps1.setInt(1, reservationId);
+		ResultSet rs = ps1.executeQuery();
+		if (rs.next()) {
+			price = rs.getInt(1);
+		}
+		String query2 = "update user set wallet = wallet + ? where id = ?";
+		PreparedStatement ps2 = connection.prepareStatement(query2);
+		ps2.setInt(1, price);
+		ps2.setInt(2, userId);
+		ps2.executeUpdate();
+	}
+
+	public String publishPassWord(String password, int userId)
+			throws SQLException {
+		String Receiver = "";
+		String messageBody = Helper.getMessageSMSPanel1() + " " + password
+				+ " " + Helper.getMessageSMSPanel2();
+		String userNameSMSPanel = "";
+		String passWordSMSPanel = "";
+		String lineNumber = "";
+		String smspanelUrl = "";
+		String query1 = "select mobileno from user where id = ? ";
+		PreparedStatement ps1 = connection.prepareStatement(query1);
+		ps1.setInt(1, userId);
+		ResultSet rs1 = ps1.executeQuery();
+		if (rs1.next()) {
+			Receiver = rs1.getString(1);
+		}
+		String query2 =
+				"select userNameSMSPanel, passWordSMSPanel, lineNumber, smspanelUrl from constants";
+		PreparedStatement ps2 = connection.prepareStatement(query2);
+		ResultSet rs2 = ps2.executeQuery();
+		if (rs2.next()) {
+			userNameSMSPanel = rs2.getString(1);
+			passWordSMSPanel = rs2.getString(2);
+			lineNumber = rs2.getString(3);
+			smspanelUrl = rs2.getString(4);
+		}
+		try {
+			URL url = new URL(smspanelUrl);
+			URLConnection con = url.openConnection();
+			// activate the output
+			con.setDoOutput(true);
+			PrintStream ps = new PrintStream(con.getOutputStream());
+			// send your parameters to your site
+			ps.print("&userName=" + userNameSMSPanel);
+			ps.print("&password=" + passWordSMSPanel);
+			ps.print("&lineNumber=" + lineNumber);
+			ps.print("&Receiver=" + Receiver);
+			ps.print("&messageBody=" + messageBody);
+
+			// we have to get the input stream in order to actually send the
+			// request
+			con.getInputStream();
+
+			// close the print stream
+			ps.close();
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+		// creating new product in background thread
+		// new CreatePortfolio().execute();
+		return "OK";
+	}
+
+	public String hashingPassWord(int userId) throws SQLException {
+		String hashingPassWord = "";
+		int temp1 = userId;
+		Random rand = new Random();
+		int temp2 = rand.nextInt(100000) + 1;
+		int temp3 = temp1 + temp2;
+		String pass = Integer.toString(temp3);
+		try {
+			hashingPassWord = Hashing.SHA1(pass);
+			String query = "update user set password = ? where id = ?";
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setString(1, hashingPassWord);
+			ps.setInt(2, userId);
+			ps.executeUpdate();
+		} catch (NoSuchAlgorithmException e) {
+			return "NO";
+			// e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			return "NO";
+			// e.printStackTrace();
+		}
+		return pass;
+	}
+
 }
