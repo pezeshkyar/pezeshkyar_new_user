@@ -2828,6 +2828,7 @@ public class Database {
 		ps2.setInt(1, price);
 		ps2.setInt(2, userId);
 		ps2.executeUpdate();
+		ps2.close();
 	}
 
 	public String publishPassWord(String password, int userId)
@@ -2875,6 +2876,8 @@ public class Database {
 
 			// close the print stream
 			ps.close();
+			ps1.close();
+			ps2.close();
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		} catch (IOException e2) {
@@ -2894,7 +2897,7 @@ public class Database {
 		String pass = Integer.toString(temp3);
 		try {
 			hashingPassWord = Hashing.SHA1(pass);
-			String query = "update user set password = ? where id = ?";
+			String query = "update user set secondPass = ? where id = ?";
 			PreparedStatement ps = connection.prepareStatement(query);
 			ps.setString(1, hashingPassWord);
 			ps.setInt(2, userId);
@@ -2909,4 +2912,32 @@ public class Database {
 		return pass;
 	}
 
+	public String verifySecurityCode(String username, String password)
+			throws SQLException {
+		String res = "";
+		String query =
+				"select * from user where username = ? and secondPass = ? ";
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				res = "OK";
+			}
+		} catch (SQLException e) {
+			res = "";
+		}
+		return res;
+	}
+
+	public void changePassword(String username, String password)
+			throws SQLException {
+		String query = "update user set password = ? where username = ? ";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setString(1, password);
+		ps.setString(2, username);
+		ps.executeUpdate();
+		ps.close();
+	}
 }

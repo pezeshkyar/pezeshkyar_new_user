@@ -1382,7 +1382,7 @@ public class Webservices {
 
 	public String cancelReservation(String username, String password,
 									int reservationId) {
-		String res = OK_MESSAGE;
+		String res = "";
 		Database db = new Database();
 		Info_Reservation info;
 		try {
@@ -1395,8 +1395,13 @@ public class Webservices {
 
 					int role = db.getPermissionOnOffice(info.officeId,
 							username);
-					if (role == Role.secretary || role == Role.doctor
-							|| info.username.equals(username)
+					if (role == Role.secretary || role == Role.doctor) {
+						Helper.sendCancelationMessage(db, userId, info);
+						db.setWallet2(userId, reservationId);
+						db.removeFromReserve(reservationId);
+						db.increseCapacity(info.turnId, info.numberOfTurns);
+						res = OK_MESSAGE;
+					} else if (info.username.equals(username)
 							|| info.patientId == userId) {
 						String nobatDate = db.getTurnDate(reservationId);
 						String str = Helper
@@ -1412,6 +1417,8 @@ public class Webservices {
 						} else {
 							res = Helper.getMessageUserNameIsNull();
 						}
+					} else {
+						res = Helper.getMessageUserNameIsNull();
 					}
 				}
 			}
@@ -2871,18 +2878,50 @@ public class Webservices {
 					password = db.hashingPassWord(userId);
 					if (!password.equals("NO")) {
 						res = db.publishPassWord(password, userId);
+					} else {
+						res = Helper.getMessageUnknownError();
 					}
-					else{
-						res=Helper.getMessageUnknownError();
-					}
-				}
-				else {
-					res=Helper.getMessageUserNameInvalid();
+				} else {
+					res = Helper.getMessageUserNameInvalid();
 				}
 			} catch (SQLException e) {
 				res = Helper.getMessageUnknownError();
 			} finally {
 				db.closeConnection();
+			}
+		}
+		return res;
+	}
+
+	public String verifySecurityCode(String username, String password) {
+		String res = "";
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (!db.isUsernameAvailable(username)) {
+					res = db.verifySecurityCode(username, password);
+					if (!res.equals(OK_MESSAGE)) {
+						res = Helper.getMessageVerifyCodeInvalid();
+					}
+				}
+			} catch (SQLException e) {
+				res = Helper.getMessageUnknownError();
+			}
+		}
+		return res;
+	}
+
+	public String changePassword(String username, String password) {
+		String res = "";
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (!db.isUsernameAvailable(username)) {
+					db.changePassword(username, password);
+					res = OK_MESSAGE;
+				}
+			} catch (SQLException e) {
+				res = Helper.getMessageUnknownError();
 			}
 		}
 		return res;
