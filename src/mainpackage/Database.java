@@ -19,6 +19,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import constant.Constants;
+import primitives.AppInfo;
 import primitives.City;
 import primitives.CityProvince;
 import primitives.DoctorInfo;
@@ -2158,7 +2159,6 @@ public class Database {
 										String message)
 			throws SQLException {
 
-		String msg = "ok";
 		String date =
 				Helper.getTodayShortDate() + " " + Helper.getCurrentTime();
 		String query = "insert into ticketmessage (id, userId, message, "
@@ -2181,7 +2181,7 @@ public class Database {
 		ps.close();
 		ps2.close();
 
-		return msg;
+		return date;
 	}
 
 	public Vector<TicketSubject> getUserTicketSubject() throws SQLException {
@@ -2939,5 +2939,25 @@ public class Database {
 		ps.setString(2, username);
 		ps.executeUpdate();
 		ps.close();
+	}
+
+	public Vector<AppInfo> getVersionName(Double versionName)
+			throws SQLException {
+		Vector<AppInfo> vec = new Vector<AppInfo>();
+		String query =
+				"select versionName, url, details, forceInstall from appinfo where versionName = (select max(versionName) from appinfo) and versionName > ? ";
+
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setDouble(1, versionName);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			AppInfo info = new AppInfo();
+			info.versionName = rs.getDouble(1);
+			info.url = rs.getString(2);
+			info.details = rs.getString(3);
+			info.force = rs.getBoolean(4);
+			vec.addElement(info);
+		}
+		return vec;
 	}
 }

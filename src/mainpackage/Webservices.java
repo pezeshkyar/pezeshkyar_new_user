@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import persindatepicker.PersianCalendar;
+import primitives.AppInfo;
 import primitives.City;
 import primitives.Info_Message;
 import primitives.Info_Message1;
@@ -2103,7 +2104,7 @@ public class Webservices {
 	public String setUserTicketMessage(	int ticketId, String username,
 										String password, String message) {
 		Database db = new Database();
-		String Str = OK_MESSAGE;
+		String Str = "error";
 
 		if (db.openConnection()) {
 			try {
@@ -2922,6 +2923,29 @@ public class Webservices {
 				}
 			} catch (SQLException e) {
 				res = Helper.getMessageUnknownError();
+			}
+		}
+		return res;
+	}
+	
+	public AppInfo[] getVersionInfo(String versionName, String password){
+		AppInfo[] res = null;
+		Vector<AppInfo> vec;
+		double version = Double.parseDouble(versionName);
+		Database db = new Database();
+		if (db.openConnection()) {
+			try {
+				if (password.equals("1882cd559e560601efdc452fa074c215b55262cd")) {
+					vec = db.getVersionName(version);
+					res = new AppInfo[vec.size()];
+					for (int i = 0; i < res.length; i++) {
+						res[i] = vec.elementAt(i);
+					}
+				}
+			} catch (SQLException e) {
+
+			} finally {
+				db.closeConnection();
 			}
 		}
 		return res;
