@@ -436,6 +436,10 @@ public class Helper {
 		return "\u06a9\u062f \u062a\u0627\u06cc\u06cc\u062f \u0634\u0645\u0627 "
 				+ "\u0628\u0631\u0627\u06cc \u0627\u067e\u0644\u06cc\u06a9"
 				+ "\u06cc\u0634\u0646 \u067e\u0632\u0634\u06a9\u06cc\u0627\u0631";
+		// ramze obore jadide shoma dar aplication arayeshyar		
+//		return "\u06a9\u062f \u062a\u0627\u06cc\u06cc\u062f \u0634\u0645\u0627 "
+//				+ "\u0628\u0631\u0627\u06cc \u0627\u067e\u0644\u06cc\u06a9\u06cc"
+//				+ "\u0634\u0646 \u0622\u0631\u0627\u06cc\u0634 \u06cc\u0627\u0631";
 	}
 
 	public static String getMessageSMSPanel2() {

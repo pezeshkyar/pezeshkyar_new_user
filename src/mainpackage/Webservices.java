@@ -1142,7 +1142,7 @@ public class Webservices {
 					r.firstReservationId = firstReservationId;
 					r.numberOfTurns = numberOfTurns;
 					r.patientId = userId;
-					r.payment = 0;
+					r.payment = db.getTaskPrice(taskId);
 					r.taskId = taskId;
 					r.turnId = turnId;
 					r.price = db.getTaskPrice(taskId);
@@ -2581,13 +2581,24 @@ public class Webservices {
 		return res;
 	}
 
-	public boolean loginSupporter(String username, String password) {
+	public String loginSupporter(String username, String password) {
 		Database db = new Database();
-		boolean res = false;
+		String res = OK_MESSAGE;
 		if (db.openConnection()) {
-			res = db.isHaveSupportPermission(username, password);
-			db.closeConnection();
-
+			try {
+				if (db.checkUserPass(username, password)) {
+					int userid = db.getUserId(username);
+					res = db.isHaveSupporter(userid);
+				}
+				else {
+					res=Helper.getMessageIncorrectUserPass();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				res=Helper.getMessageUnknownError();
+			} finally {
+				db.closeConnection();
+			}
 		}
 		return res;
 	}
@@ -2927,15 +2938,16 @@ public class Webservices {
 		}
 		return res;
 	}
-	
-	public AppInfo[] getVersionInfo(String versionName, String password){
+
+	public AppInfo[] getVersionInfo(String versionName, String password) {
 		AppInfo[] res = null;
 		Vector<AppInfo> vec;
 		double version = Double.parseDouble(versionName);
 		Database db = new Database();
 		if (db.openConnection()) {
 			try {
-				if (password.equals("1882cd559e560601efdc452fa074c215b55262cd")) {
+				if (password.equals(
+						"1882cd559e560601efdc452fa074c215b55262cd")) {
 					vec = db.getVersionName(version);
 					res = new AppInfo[vec.size()];
 					for (int i = 0; i < res.length; i++) {

@@ -1465,7 +1465,7 @@ public class Database {
 						+ "join user as u1 on reserve.userid = u1.id "
 						+ "join user as u2 on reserve.patientid = u2.id "
 						+ "join task on reserve.taskid = task.id "
-						+ "where turn.officeId = ? and date between ? and ?";
+						+ "where turn.officeId = ? and turn.date between ? and ? ";
 		Vector<UserTurn> vec = new Vector<UserTurn>();
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setInt(1, officeId);
@@ -2618,7 +2618,7 @@ public class Database {
 				+ "join user on doctoroffice.doctorid = user.id "
 				+ "join city on office.cityid = city.id "
 				+ "join province on city.provinceid = province.id "
-				+ "where ((province.id = ? or office.cityid = ? or office.spec = ? or office.subspec = ? ";
+				+ "where ((province.id = ? or office.cityid = ? or office.spec = ? or (office.spec = ? and office.subspec = ? ) ";
 		if (!firstName.isEmpty()) {
 			query += "or user.name like '%" + firstName + "%' ";
 		}
@@ -2631,8 +2631,9 @@ public class Database {
 		ps.setInt(1, provinceId);
 		ps.setInt(2, cityId);
 		ps.setInt(3, specId);
-		ps.setInt(4, subspecId);
-		ps.setInt(5, userId);
+		ps.setInt(4, specId);
+		ps.setInt(5, subspecId);
+		ps.setInt(6, userId);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			vec.addElement(rs.getInt(1));
@@ -2959,5 +2960,15 @@ public class Database {
 			vec.addElement(info);
 		}
 		return vec;
+	}
+
+	public String isHaveSupporter(int userId) throws SQLException {
+		String query = "select * from usersupport where userid = ? ";
+		PreparedStatement ps = connection.prepareStatement(query);
+		ps.setInt(1, userId);
+		ResultSet rs = ps.executeQuery();
+		if (rs.next())
+			return "OK";
+		return "";
 	}
 }
