@@ -2027,8 +2027,7 @@ public class Webservices {
 		return res;
 	}
 
-	public Ticket[] getUserTicketSupporter(	String username, String password,
-											int officeId) {
+	public Ticket[] getUserTicketSupporter(	String username, String password) {
 		Database db = new Database();
 		Vector<Ticket> vec;
 		Ticket[] res = null;
@@ -2939,20 +2938,15 @@ public class Webservices {
 		return res;
 	}
 
-	public AppInfo[] getVersionInfo(String versionName, String password) {
-		AppInfo[] res = null;
-		Vector<AppInfo> vec;
+	public AppInfo getVersionInfo(String versionName, String password) {
+		AppInfo res = null;
 		double version = Double.parseDouble(versionName);
 		Database db = new Database();
 		if (db.openConnection()) {
 			try {
 				if (password.equals(
 						"1882cd559e560601efdc452fa074c215b55262cd")) {
-					vec = db.getVersionName(version);
-					res = new AppInfo[vec.size()];
-					for (int i = 0; i < res.length; i++) {
-						res[i] = vec.elementAt(i);
-					}
+					res = db.getVersionName(version);
 				}
 			} catch (SQLException e) {
 

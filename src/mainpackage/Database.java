@@ -2942,22 +2942,23 @@ public class Database {
 		ps.close();
 	}
 
-	public Vector<AppInfo> getVersionName(Double versionName)
+	public AppInfo getVersionName(Double versionName)
 			throws SQLException {
-		Vector<AppInfo> vec = new Vector<AppInfo>();
+		AppInfo vec = null;
 		String query =
-				"select versionName, url, details, forceInstall from appinfo where versionName = (select max(versionName) from appinfo) and versionName > ? ";
-
+				"select versionName, url, details, forceInstall "
+				+ "from appinfo where "
+				+ "versionName = (select max(versionName) from appinfo where versionName > ?)";
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setDouble(1, versionName);
 		ResultSet rs = ps.executeQuery();
-		while (rs.next()) {
+		if (rs.next()) {
 			AppInfo info = new AppInfo();
 			info.versionName = rs.getDouble(1);
 			info.url = rs.getString(2);
 			info.details = rs.getString(3);
 			info.force = rs.getBoolean(4);
-			vec.addElement(info);
+			vec=info;
 		}
 		return vec;
 	}
